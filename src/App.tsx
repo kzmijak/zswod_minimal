@@ -1,5 +1,5 @@
 // routes
-import Router from './routes';
+import { Router } from './_zswod/routes';
 // theme
 import ThemeProvider from './theme';
 // components
