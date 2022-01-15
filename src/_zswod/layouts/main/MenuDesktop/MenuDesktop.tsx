@@ -42,8 +42,6 @@ export default function MenuDesktop({ isOffset, isHome, navConfig }: MenuProps) 
 
 // ----------------------------------------------------------------------
 
-// ----------------------------------------------------------------------
-
 type MenuDesktopItemProps = {
   item: MenuItemProps;
   isHome: boolean;

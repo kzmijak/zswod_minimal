@@ -1,16 +1,6 @@
-import {
-  Box,
-  Grid,
-  LinkProps,
-  List,
-  ListItem,
-  ListSubheader,
-  MenuItemProps,
-  Popover,
-  styled,
-} from '@mui/material';
-import { FC, ReactNode, RefObject, useEffect, useState } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { Box, List, ListItem, ListSubheader, Popover, styled } from '@mui/material';
+import { FC, useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import Iconify from 'src/components/Iconify';
 import { MenuItemChildrenProps } from 'src/layouts/main/type';
 import { LinkStyle, RouterLinkProps } from './MenuDesktop';
