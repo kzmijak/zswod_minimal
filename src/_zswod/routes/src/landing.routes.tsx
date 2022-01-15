@@ -1,8 +1,8 @@
 import { Suspense } from 'react';
 import { RouteObject } from 'react-router';
 import LoadingScreen from 'src/components/LoadingScreen';
-import MainLayout from 'src/layouts/main';
 import HomePage from 'src/pages/Home';
+import MainLayout from 'src/_zswod/layouts/main';
 
 const LandingRoutes: RouteObject = {
   path: '',
