@@ -96,58 +96,56 @@ const PopoverElement: FC<PopoverElementProps> = ({ title, isHome, isOffset, chil
         PaperProps={{
           sx: {
             px: 3,
-            pt: 5,
+            pt: 3,
             pb: 3,
-            right: 16,
             m: 'auto',
             borderRadius: 2,
+            alignItems: 'center',
             maxWidth: (theme) => theme.breakpoints.values.lg,
             boxShadow: (theme) => theme.customShadows.z24,
           },
         }}
       >
-        <Grid container spacing={3}>
+        <>
           {children.map((list) => {
             const { subheader, items } = list;
 
             return (
-              <Grid key={subheader} item xs={12} md={subheader === 'Dashboard' ? 6 : 2}>
-                <List disablePadding>
-                  <ListSubheader
-                    disableSticky
-                    disableGutters
+              <List key={subheader} disablePadding>
+                <ListSubheader
+                  disableSticky
+                  disableGutters
+                  sx={{
+                    display: 'flex',
+                    lineHeight: 'unset',
+                    alignItems: 'center',
+                    color: 'text.primary',
+                    typography: 'overline',
+                  }}
+                >
+                  <IconBullet type="subheader" /> {subheader}
+                </ListSubheader>
+                {items.map((item) => (
+                  <ListItemStyle
+                    key={item.title}
+                    to={item.path}
+                    component={NavLink}
+                    underline="none"
                     sx={{
-                      display: 'flex',
-                      lineHeight: 'unset',
-                      alignItems: 'center',
-                      color: 'text.primary',
-                      typography: 'overline',
+                      '&.active': {
+                        color: 'text.primary',
+                        typography: 'subtitle2',
+                      },
                     }}
                   >
-                    <IconBullet type="subheader" /> {subheader}
-                  </ListSubheader>
-                  {items.map((item) => (
-                    <ListItemStyle
-                      key={item.title}
-                      to={item.path}
-                      component={NavLink}
-                      underline="none"
-                      sx={{
-                        '&.active': {
-                          color: 'text.primary',
-                          typography: 'subtitle2',
-                        },
-                      }}
-                    >
-                      <IconBullet />
-                      {item.title}
-                    </ListItemStyle>
-                  ))}
-                </List>
-              </Grid>
+                    <IconBullet />
+                    {item.title}
+                  </ListItemStyle>
+                ))}
+              </List>
             );
           })}
-        </Grid>
+        </>
       </Popover>
     </>
   );
