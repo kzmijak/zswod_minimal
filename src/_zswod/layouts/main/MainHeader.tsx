@@ -11,7 +11,7 @@ import cssStyles from 'src/utils/cssStyles';
 import { HEADER } from 'src/config';
 // components
 import Logo from 'src/components/Logo';
-import Label from 'src/components/Label';
+import Image from 'src/components/Image';
 //
 import MenuDesktop from './MenuDesktop/MenuDesktop';
 import MenuMobile from 'src/layouts/main/MenuMobile';
@@ -74,11 +74,7 @@ export default function MainHeader() {
             justifyContent: 'space-between',
           }}
         >
-          <Logo />
-
-          <Label color="info" sx={{ ml: 1 }}>
-            v3.0.0
-          </Label>
+          <Image alt="sketch icon" src="/logo/logo.png" sx={{ width: 78, height: 78, mr: 1 }} />
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
@@ -89,7 +85,7 @@ export default function MainHeader() {
             rel="noopener"
             href="https://material-ui.com/store/items/minimal-dashboard/"
           >
-            Purchase Now
+            E-Panel
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
