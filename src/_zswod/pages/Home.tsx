@@ -4,7 +4,6 @@ import { styled } from '@mui/material/styles';
 import Page from 'src/components/Page';
 // sections
 import {
-  HomeMinimal,
   HomeDarkMode,
   HomeLookingFor,
   HomeColorPresets,
@@ -13,12 +12,13 @@ import {
   HomeCleanInterfaces,
   HomeHugePackElements,
 } from 'src/sections/home';
-import HomeHero from '../sections/home/HomeHero';
+import { HomeHero, HomeMinimal } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
 const RootStyle = styled('div')(({ theme }) => ({
   height: '100%',
+  scrollbarWidth: 'none',
 }));
 
 const ContentStyle = styled('div')(({ theme }) => ({

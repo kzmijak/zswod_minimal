@@ -74,7 +74,11 @@ export default function MainHeader() {
             justifyContent: 'space-between',
           }}
         >
-          <Image alt="sketch icon" src="/logo/logo.png" sx={{ width: 78, height: 78, mr: 1 }} />
+          <Image
+            alt="sketch icon"
+            src="/logo/logo_centered.png"
+            sx={{ width: 78, height: 78, mr: 1 }}
+          />
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
