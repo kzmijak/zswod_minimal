@@ -18,7 +18,7 @@ import { MotionInView, varFade } from 'src/components/animate';
 const CARDS = [
   {
     icon: '/images/artykuły.jfif',
-    title: 'Artykuły',
+    title: 'Nowości',
     description:
       'Nowości, aktualizacje i wydarzenia - tutaj dowiesz się czym szkoła żyje w ostatnim czasie.',
   },
@@ -27,6 +27,12 @@ const CARDS = [
     title: 'Galeria',
     description:
       'Zdjęcia, sesje i upominki - tutaj znajdziesz najświeższe materiały z ostatnich wydarzeń szkolnych.',
+  },
+  {
+    icon: '/images/kontakt.jpg',
+    title: 'Historia',
+    description:
+      'Archiwalne wpisy upamiętniające przeszłe wydarzenia szkolne - momenty do których zawsze miło wracamy.',
   },
   {
     icon: '/images/kontakt.jpg',
@@ -80,7 +86,7 @@ export default function HomeMinimal() {
           sx={{
             display: 'grid',
             gap: { xs: 5, lg: 10 },
-            gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' },
+            gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(4, 1fr)' },
           }}
         >
           {CARDS.map((card, index) => (

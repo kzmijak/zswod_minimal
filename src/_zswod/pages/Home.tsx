@@ -6,13 +6,12 @@ import Page from 'src/components/Page';
 import {
   HomeDarkMode,
   HomeLookingFor,
-  HomeColorPresets,
   HomePricingPlans,
   HomeAdvertisement,
   HomeCleanInterfaces,
   HomeHugePackElements,
 } from 'src/sections/home';
-import { HomeHero, HomeMinimal } from '../sections/home';
+import { HomeColorPresets, HomeHero, HomeMinimal } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
@@ -36,12 +35,10 @@ export default function HomePage() {
         <HomeHero />
         <ContentStyle>
           <HomeMinimal />
-
+          <HomeColorPresets />
           <HomeHugePackElements />
 
           <HomeDarkMode />
-
-          <HomeColorPresets />
 
           <HomeCleanInterfaces />
 
