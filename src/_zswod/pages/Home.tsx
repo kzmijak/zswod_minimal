@@ -10,7 +10,7 @@ import {
   HomeAdvertisement,
   HomeHugePackElements,
 } from 'src/sections/home';
-import { HomeHero, HomeShortcuts, HomeArticles, HomeGallery } from '../sections/home';
+import { HomeHero, HomeShortcuts, HomeArticles, HomeGallery, HomeContact } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
@@ -36,16 +36,7 @@ export default function HomePage() {
           <HomeShortcuts />
           <HomeArticles />
           <HomeGallery />
-
-          <HomeHugePackElements />
-
-          <HomeDarkMode />
-
-          <HomePricingPlans />
-
-          <HomeLookingFor />
-
-          <HomeAdvertisement />
+          <HomeContact />
         </ContentStyle>
       </RootStyle>
     </Page>

@@ -30,12 +30,6 @@ const CARDS = [
   },
   {
     icon: '/images/kontakt.jpg',
-    title: 'Historia',
-    description:
-      'Archiwalne wpisy upamiętniające przeszłe wydarzenia szkolne - momenty do których zawsze miło wracamy.',
-  },
-  {
-    icon: '/images/kontakt.jpg',
     title: 'Kontakt',
     description:
       'Jeżeli posiadasz jakieś ważne sprawy które chcesz nam przekazać, tutaj znajdziesz sposób na to aby się z nami skomunikować.',
@@ -86,7 +80,7 @@ export default function HomeShortcuts() {
           sx={{
             display: 'grid',
             gap: { xs: 5, lg: 10 },
-            gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(4, 1fr)' },
+            gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' },
           }}
         >
           {CARDS.map((card, index) => (
