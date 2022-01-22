@@ -8,10 +8,9 @@ import {
   HomeLookingFor,
   HomePricingPlans,
   HomeAdvertisement,
-  HomeCleanInterfaces,
   HomeHugePackElements,
 } from 'src/sections/home';
-import { HomeColorPresets, HomeHero, HomeMinimal } from '../sections/home';
+import { HomeHero, HomeShortcuts, HomeArticles, HomeGallery } from '../sections/home';
 
 // ----------------------------------------------------------------------
 
@@ -34,13 +33,13 @@ export default function HomePage() {
       <RootStyle>
         <HomeHero />
         <ContentStyle>
-          <HomeMinimal />
-          <HomeColorPresets />
+          <HomeShortcuts />
+          <HomeArticles />
+          <HomeGallery />
+
           <HomeHugePackElements />
 
           <HomeDarkMode />
-
-          <HomeCleanInterfaces />
 
           <HomePricingPlans />
 

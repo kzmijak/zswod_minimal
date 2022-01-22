@@ -1,5 +1,6 @@
-import HomeColorPresets from './HomeColorPresets';
+import HomeGallery from './HomeGallery';
+import HomeArticles from './HomeArticles';
 import HomeHero from './HomeHero';
-import HomeMinimal from './HomeMinimal';
+import HomeShortcuts from './HomeShortcuts';
 
-export { HomeHero, HomeMinimal, HomeColorPresets };
+export { HomeHero, HomeShortcuts, HomeArticles, HomeGallery };

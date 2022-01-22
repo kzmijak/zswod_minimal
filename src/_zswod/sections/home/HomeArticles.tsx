@@ -32,7 +32,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeColorPresets() {
+export default function HomeArticles() {
   return (
     <RootStyle>
       <Container sx={{ position: 'relative', textAlign: 'center' }}>

@@ -51,7 +51,7 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeMinimal() {
+export default function HomeShortcuts() {
   return (
     <RootStyle>
       <Container>

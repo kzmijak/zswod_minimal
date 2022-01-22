@@ -3,7 +3,7 @@ import { useRef } from 'react';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
-import { alpha, useTheme, styled } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 // utils
 import { articlesMockData } from 'src/_zswod/utils/Mock/articles';
