@@ -1,28 +1,10 @@
-import { capitalCase } from 'change-case';
-import { m } from 'framer-motion';
 // @mui
-import { styled, alpha } from '@mui/material/styles';
-import {
-  Box,
-  Stack,
-  Radio,
-  Tooltip,
-  Container,
-  Typography,
-  RadioGroup,
-  CardActionArea,
-  FormControlLabel,
-  Card,
-  CardHeader,
-  CardContent,
-} from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Container, Typography } from '@mui/material';
 // hooks
-import useSettings from 'src/hooks/useSettings';
 // components
-import Image from 'src/components/Image';
 import { MotionInView, varFade } from 'src/components/animate';
 import { CarouselCenterMode } from 'src/_zswod/components/carousel';
-import Slider from 'react-slick';
 
 // ----------------------------------------------------------------------
 

@@ -52,21 +52,6 @@ const HeroOverlayStyle = styled(m.img)({
   position: 'absolute',
 });
 
-const HeroImgStyle = styled(m.img)(({ theme }) => ({
-  top: 0,
-  right: 0,
-  bottom: 0,
-  zIndex: 8,
-  width: '100%',
-  margin: 'auto',
-  position: 'absolute',
-  [theme.breakpoints.up('lg')]: {
-    right: '8%',
-    width: 'auto',
-    height: '48vh',
-  },
-}));
-
 // ----------------------------------------------------------------------
 
 export default function HomeHero() {
