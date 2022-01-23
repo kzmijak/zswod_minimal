@@ -5,10 +5,9 @@ import { Container, Grid, Stack, Typography, useTheme } from '@mui/material';
 import Image from 'src/components/Image';
 import { MotionInView, varFade } from 'src/components/animate';
 import { imagesMockData } from 'src/_zswod/utils/Mock/images';
-import LightboxModal from 'src/components/LightboxModal';
+import { LightboxModal, ButtonEPanel } from 'src/_zswod/components';
 import { useEffect, useRef, useState } from 'react';
 import useResponsive from 'src/hooks/useResponsive';
-import { ButtonEPanel } from 'src/_zswod/components';
 
 // ----------------------------------------------------------------------
 
