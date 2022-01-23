@@ -1,16 +1,14 @@
 import { m } from 'framer-motion';
-import { Link as RouterLink } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import { Button, Box, Link, Container, Typography, Stack, StackProps, Grid } from '@mui/material';
+import { Box, Link, Container, Typography, Stack, StackProps } from '@mui/material';
 // routes
 // components
 import Image from 'src/components/Image';
-import Iconify from 'src/components/Iconify';
 import TextIconLabel from 'src/components/TextIconLabel';
 import { MotionContainer, varFade } from 'src/components/animate';
 import useSettings from 'src/hooks/useSettings';
-import { PATH_DASHBOARD_ROOT } from 'src/_zswod/routes/src/dashboard.routes';
+import { ButtonEPanel } from 'src/_zswod/components';
 
 // ----------------------------------------------------------------------
 
@@ -142,15 +140,7 @@ export default function HomeHero() {
               </Stack>
 
               <m.div variants={varFade().inRight}>
-                <Button
-                  size="large"
-                  variant="contained"
-                  component={RouterLink}
-                  to={PATH_DASHBOARD_ROOT}
-                  startIcon={<Iconify icon={'eva:flash-fill'} width={20} height={20} />}
-                >
-                  e-Panel
-                </Button>
+                <ButtonEPanel />
               </m.div>
             </Stack>
           </ContentStyle>

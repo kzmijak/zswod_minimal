@@ -1,11 +1,12 @@
 // @mui
 import { styled } from '@mui/material/styles';
-import { Container, Typography } from '@mui/material';
+import { Container, Stack, Typography } from '@mui/material';
 // hooks
 // components
 import { MotionInView, varFade } from 'src/components/animate';
 import { CarouselCenterMode } from 'src/_zswod/components/carousel';
 import { useEffect, useRef } from 'react';
+import { ButtonEPanel } from 'src/_zswod/components';
 
 // ----------------------------------------------------------------------
 
@@ -36,12 +37,28 @@ export default function HomeArticles({ passRef }: HomeArticlesProps) {
         </MotionInView>
 
         <MotionInView variants={varFade().inUp}>
-          <Typography variant="h2" sx={{ mb: 19 }}>
+          <Typography variant="h2" sx={{ mb: 10 }}>
             Oto co się ostatnio wydarzyło!
           </Typography>
         </MotionInView>
 
         <CarouselCenterMode />
+
+        <MotionInView variants={varFade().inLeft}>
+          <Stack
+            direction={{ xs: 'column', md: 'row' }}
+            justifyContent={{ xd: 'center', md: 'flex-end' }}
+            alignItems="center"
+            spacing={2}
+            sx={{
+              mt: 4,
+              mb: 2,
+            }}
+          >
+            <Typography>Jest ich więcej!</Typography>
+            <ButtonEPanel />
+          </Stack>
+        </MotionInView>
       </Container>
     </RootStyle>
   );

@@ -84,7 +84,7 @@ export default function HomeShortcuts({ articlesRef, galleryRef, contactRef }: H
         <Box
           sx={{
             textAlign: 'center',
-            mb: { xs: 10, md: 25 },
+            mb: { xs: 10, md: 15 },
           }}
         >
           <MotionInView variants={varFade().inUp} sx={{ alignItems: 'center' }}>

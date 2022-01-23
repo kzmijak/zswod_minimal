@@ -15,6 +15,7 @@ import Image from 'src/components/Image';
 import MenuDesktop from './MenuDesktop/MenuDesktop';
 import MenuMobile from 'src/layouts/main/MenuMobile';
 import navConfig from './MenuConfig';
+import { Logo } from 'src/_zswod/components';
 
 // ----------------------------------------------------------------------
 
@@ -73,11 +74,7 @@ export default function MainHeader() {
             justifyContent: 'space-between',
           }}
         >
-          <Image
-            alt="sketch icon"
-            src="/logo/logo_centered.png"
-            sx={{ width: 78, height: 78, mr: 1 }}
-          />
+          <Logo sx={{ width: 78, height: 78, mr: 1 }} />
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}

@@ -5,7 +5,7 @@ import { Box, Link, Container, Typography, Stack } from '@mui/material';
 //
 import MainHeader from './MainHeader';
 import MainFooter from 'src/layouts/main/MainFooter';
-import Logo from 'src/components/Logo';
+import { Logo } from 'src/_zswod/components';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +34,7 @@ export default function MainLayout() {
           }}
         >
           <Container>
-            <Logo sx={{ mb: 1, mx: 'auto' }} />
+            <Logo sx={{ mb: 1, mx: 'auto', width: 120, height: 120 }} />
 
             <Typography variant="caption" component="p">
               © Wszystkie prawa zastrzeżone

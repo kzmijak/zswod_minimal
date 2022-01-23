@@ -8,6 +8,7 @@ import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 // utils
 import { articlesMockData } from 'src/_zswod/utils/Mock/articles';
 import { MotionInView, varFade } from 'src/components/animate';
+import useResponsive from 'src/hooks/useResponsive';
 
 // ----------------------------------------------------------------------
 
@@ -88,12 +89,13 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
 
 export default function CarouselCenterMode() {
   const carouselRef = useRef<Slider | null>(null);
+  const isDesktop = useResponsive('up', 'md');
 
   const settings = {
     dots: true,
     infinite: false,
     speed: 500,
-    slidesToShow: 5,
+    slidesToShow: isDesktop ? 5 : 2,
     slidesToScroll: 1,
   };
 
