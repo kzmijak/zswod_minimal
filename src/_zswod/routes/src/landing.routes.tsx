@@ -4,12 +4,14 @@ import LoadingScreen from 'src/components/LoadingScreen';
 import HomePage from '../../pages/Home';
 import MainLayout from 'src/_zswod/layouts/main';
 
+const PATH_LANDING_ROOT = '/zswod_minimal';
+
 const LandingRoutes: RouteObject = {
-  path: '',
+  path: PATH_LANDING_ROOT,
   element: <MainLayout />,
   children: [
     {
-      path: '/',
+      path: '',
       element: (
         <Suspense fallback={LoadingScreen}>
           <HomePage />
@@ -19,4 +21,4 @@ const LandingRoutes: RouteObject = {
   ],
 };
 
-export { LandingRoutes };
+export { LandingRoutes, PATH_LANDING_ROOT };

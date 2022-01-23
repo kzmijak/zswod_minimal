@@ -2,7 +2,7 @@ import { RouteObject } from 'react-router';
 import DashboardLayout from 'src/_zswod/layouts/dashboard';
 import Maintenance from 'src/_zswod/pages/Maintenance';
 
-const PATH_DASHBOARD_ROOT = '/etablica';
+const PATH_DASHBOARD_ROOT = `/zswod_minimal/etablica`;
 const PATH_DASHBOARD = {
   about: `${PATH_DASHBOARD_ROOT}/oszkole`,
   parents: `${PATH_DASHBOARD_ROOT}/dlarodzicow`,
