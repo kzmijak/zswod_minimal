@@ -9,13 +9,12 @@ import useResponsive from 'src/hooks/useResponsive';
 import cssStyles from 'src/utils/cssStyles';
 // config
 import { HEADER } from 'src/config';
-// components
-import Image from 'src/components/Image';
 //
 import MenuDesktop from './MenuDesktop/MenuDesktop';
 import MenuMobile from 'src/layouts/main/MenuMobile';
 import navConfig from './MenuConfig';
 import { Logo } from 'src/_zswod/components';
+import { PATH_DASHBOARD_ROOT } from 'src/_zswod/routes';
 
 // ----------------------------------------------------------------------
 
@@ -79,12 +78,7 @@ export default function MainHeader() {
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
-          <Button
-            variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-          >
+          <Button variant="contained" href={PATH_DASHBOARD_ROOT}>
             E-Panel
           </Button>
 

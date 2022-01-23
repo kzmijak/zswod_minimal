@@ -1,5 +1,6 @@
 import { RouteObject } from 'react-router';
-import DashboardLayout from 'src/layouts/dashboard';
+import DashboardLayout from 'src/_zswod/layouts/dashboard';
+import Maintenance from 'src/_zswod/pages/Maintenance';
 
 const PATH_DASHBOARD_ROOT = '/etablica';
 const PATH_DASHBOARD = {
@@ -11,7 +12,16 @@ const PATH_DASHBOARD = {
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
   element: <DashboardLayout />,
-  children: [],
+  children: [
+    {
+      path: '*',
+      element: <Maintenance />,
+    },
+    {
+      path: '',
+      element: <Maintenance />,
+    },
+  ],
 };
 
 export { PATH_DASHBOARD_ROOT, PATH_DASHBOARD, DashboardRoutes };

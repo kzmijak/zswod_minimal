@@ -2,7 +2,7 @@ import { Button } from '@mui/material';
 import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import Iconify from 'src/components/Iconify';
-import { PATH_DASHBOARD_ROOT } from '../routes/src/dashboard.routes';
+import { PATH_DASHBOARD_ROOT } from '../routes';
 
 type ButtonEPanelProps = {
   width?: number;
