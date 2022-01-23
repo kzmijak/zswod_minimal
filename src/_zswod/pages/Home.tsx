@@ -1,15 +1,9 @@
 // @mui
 import { styled } from '@mui/material/styles';
+import { useState } from 'react';
 // components
 import Page from 'src/components/Page';
 // sections
-import {
-  HomeDarkMode,
-  HomeLookingFor,
-  HomePricingPlans,
-  HomeAdvertisement,
-  HomeHugePackElements,
-} from 'src/sections/home';
 import { HomeHero, HomeShortcuts, HomeArticles, HomeGallery, HomeContact } from '../sections/home';
 
 // ----------------------------------------------------------------------
@@ -28,15 +22,23 @@ const ContentStyle = styled('div')(({ theme }) => ({
 // ----------------------------------------------------------------------
 
 export default function HomePage() {
+  const [articlesRef, setArticlesRef] = useState(null);
+  const [galleryRef, setGalleryRef] = useState(null);
+  const [contactRef, setContactRef] = useState(null);
+
   return (
     <Page title="The starting point for your next project">
       <RootStyle>
         <HomeHero />
         <ContentStyle>
-          <HomeShortcuts />
-          <HomeArticles />
-          <HomeGallery />
-          <HomeContact />
+          <HomeShortcuts
+            articlesRef={articlesRef}
+            galleryRef={galleryRef}
+            contactRef={contactRef}
+          />
+          <HomeArticles passRef={setArticlesRef} />
+          <HomeGallery passRef={setGalleryRef} />
+          <HomeContact passRef={setContactRef} />
         </ContentStyle>
       </RootStyle>
     </Page>

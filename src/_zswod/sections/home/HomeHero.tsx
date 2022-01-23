@@ -100,14 +100,14 @@ export default function HomeHero() {
                   <TextIconLabel
                     icon={
                       <Image
-                        alt="sketch icon"
+                        alt="Facebook ikona"
                         src="/logo/facebook.png"
                         sx={{ width: 20, height: 20, mr: 1 }}
                       />
                     }
                     value={
                       <Link
-                        href="https://www.sketch.com/s/0fa4699d-a3ff-4cd5-a3a7-d851eb7e17f0"
+                        href="https://www.facebook.com/sporlowd/"
                         target="_blank"
                         rel="noopener"
                         color={textColor}
@@ -130,7 +130,7 @@ export default function HomeHero() {
                     }
                     value={
                       <Link
-                        href="https://www.figma.com/file/x7earqGD0VGFjFdk5v2DgZ/%5BPreview%5D-Minimal-Web?node-id=866%3A55474"
+                        href="https://www.talentowisko.pl/podstawowa/szkola/szkola-podstawowa-im-jana-pawla-ii-w-orlowie-drewnianym/"
                         target="_blank"
                         rel="noopener"
                         color={textColor}

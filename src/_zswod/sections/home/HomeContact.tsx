@@ -1,5 +1,6 @@
 import { Box, Container, Grid, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useEffect, useRef } from 'react';
 import { MotionInView, varFade } from 'src/components/animate';
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -7,15 +8,21 @@ const RootStyle = styled('div')(({ theme }) => ({
   paddingBottom: theme.spacing(10),
 }));
 
-const ContentStyle = styled('div')(({ theme }) => ({
-  textAlign: 'center',
-}));
-
 // -----------------------------------------------------------------------
 
-export default function HomeContact() {
+type HomeContactProps = {
+  passRef: Function;
+};
+
+export default function HomeContact({ passRef }: HomeContactProps) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    passRef(ref);
+  }, [passRef, ref]);
+
   return (
-    <RootStyle>
+    <RootStyle ref={ref}>
       <Container>
         <Box
           sx={{

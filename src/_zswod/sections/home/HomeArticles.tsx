@@ -5,6 +5,7 @@ import { Container, Typography } from '@mui/material';
 // components
 import { MotionInView, varFade } from 'src/components/animate';
 import { CarouselCenterMode } from 'src/_zswod/components/carousel';
+import { useEffect, useRef } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -14,9 +15,19 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeArticles() {
+type HomeArticlesProps = {
+  passRef: Function;
+};
+
+export default function HomeArticles({ passRef }: HomeArticlesProps) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    passRef(ref);
+  }, [passRef, ref]);
+
   return (
-    <RootStyle>
+    <RootStyle ref={ref}>
       <Container sx={{ position: 'relative', textAlign: 'center' }}>
         <MotionInView variants={varFade().inUp}>
           <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>

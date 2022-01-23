@@ -6,7 +6,7 @@ import Image from 'src/components/Image';
 import { MotionInView, varFade } from 'src/components/animate';
 import { imagesMockData } from 'src/_zswod/utils/Mock/images';
 import LightboxModal from 'src/components/LightboxModal';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -28,16 +28,25 @@ const ContentStyle = styled('div')(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+type HomeGalleryProps = {
+  passRef: Function;
+};
 
-export default function HomeGallery() {
+export default function HomeGallery({ passRef }: HomeGalleryProps) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const images = imagesMockData.slice(0, 12);
   const imageUrls = images.map((image) => image.uri);
   const [imageOpen, setImageOpen] = useState<number>(-1);
 
+  const ref = useRef(null);
+
+  useEffect(() => {
+    passRef(ref);
+  }, [passRef, ref]);
+
   return (
-    <RootStyle>
+    <RootStyle ref={ref}>
       <Container>
         <ContentStyle>
           <MotionInView variants={varFade().inUp}>

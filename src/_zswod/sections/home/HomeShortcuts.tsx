@@ -15,22 +15,32 @@ import { MotionInView, varFade } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
-const CARDS = [
+type Section = 'articles' | 'gallery' | 'contact';
+
+const CARDS: {
+  icon: string;
+  title: string;
+  description: string;
+  section: Section;
+}[] = [
   {
     icon: '/images/artykuły.jfif',
     title: 'Nowości',
     description:
       'Nowości, aktualizacje i wydarzenia - tutaj dowiesz się czym szkoła żyje w ostatnim czasie.',
+    section: 'articles',
   },
   {
     icon: '/images/galeria.jfif',
     title: 'Galeria',
+    section: 'gallery',
     description:
       'Zdjęcia, sesje i upominki - tutaj znajdziesz najświeższe materiały z ostatnich wydarzeń szkolnych.',
   },
   {
     icon: '/images/kontakt.jpg',
     title: 'Kontakt',
+    section: 'contact',
     description:
       'Jeżeli posiadasz jakieś ważne sprawy które chcesz nam przekazać, tutaj znajdziesz sposób na to aby się z nami skomunikować.',
   },
@@ -45,7 +55,29 @@ const RootStyle = styled('div')(({ theme }) => ({
 
 // ----------------------------------------------------------------------
 
-export default function HomeShortcuts() {
+type HomeShortcutsProps = {
+  articlesRef: React.RefObject<HTMLDivElement> | null | undefined;
+  galleryRef: React.RefObject<HTMLDivElement> | null | undefined;
+  contactRef: React.RefObject<HTMLDivElement> | null | undefined;
+};
+
+export default function HomeShortcuts({ articlesRef, galleryRef, contactRef }: HomeShortcutsProps) {
+  const scrollToRef = (section: Section) => {
+    switch (section) {
+      case 'articles':
+        articlesRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
+      case 'gallery':
+        galleryRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
+      case 'contact':
+        contactRef?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <RootStyle>
       <Container>
@@ -57,7 +89,7 @@ export default function HomeShortcuts() {
         >
           <MotionInView variants={varFade().inUp} sx={{ alignItems: 'center' }}>
             <Image
-              alt="sketch icon"
+              alt="Logo szkoły"
               src="/logo/logo_centered.png"
               sx={{
                 height: 300,
@@ -85,9 +117,14 @@ export default function HomeShortcuts() {
         >
           {CARDS.map((card, index) => (
             <MotionInView variants={varFade().inUp} key={card.title}>
-              <Card sx={{ maxWidth: 345 }}>
+              <Card sx={{ maxWidth: 345 }} onClick={() => scrollToRef(card.section)}>
                 <CardActionArea>
-                  <CardMedia component="img" height="140" image={card.icon} alt="green iguana" />
+                  <CardMedia
+                    component="img"
+                    height="140"
+                    image={card.icon}
+                    alt={`Miniaturka artykuły (${card.title})`}
+                  />
                   <CardContent>
                     <Typography gutterBottom variant="h5" component="div">
                       {card.title}
