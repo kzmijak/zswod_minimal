@@ -32,12 +32,14 @@ const ContentStyle = styled((props: StackProps) => <Stack spacing={5} {...props}
   ({ theme }) => ({
     zIndex: 10,
     margin: 'auto',
+    maxWidth: 520,
     textAlign: 'center',
     position: 'relative',
     borderRadius: 10,
     paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(15),
     [theme.breakpoints.up('md')]: {
+      maxWidth: 'unset',
       margin: 'unset',
       textAlign: 'left',
     },
@@ -62,39 +64,35 @@ export default function HomeHero() {
     <MotionContainer>
       <RootStyle>
         <HeroOverlayStyle
-          alt="overlay"
+          alt="Szkoła - tło"
           src={`/overlay-home/overlay-home-${themeColorPresets}.png`}
           variants={varFade().in}
         />
 
-        {/* <HeroImgStyle
-          alt="hero"
-          src="https://minimal-assets-api.vercel.app/assets/images/home/hero.png"
-          variants={varFade().inUp}
-        /> */}
-
         <Container>
           <ContentStyle sx={{ backgroundColor: backgroundColor }}>
-            <Grid container justifyContent="left" sx={{ marginLeft: 10 }}>
-              <m.div variants={varFade().inRight}>
-                <Typography variant="h2" sx={{ color: textColor }}>
-                  Szkoła Podstawowa im. Jana Pawła II-Papieża
-                  <br /> w Orłowie Drewnianym
-                  <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
-                    <br />
-                    Witamy!
-                  </Typography>
+            <m.div variants={varFade().inRight}>
+              <Typography variant="h2" sx={{ color: textColor, margin: { md: 5 } }}>
+                Szkoła Podstawowa im. Jana Pawła II-Papieża
+                <br /> w Orłowie Drewnianym
+                <Typography component="span" variant="h1" sx={{ color: 'primary.main' }}>
+                  <br />
+                  Witamy!
                 </Typography>
-              </m.div>
-            </Grid>
+              </Typography>
+            </m.div>
 
-            <Grid container justifyContent="right" sx={{ paddingX: 10 }}>
+            <Stack
+              direction="column"
+              justifyContent="space-evenly"
+              alignItems={{ xs: 'center', md: 'flex-end' }}
+              spacing={2}
+              sx={{ pr: { md: 5 } }}
+            >
               <m.div variants={varFade().inRight}>
                 <Typography sx={{ color: textColor }}>Możesz nas również odwiedzieć na:</Typography>
               </m.div>
-            </Grid>
 
-            <Grid container justifyContent="right" sx={{ paddingX: 10 }}>
               <Stack spacing={2.5} alignItems="center" direction={{ xs: 'column', md: 'row' }}>
                 <m.div variants={varFade().inRight}>
                   <TextIconLabel
@@ -142,9 +140,7 @@ export default function HomeHero() {
                   />
                 </m.div>
               </Stack>
-            </Grid>
 
-            <Grid container justifyContent="right" sx={{ paddingX: 10 }}>
               <m.div variants={varFade().inRight}>
                 <Button
                   size="large"
@@ -156,7 +152,7 @@ export default function HomeHero() {
                   e-Panel
                 </Button>
               </m.div>
-            </Grid>
+            </Stack>
           </ContentStyle>
         </Container>
       </RootStyle>

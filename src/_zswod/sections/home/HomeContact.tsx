@@ -40,8 +40,8 @@ export default function HomeContact({ passRef }: HomeContactProps) {
             <Typography variant="h2">Coś ważnego? Daj nam znać!</Typography>
           </MotionInView>
 
-          <Grid container spacing={2} sx={{ mt: { xs: 5, md: 10 } }}>
-            <Grid item xs={8}>
+          <Grid container spacing={5} sx={{ mt: { xs: 5, md: 10 } }}>
+            <Grid item xs={12} md={8}>
               <MotionInView variants={varFade().inRight}>
                 <Typography variant="h3">
                   🏫 Szkoła
@@ -50,7 +50,7 @@ export default function HomeContact({ passRef }: HomeContactProps) {
                 </Typography>
               </MotionInView>
             </Grid>
-            <Grid item xs={4}>
+            <Grid item xs={12} md={4}>
               <MotionInView variants={varFade().inLeft}>
                 <Typography variant="h3">
                   📞 Sekretariat
