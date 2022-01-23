@@ -9,13 +9,12 @@ import useResponsive from 'src/hooks/useResponsive';
 import cssStyles from 'src/utils/cssStyles';
 // config
 import { HEADER } from 'src/config';
-// components
-import Logo from 'src/components/Logo';
-import Label from 'src/components/Label';
 //
 import MenuDesktop from './MenuDesktop/MenuDesktop';
 import MenuMobile from 'src/layouts/main/MenuMobile';
 import navConfig from './MenuConfig';
+import { Logo } from 'src/_zswod/components';
+import { PATH_DASHBOARD_ROOT } from 'src/_zswod/routes';
 
 // ----------------------------------------------------------------------
 
@@ -74,22 +73,13 @@ export default function MainHeader() {
             justifyContent: 'space-between',
           }}
         >
-          <Logo />
-
-          <Label color="info" sx={{ ml: 1 }}>
-            v3.0.0
-          </Label>
+          <Logo sx={{ width: 78, height: 78, mr: 1 }} />
           <Box sx={{ flexGrow: 1 }} />
 
           {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}
 
-          <Button
-            variant="contained"
-            target="_blank"
-            rel="noopener"
-            href="https://material-ui.com/store/items/minimal-dashboard/"
-          >
-            Purchase Now
+          <Button variant="contained" href={PATH_DASHBOARD_ROOT}>
+            E-Panel
           </Button>
 
           {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={navConfig} />}

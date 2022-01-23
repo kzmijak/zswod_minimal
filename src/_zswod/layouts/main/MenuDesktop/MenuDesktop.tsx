@@ -55,7 +55,7 @@ function MenuDesktopItem({ isHome, isOffset, item }: MenuDesktopItemProps) {
     return <PopoverElement title={title} isHome={isHome} isOffset={isOffset} children={children} />;
   }
 
-  if (title === 'Documentation') {
+  if (title === 'Dziennik Vulcan') {
     return (
       <LinkStyle
         href={path}
