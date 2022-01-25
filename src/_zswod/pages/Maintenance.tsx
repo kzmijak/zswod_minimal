@@ -21,7 +21,7 @@ const RootStyle = styled(Page)(({ theme }) => ({
 
 export default function Maintenance() {
   return (
-    <RootStyle title="Maintenance | Minimal-UI">
+    <RootStyle title="Praca w toku">
       <Container sx={{ textAlign: 'center' }}>
         <Typography variant="h3" paragraph>
           Tutaj jeszcze nic nie ma

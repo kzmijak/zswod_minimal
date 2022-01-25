@@ -18,17 +18,20 @@ import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
 //
 import App from './App';
+import { ArticlesProvider } from './_zswod/contexts/ArticlesContext';
 
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
   <HelmetProvider>
     <SettingsProvider>
-      <CollapseDrawerProvider>
-        <BrowserRouter>
-          <App />
-        </BrowserRouter>
-      </CollapseDrawerProvider>
+      <ArticlesProvider>
+        <CollapseDrawerProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CollapseDrawerProvider>
+      </ArticlesProvider>
     </SettingsProvider>
   </HelmetProvider>,
   document.getElementById('root')

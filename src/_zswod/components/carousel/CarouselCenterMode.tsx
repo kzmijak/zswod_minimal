@@ -9,6 +9,7 @@ import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 import { articlesMockData } from 'src/_zswod/utils/Mock/articles';
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
+import { imagesMockData } from 'src/_zswod/utils/Mock/images';
 
 // ----------------------------------------------------------------------
 
@@ -100,17 +101,18 @@ export default function CarouselCenterMode() {
   };
 
   return (
-    // <RootStyle>
     <Slider ref={carouselRef} {...settings}>
-      {MOCK_CAROUSELS.map((item) => (
-        <MotionInView
-          key={item.id}
-          variants={item.id % 2 === 0 ? varFade().inDown : varFade().inUp}
-        >
-          <CarouselItem item={item} />
-        </MotionInView>
-      ))}
+      {MOCK_CAROUSELS.map((article, index) => {
+        const item: CarouselItemProps = {
+          ...article,
+          image: imagesMockData.filter((i) => i.articleId === article.id)[0].uri,
+        };
+        return (
+          <MotionInView key={index} variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}>
+            <CarouselItem item={item} />
+          </MotionInView>
+        );
+      })}
     </Slider>
-    // </RootStyle>
   );
 }
