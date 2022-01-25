@@ -2,7 +2,7 @@
 import { styled } from '@mui/material/styles';
 import { useState } from 'react';
 // components
-import Page from 'src/components/Page';
+import Page from '../components/Page';
 // sections
 import { HomeHero, HomeShortcuts, HomeArticles, HomeGallery, HomeContact } from '../sections/home';
 
@@ -27,7 +27,7 @@ export default function HomePage() {
   const [contactRef, setContactRef] = useState(null);
 
   return (
-    <Page title="The starting point for your next project">
+    <Page title="Szkoła Podstawowa Orłów">
       <RootStyle>
         <HomeHero />
         <ContentStyle>
