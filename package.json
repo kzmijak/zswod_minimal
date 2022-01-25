@@ -13,7 +13,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
-  "homepage": "https://kzmijak.github.io/zswod_minimal/",
   "eslintConfig": {
     "extends": [
       "react-app"
