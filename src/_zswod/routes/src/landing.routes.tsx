@@ -4,10 +4,8 @@ import LoadingScreen from 'src/components/LoadingScreen';
 import HomePage from '../../pages/Home';
 import MainLayout from 'src/_zswod/layouts/main';
 
-const PATH_LANDING_ROOT = '/zswod_minimal';
-
 const LandingRoutes: RouteObject = {
-  path: PATH_LANDING_ROOT,
+  path: '/',
   element: <MainLayout />,
   children: [
     {
@@ -21,4 +19,4 @@ const LandingRoutes: RouteObject = {
   ],
 };
 
-export { LandingRoutes, PATH_LANDING_ROOT };
+export { LandingRoutes };
