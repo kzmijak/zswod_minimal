@@ -4,10 +4,11 @@ import { Container, Grid, Stack, Typography, useTheme } from '@mui/material';
 // components
 import Image from 'src/components/Image';
 import { MotionInView, varFade } from 'src/components/animate';
-import { imagesMockData } from 'src/_zswod/utils/Mock/images';
 import { LightboxModal, ButtonEPanel } from 'src/_zswod/components';
 import { useEffect, useRef, useState } from 'react';
 import useResponsive from 'src/hooks/useResponsive';
+import { useSelector } from 'react-redux';
+import { getImages } from 'src/_zswod/redux/Image/selectors';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +38,7 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useResponsive('up', 'md');
-  const images = imagesMockData.slice(0, isDesktop ? 12 : 6);
+  const images = useSelector(getImages).slice(0, isDesktop ? 12 : 6);
   const imageUrls = images.map((image) => image.uri);
   const [imageOpen, setImageOpen] = useState<number>(-1);
 

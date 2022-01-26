@@ -12,6 +12,7 @@ import 'react-image-lightbox/style.css';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { Provider as ReduxProvider } from 'react-redux';
 // contexts
 import { SettingsProvider } from './contexts/SettingsContext';
 import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
@@ -19,20 +20,23 @@ import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 //
 import App from './App';
 import { ArticlesProvider } from './_zswod/contexts/ArticlesContext';
+import { store } from './_zswod/redux/store';
 
 // ----------------------------------------------------------------------
 
 ReactDOM.render(
   <HelmetProvider>
-    <SettingsProvider>
-      <ArticlesProvider>
-        <CollapseDrawerProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </CollapseDrawerProvider>
-      </ArticlesProvider>
-    </SettingsProvider>
+    <ReduxProvider store={store}>
+      <SettingsProvider>
+        <ArticlesProvider>
+          <CollapseDrawerProvider>
+            <BrowserRouter>
+              <App />
+            </BrowserRouter>
+          </CollapseDrawerProvider>
+        </ArticlesProvider>
+      </SettingsProvider>
+    </ReduxProvider>
   </HelmetProvider>,
   document.getElementById('root')
 );

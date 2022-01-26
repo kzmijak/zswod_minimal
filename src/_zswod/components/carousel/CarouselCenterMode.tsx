@@ -9,7 +9,8 @@ import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 import { articlesMockData } from 'src/_zswod/utils/Mock/articles';
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
-import { imagesMockData } from 'src/_zswod/utils/Mock/images';
+import { useSelector } from 'react-redux';
+import { getImages } from 'src/_zswod/redux/Image/selectors';
 
 // ----------------------------------------------------------------------
 
@@ -91,6 +92,7 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
 export default function CarouselCenterMode() {
   const carouselRef = useRef<Slider | null>(null);
   const isDesktop = useResponsive('up', 'md');
+  const images = useSelector(getImages);
 
   const settings = {
     dots: true,
@@ -105,7 +107,7 @@ export default function CarouselCenterMode() {
       {MOCK_CAROUSELS.map((article, index) => {
         const item: CarouselItemProps = {
           ...article,
-          image: imagesMockData.filter((i) => i.articleId === article.id)[0].uri,
+          image: images.filter((i) => i.articleId === article.id)[0].uri,
         };
         return (
           <MotionInView key={index} variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}>
