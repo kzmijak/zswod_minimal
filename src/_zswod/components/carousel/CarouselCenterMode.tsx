@@ -6,15 +6,14 @@ import { Link as RouterLink } from 'react-router-dom';
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 // utils
-import { articlesMockData } from 'src/_zswod/utils/Mock/articles';
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
-import { useSelector } from 'react-redux';
-import { getImages } from 'src/_zswod/redux/Image/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { getArticles } from 'src/_zswod/redux/article/selectors';
+import { asyncGetArticlesAction } from 'src/_zswod/redux/article/actions';
+import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 
 // ----------------------------------------------------------------------
-
-const MOCK_CAROUSELS = articlesMockData;
 
 const CarouselImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -92,7 +91,11 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
 export default function CarouselCenterMode() {
   const carouselRef = useRef<Slider | null>(null);
   const isDesktop = useResponsive('up', 'md');
-  const images = useSelector(getImages);
+  const articles = useSelector(getArticles);
+  const articlesContext = useArticlesContext();
+
+  const dispatch = useDispatch();
+  dispatch(asyncGetArticlesAction());
 
   const settings = {
     dots: true,
@@ -104,10 +107,10 @@ export default function CarouselCenterMode() {
 
   return (
     <Slider ref={carouselRef} {...settings}>
-      {MOCK_CAROUSELS.map((article, index) => {
+      {articles.map((article, index) => {
         const item: CarouselItemProps = {
           ...article,
-          image: images.filter((i) => i.articleId === article.id)[0].uri,
+          image: articlesContext.getArticlePrimaryImage(article.id).uri,
         };
         return (
           <MotionInView key={index} variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}>

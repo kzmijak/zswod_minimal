@@ -1,12 +1,15 @@
 import { createContext, FC, ReactNode } from 'react';
-import { AxiosLoadable, getAxiosLoadableInstance } from '../utils/AxiosLoadable';
-import { Article, articlesMockData } from '../utils/Mock/articles';
-import { Image, imagesMockData } from '../utils/Mock/images';
+import { useSelector } from 'react-redux';
+import { getArticles } from '../redux/article/selectors';
+import { getImages } from '../redux/Image/selectors';
+import { Article } from '../utils/Mock/articles';
+import { Image } from '../utils/Mock/images';
 
-type ArticlesContextProps = AxiosLoadable<Article> & {
-  getArticles: () => Article[];
+type ArticlesContextProps = {
+  articles: Article[];
   getArticle: (articleId: number) => Article | undefined;
-  getGallery: (articleId: number) => Image[];
+  getArticleGallery: (articleId: number) => Image[];
+  getArticlePrimaryImage: (articleId: number) => Image;
 };
 
 const ArticlesContext = createContext<ArticlesContextProps>(null!);
@@ -16,17 +19,20 @@ type ArticlesProviderProps = {
 };
 
 const ArticlesProvider: FC<ArticlesProviderProps> = ({ children }) => {
-  const getArticles = () => articlesMockData;
+  const articles = useSelector(getArticles);
+  const images = useSelector(getImages);
 
-  const getArticle = (articleId: number) => articlesMockData.find((a) => a.id === articleId);
+  const getArticle = (articleId: number) => articles.find((a) => a.id === articleId);
 
-  const getGallery = (articleId: number) => imagesMockData.filter((i) => i.articleId === articleId);
+  const getArticleGallery = (articleId: number) => images.filter((i) => i.articleId === articleId);
+
+  const getArticlePrimaryImage = (articleId: number) => getArticleGallery(articleId)[0];
 
   const value: ArticlesContextProps = {
-    ...getAxiosLoadableInstance<Article>(),
-    getArticles,
+    articles,
     getArticle,
-    getGallery,
+    getArticleGallery,
+    getArticlePrimaryImage,
   };
 
   return <ArticlesContext.Provider value={value}>{children}</ArticlesContext.Provider>;

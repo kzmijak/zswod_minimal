@@ -7,8 +7,9 @@ import { MotionInView, varFade } from 'src/components/animate';
 import { LightboxModal, ButtonEPanel } from 'src/_zswod/components';
 import { useEffect, useRef, useState } from 'react';
 import useResponsive from 'src/hooks/useResponsive';
-import { useSelector } from 'react-redux';
-import { getImages } from 'src/_zswod/redux/Image/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { getImagesSliced } from 'src/_zswod/redux/Image/selectors';
+import { asyncGetImagesAction } from 'src/_zswod/redux/Image/actions';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +39,11 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useResponsive('up', 'md');
-  const images = useSelector(getImages).slice(0, isDesktop ? 12 : 6);
+
+  const dispatch = useDispatch();
+  dispatch(asyncGetImagesAction());
+
+  const images = useSelector(getImagesSliced(isDesktop ? 12 : 6));
   const imageUrls = images.map((image) => image.uri);
   const [imageOpen, setImageOpen] = useState<number>(-1);
 

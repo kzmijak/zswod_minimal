@@ -1,12 +1,12 @@
 import { createSelector } from '@reduxjs/toolkit';
-import { Image } from 'src/_zswod/utils/Mock/images';
 import { RootState } from '../store';
+import { Image } from '../../utils/Mock/images';
 
 const getImagesState = (state: RootState) => state.image;
 
 const getImages = (state: RootState) => getImagesState(state).data;
 
-const getArticleImages = (articleId: number) =>
-  createSelector(getImages, (images: Image[]) => images.filter((i) => i.articleId === articleId));
+const getImagesSliced = (limit: number) =>
+  createSelector(getImages, (images: Image[]) => images.slice(0, limit));
 
-export { getImages, getImagesState, getArticleImages };
+export { getImages, getImagesState, getImagesSliced };
