@@ -8,9 +8,8 @@ import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 // utils
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getArticles } from 'src/_zswod/redux/article/selectors';
-import { asyncGetArticlesAction } from 'src/_zswod/redux/article/actions';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 
 // ----------------------------------------------------------------------
@@ -93,9 +92,6 @@ export default function CarouselCenterMode() {
   const isDesktop = useResponsive('up', 'md');
   const articles = useSelector(getArticles);
   const articlesContext = useArticlesContext();
-
-  const dispatch = useDispatch();
-  dispatch(asyncGetArticlesAction());
 
   const settings = {
     dots: true,

@@ -7,9 +7,9 @@ import { MotionInView, varFade } from 'src/components/animate';
 import { LightboxModal, ButtonEPanel } from 'src/_zswod/components';
 import { useEffect, useRef, useState } from 'react';
 import useResponsive from 'src/hooks/useResponsive';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getImagesSliced } from 'src/_zswod/redux/Image/selectors';
-import { asyncGetImagesAction } from 'src/_zswod/redux/Image/actions';
+import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 
 // ----------------------------------------------------------------------
 
@@ -39,9 +39,6 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useResponsive('up', 'md');
-
-  const dispatch = useDispatch();
-  dispatch(asyncGetImagesAction());
 
   const images = useSelector(getImagesSliced(isDesktop ? 12 : 6));
   const imageUrls = images.map((image) => image.uri);
@@ -119,7 +116,7 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
             }}
           >
             <Typography>Zobacz całą galerię!</Typography>
-            <ButtonEPanel />
+            <ButtonEPanel to={PATHS_ABOUT.Galeria} />
           </Stack>
         </MotionInView>
       </Container>

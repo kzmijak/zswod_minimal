@@ -79,6 +79,24 @@ const images: Image[] = [
     alt: 'Zbieramy nakrętki dla chorych dzieci',
     articleId: 6,
   },
+  {
+    index: 13,
+    uri: 'https://www.talentowisko.pl/resizer/?w=960&i=uploads/entries/2b9ebee483ae3b204a0d1767c6ccb57d.jpeg',
+    alt: 'Zbieramy nakrętki dla chorych dzieci',
+    articleId: 6,
+  },
+  {
+    index: 14,
+    uri: 'https://www.talentowisko.pl/resizer/?w=960&i=uploads/entries/2b9ebee483ae3b204a0d1767c6ccb57d.jpeg',
+    alt: 'Zbieramy nakrętki dla chorych dzieci',
+    articleId: 6,
+  },
+  {
+    index: 15,
+    uri: 'https://www.talentowisko.pl/resizer/?w=960&i=uploads/entries/2b9ebee483ae3b204a0d1767c6ccb57d.jpeg',
+    alt: 'Zbieramy nakrętki dla chorych dzieci',
+    articleId: 6,
+  },
 ];
 
 export { images as imagesMockData };

@@ -1,6 +1,8 @@
 import { createContext, FC, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { asyncGetArticlesAction } from '../redux/article/actions';
 import { getArticles } from '../redux/article/selectors';
+import { asyncGetImagesAction } from '../redux/Image/actions';
 import { getImages } from '../redux/Image/selectors';
 import { Article } from '../utils/Mock/articles';
 import { Image } from '../utils/Mock/images';
@@ -19,6 +21,10 @@ type ArticlesProviderProps = {
 };
 
 const ArticlesProvider: FC<ArticlesProviderProps> = ({ children }) => {
+  const dispatch = useDispatch();
+  dispatch(asyncGetArticlesAction());
+  dispatch(asyncGetImagesAction());
+
   const articles = useSelector(getArticles);
   const images = useSelector(getImages);
 

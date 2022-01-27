@@ -13,7 +13,7 @@ interface PageProps extends BoxProps {
 const Page = forwardRef<HTMLDivElement, PageProps>(({ children, title = '', ...other }, ref) => (
   <Box ref={ref} {...other}>
     <Helmet>
-      <title>{title}</title>
+      <title>{title} | SP Orłów Drewniany</title>
     </Helmet>
     {children}
   </Box>

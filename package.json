@@ -40,6 +40,8 @@
     "@emotion/react": "^11.7.1",
     "@emotion/styled": "^11.6.0",
     "@iconify/react": "^3.1.0",
+    "@mui/icons-material": "^5.3.1",
+    "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.2.4",
     "@reduxjs/toolkit": "^1.7.1",
     "change-case": "^4.1.2",
