@@ -106,7 +106,7 @@ export default function CarouselCenterMode() {
       {articles.map((article, index) => {
         const item: CarouselItemProps = {
           ...article,
-          image: articlesContext.getArticlePrimaryImage(article.id).uri,
+          image: articlesContext.getArticlePrimaryImage(article.id)?.uri ?? '',
         };
         return (
           <MotionInView key={index} variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}>

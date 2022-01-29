@@ -48,6 +48,27 @@ const articles: Article[] = [
       'Konkurs plastyczny polegał na wykonaniu  oryginalnego i użytecznego „dzieła”  z metalowej puszki lub puszek. Wszystkie prace są bardzo orginalne, wykonane  starannie i z wykorzystaniem różnorodnych materiałów do ich ozdabiania. Oto ich wykonawcy: Kacper Tokarski, Malwinka Andruszewska, Wiktoria Jurkiewicz, Maja i Miłosz Matwiej, Zosia Rowińska, Kornelka Antończak, Teodor Świta, Miłosz Raczkowski, Ola Tokarska, Ola Domańska, Blanka Ziętek, Lenka Brodowski, Nadia Karwat, Lenka Molendowska. Na wyróżnienie zasługuje praca Kacpra, który wykonał piękną lampkę  na biurko. Wszystkim gratulujemy super pomysłów. ',
     date: new Date('2021-08-19'),
   },
+  {
+    id: 7,
+    title: 'Wyniki konkursu „Drugie życie puszki”',
+    description:
+      'Konkurs plastyczny polegał na wykonaniu  oryginalnego i użytecznego „dzieła”  z metalowej puszki lub puszek. Wszystkie prace są bardzo orginalne, wykonane  starannie i z wykorzystaniem różnorodnych materiałów do ich ozdabiania. Oto ich wykonawcy: Kacper Tokarski, Malwinka Andruszewska, Wiktoria Jurkiewicz, Maja i Miłosz Matwiej, Zosia Rowińska, Kornelka Antończak, Teodor Świta, Miłosz Raczkowski, Ola Tokarska, Ola Domańska, Blanka Ziętek, Lenka Brodowski, Nadia Karwat, Lenka Molendowska. Na wyróżnienie zasługuje praca Kacpra, który wykonał piękną lampkę  na biurko. Wszystkim gratulujemy super pomysłów. ',
+    date: new Date('2021-08-19'),
+  },
+  {
+    id: 8,
+    title: 'Wyniki konkursu „Drugie życie puszki”',
+    description:
+      'Konkurs plastyczny polegał na wykonaniu  oryginalnego i użytecznego „dzieła”  z metalowej puszki lub puszek. Wszystkie prace są bardzo orginalne, wykonane  starannie i z wykorzystaniem różnorodnych materiałów do ich ozdabiania. Oto ich wykonawcy: Kacper Tokarski, Malwinka Andruszewska, Wiktoria Jurkiewicz, Maja i Miłosz Matwiej, Zosia Rowińska, Kornelka Antończak, Teodor Świta, Miłosz Raczkowski, Ola Tokarska, Ola Domańska, Blanka Ziętek, Lenka Brodowski, Nadia Karwat, Lenka Molendowska. Na wyróżnienie zasługuje praca Kacpra, który wykonał piękną lampkę  na biurko. Wszystkim gratulujemy super pomysłów. ',
+    date: new Date('2021-08-19'),
+  },
+  {
+    id: 9,
+    title: 'Wyniki konkursu „Drugie życie puszki”',
+    description:
+      'Konkurs plastyczny polegał na wykonaniu  oryginalnego i użytecznego „dzieła”  z metalowej puszki lub puszek. Wszystkie prace są bardzo orginalne, wykonane  starannie i z wykorzystaniem różnorodnych materiałów do ich ozdabiania. Oto ich wykonawcy: Kacper Tokarski, Malwinka Andruszewska, Wiktoria Jurkiewicz, Maja i Miłosz Matwiej, Zosia Rowińska, Kornelka Antończak, Teodor Świta, Miłosz Raczkowski, Ola Tokarska, Ola Domańska, Blanka Ziętek, Lenka Brodowski, Nadia Karwat, Lenka Molendowska. Na wyróżnienie zasługuje praca Kacpra, który wykonał piękną lampkę  na biurko. Wszystkim gratulujemy super pomysłów. ',
+    date: new Date('2021-08-19'),
+  },
 ] as Article[];
 
 export { articles as articlesMockData };

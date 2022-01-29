@@ -4,14 +4,12 @@ import {
   AccordionSummary,
   Button,
   Container,
-  Fab,
   Stack,
   Typography,
 } from '@mui/material';
 import {
   Timeline,
   TimelineConnector,
-  TimelineContent,
   TimelineDot,
   TimelineItem,
   TimelineOppositeContent,
@@ -24,23 +22,21 @@ import Img from 'src/components/Image';
 import { Image } from '../../../utils/Mock/images';
 import { Link } from 'react-router-dom';
 import { timeSince } from 'src/_zswod/utils/Mock/timeAgo';
+import Scrollbar from 'src/components/Scrollbar';
 
-const ImagesDemo: FC<{ images: Image[] }> = ({ images }) => (
+const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">
-    {images.slice(0, 4).map((i) => (
-      <Img key={i.index} src={i.uri} sx={{ height: 39, width: 39, borderRadius: 5 }} />
-    ))}
-    {images.length > 4 && (
-      <Fab disabled color="secondary" aria-label="add" size="small">
-        +{images.length - 4}
-      </Fab>
-    )}
+    <Img key={image.index} src={image.uri} sx={{ height: 39, width: 39, borderRadius: 5 }} />
   </Stack>
 );
 
-const Picker: FC = () => {
-  const { articles, getArticleGallery } = useArticlesContext();
-  const [openedGallery, setOpenedGallery] = useState<number | null>(null);
+type PickerProps = {
+  openedGallery: number | null;
+  setOpenedGallery: Function;
+};
+
+const Picker: FC<PickerProps> = ({ openedGallery, setOpenedGallery }) => {
+  const { articles, getArticlePrimaryImage } = useArticlesContext();
   const toggleGallery = (id: number) => {
     const isCurrent = id === openedGallery;
 
@@ -48,41 +44,46 @@ const Picker: FC = () => {
   };
 
   return (
-    <Container maxWidth="xl">
-      <Typography variant="h3" component="h1" paragraph>
-        Galeria
-      </Typography>
-      <Timeline position="left" sx={{ float: 'left' }}>
-        {articles.map((a) => (
-          <TimelineItem key={a.id}>
-            <TimelineOppositeContent>
-              <Accordion expanded={openedGallery === a.id} onClick={() => toggleGallery(a.id)}>
-                <AccordionSummary>
-                  <Typography variant="h6" sx={{ width: '60%', flexShrink: 0 }}>
-                    {a.title}
+    <Container>
+      <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
+        <Timeline position="left">
+          {articles
+            .filter((a) => getArticlePrimaryImage(a.id) !== undefined)
+            .map((a) => (
+              <TimelineItem key={a.id}>
+                <TimelineOppositeContent>
+                  <Accordion expanded={openedGallery === a.id} onClick={() => toggleGallery(a.id)}>
+                    <AccordionSummary>
+                      <Typography variant="h6" sx={{ width: '80%', flexShrink: 0 }}>
+                        {a.title}
+                      </Typography>
+                      <ImagesDemo image={getArticlePrimaryImage(a.id)} />
+                    </AccordionSummary>
+
+                    <AccordionDetails>
+                      <Typography>
+                        <Button component={Link} to="artykul" startIcon={<ContentPasteGoIcon />}>
+                          Zobacz artykuł
+                        </Button>
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
+                </TimelineOppositeContent>
+
+                <TimelineSeparator>
+                  <TimelineDot sx={{ background: 'white' }} />
+                  <TimelineConnector />
+                </TimelineSeparator>
+
+                <TimelineOppositeContent sx={{ flex: 0.1 }}>
+                  <Typography noWrap sx={{ position: 'absolute', left: 0 }}>
+                    {timeSince(a.date)} temu
                   </Typography>
-                  <ImagesDemo images={getArticleGallery(a.id)} />
-                </AccordionSummary>
-
-                <AccordionDetails>
-                  <Typography>
-                    <Button component={Link} to="artykul" startIcon={<ContentPasteGoIcon />}>
-                      Zobacz artykuł
-                    </Button>
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
-            </TimelineOppositeContent>
-
-            <TimelineSeparator>
-              <TimelineDot />
-              <TimelineConnector />
-            </TimelineSeparator>
-
-            <TimelineContent>{timeSince(a.date)} temu</TimelineContent>
-          </TimelineItem>
-        ))}
-      </Timeline>
+                </TimelineOppositeContent>
+              </TimelineItem>
+            ))}
+        </Timeline>
+      </Scrollbar>
     </Container>
   );
 };
