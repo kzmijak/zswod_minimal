@@ -1,8 +1,11 @@
 import { Stack } from '@mui/material';
 import { m } from 'framer-motion';
-import { FC, useState } from 'react';
+import { FC } from 'react';
+import { useSelector } from 'react-redux';
 import { MotionContainer } from 'src/components/animate';
 import { Page } from 'src/_zswod/components';
+import { getCurrentGallery } from 'src/_zswod/redux/gallery/selectors';
+import { GalleryMobile } from './Mobile/mobile';
 import { Picker } from './Picker/Picker';
 import { Presenter } from './Presenter/Presenter';
 
@@ -17,23 +20,21 @@ const presenterVariants = {
 };
 
 const Gallery: FC = () => {
-  const [openedGallery, setOpenedGallery] = useState<number | null>(null);
+  const gallery = useSelector(getCurrentGallery);
+  console.log(gallery);
 
   return (
     <MotionContainer>
       <Page>
         <Stack direction="row">
-          <m.div
-            variants={pickerVariants}
-            animate={openedGallery !== null ? 'openGallery' : 'closeGallery'}
-          >
-            <Picker openedGallery={openedGallery} setOpenedGallery={setOpenedGallery} />
+          <m.div variants={pickerVariants} animate={gallery ? 'openGallery' : 'closeGallery'}>
+            <Picker />
           </m.div>
           <m.div
             variants={presenterVariants}
-            animate={openedGallery !== null ? 'openGallery' : 'closeGallery'}
+            animate={gallery !== null ? 'openGallery' : 'closeGallery'}
           >
-            {openedGallery && <Presenter articleId={openedGallery} />}
+            <Presenter />
           </m.div>
         </Stack>
       </Page>
@@ -41,4 +42,4 @@ const Gallery: FC = () => {
   );
 };
 
-export { Gallery };
+export { Gallery, GalleryMobile };

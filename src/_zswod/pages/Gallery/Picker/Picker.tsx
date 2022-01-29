@@ -21,9 +21,13 @@ import { FC } from 'react';
 import { useArticlesContext } from '../../../hooks/useArticlesContext';
 import Img from 'src/components/Image';
 import { Image } from '../../../utils/Mock/images';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { timeSince } from 'src/_zswod/utils/Mock/timeAgo';
 import Scrollbar from 'src/components/Scrollbar';
+import { useDispatch, useSelector } from 'react-redux';
+import { getCurrentGallery } from 'src/_zswod/redux/gallery/selectors';
+import { setGalleryAction } from 'src/_zswod/redux/gallery/actions';
+import useResponsive from 'src/hooks/useResponsive';
 
 const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -32,17 +36,24 @@ const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
 );
 
 type PickerProps = {
-  openedGallery: number | null;
-  setOpenedGallery: Function;
   sx?: SxProps;
 };
 
-const Picker: FC<PickerProps> = ({ openedGallery, setOpenedGallery, sx }) => {
+const Picker: FC<PickerProps> = ({ sx }) => {
   const { articles, getArticlePrimaryImage } = useArticlesContext();
-  const toggleGallery = (id: number) => {
-    const isCurrent = id === openedGallery;
+  const gallery = useSelector(getCurrentGallery);
+  const dispatch = useDispatch();
+  const isDesktop = useResponsive('up', 'lg');
+  const navigate = useNavigate();
 
-    setOpenedGallery(isCurrent ? null : id);
+  const toggleGallery = (id: number) => {
+    const isCurrent = id === gallery;
+
+    if (!isDesktop) {
+      return navigate(id.toString());
+    }
+
+    dispatch(setGalleryAction(isCurrent ? null : id));
   };
 
   return (
@@ -54,7 +65,7 @@ const Picker: FC<PickerProps> = ({ openedGallery, setOpenedGallery, sx }) => {
             .map((a) => (
               <TimelineItem key={a.id}>
                 <TimelineOppositeContent>
-                  <Accordion expanded={openedGallery === a.id} onClick={() => toggleGallery(a.id)}>
+                  <Accordion expanded={gallery === a.id} onClick={() => toggleGallery(a.id)}>
                     <AccordionSummary>
                       <Typography variant="h6" sx={{ width: '80%', flexShrink: 0 }}>
                         {a.title}

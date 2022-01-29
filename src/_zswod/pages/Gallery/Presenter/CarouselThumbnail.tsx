@@ -8,10 +8,15 @@ import { Box } from '@mui/material';
 import CarouselControlsArrowsIndex from './CarouselControlsArrowsIndex';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { LightboxModal } from 'src/_zswod/components';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/_zswod/redux/store';
 // utils
 
 // ----------------------------------------------------------------------
-
+const variants = {
+  onInit: { opacity: 1, transition: { delay: 0.5, duration: 0.5 } },
+  onEnd: { opacity: 0 },
+};
 const THUMB_SIZE = 64;
 
 const RootStyle = styled(Box)(({ theme }) => {
@@ -84,15 +89,19 @@ function ThumbnailItem({ item }: { item: CarouselItemProps }) {
   return <ThumbImgStyle alt={alt} src={image} />;
 }
 
-const CarouselThumbnail: FC<{ articleId: number }> = ({ articleId }) => {
+const CarouselThumbnail: FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nav1, setNav1] = useState<Slider | undefined>(undefined);
   const [nav2, setNav2] = useState<Slider | undefined>(undefined);
   const slider1 = useRef<Slider | null>(null);
   const slider2 = useRef<Slider | null>(null);
 
+  const { openedGallery, previousGallery } = useSelector((state: RootState) => state.gallery);
+
   const { getArticleGallery } = useArticlesContext();
-  const images = getArticleGallery(articleId).map<CarouselItemProps & { id: number }>((i) => ({
+  const images = getArticleGallery(openedGallery ?? previousGallery!).map<
+    CarouselItemProps & { id: number }
+  >((i) => ({
     id: i.index,
     alt: i.alt,
     image: i.uri,
@@ -141,7 +150,8 @@ const CarouselThumbnail: FC<{ articleId: number }> = ({ articleId }) => {
   return (
     <m.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+      variants={variants}
+      animate={openedGallery !== null ? 'onInit' : 'onEnd'}
     >
       <RootStyle>
         <Box

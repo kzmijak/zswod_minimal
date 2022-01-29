@@ -2,9 +2,9 @@ import { Container } from '@mui/material';
 import { FC } from 'react';
 import { CarouselThumbnail } from './CarouselThumbnail';
 
-const Presenter: FC<{ articleId: number }> = ({ articleId }) => (
+const Presenter: FC = () => (
   <Container>
-    <CarouselThumbnail articleId={articleId} />
+    <CarouselThumbnail />
   </Container>
 );
 
