@@ -5,6 +5,7 @@ import {
   Button,
   Container,
   Stack,
+  SxProps,
   Typography,
 } from '@mui/material';
 import {
@@ -16,7 +17,7 @@ import {
   TimelineSeparator,
 } from '@mui/lab';
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useArticlesContext } from '../../../hooks/useArticlesContext';
 import Img from 'src/components/Image';
 import { Image } from '../../../utils/Mock/images';
@@ -33,9 +34,10 @@ const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
 type PickerProps = {
   openedGallery: number | null;
   setOpenedGallery: Function;
+  sx?: SxProps;
 };
 
-const Picker: FC<PickerProps> = ({ openedGallery, setOpenedGallery }) => {
+const Picker: FC<PickerProps> = ({ openedGallery, setOpenedGallery, sx }) => {
   const { articles, getArticlePrimaryImage } = useArticlesContext();
   const toggleGallery = (id: number) => {
     const isCurrent = id === openedGallery;
@@ -44,7 +46,7 @@ const Picker: FC<PickerProps> = ({ openedGallery, setOpenedGallery }) => {
   };
 
   return (
-    <Container>
+    <Container sx={sx}>
       <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
         <Timeline position="left">
           {articles
