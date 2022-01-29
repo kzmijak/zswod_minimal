@@ -1,18 +1,21 @@
 import { RouteObject } from 'react-router';
+import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
 import DashboardLayout from 'src/_zswod/layouts/dashboard';
 import Maintenance from 'src/_zswod/pages/Maintenance';
-
-const PATH_DASHBOARD_ROOT = `/etablica`;
-const PATH_DASHBOARD = {
-  about: `${PATH_DASHBOARD_ROOT}/oszkole`,
-  parents: `${PATH_DASHBOARD_ROOT}/dlarodzicow`,
-  students: `${PATH_DASHBOARD_ROOT}/dlaucznia`,
-};
+import { Gallery, GalleryMobile } from 'src/_zswod/pages/Gallery';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
   element: <DashboardLayout />,
   children: [
+    {
+      path: PATHS_ABOUT.Galeria,
+      element: <Gallery />,
+    },
+    {
+      path: `${PATHS_ABOUT.Galeria}/:articleId`,
+      element: <GalleryMobile />,
+    },
     {
       path: '*',
       element: <Maintenance />,
@@ -24,4 +27,4 @@ const DashboardRoutes: RouteObject = {
   ],
 };
 
-export { PATH_DASHBOARD_ROOT, PATH_DASHBOARD, DashboardRoutes };
+export { PATH_DASHBOARD_ROOT, DashboardRoutes };

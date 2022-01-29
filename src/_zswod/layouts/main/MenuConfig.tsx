@@ -24,8 +24,6 @@ const mappedMenus = menuContents.map((menuItem) => ({
   ],
 }));
 
-console.log(mappedMenus);
-
 const menuConfig = [
   ...mappedMenus,
   {
