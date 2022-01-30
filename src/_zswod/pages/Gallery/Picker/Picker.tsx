@@ -21,6 +21,7 @@ import { getCurrentGallery } from 'src/_zswod/redux/gallery/selectors';
 import { setGalleryAction } from 'src/_zswod/redux/gallery/actions';
 import useResponsive from 'src/hooks/useResponsive';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
+import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 
 const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -67,7 +68,11 @@ const Picker: FC<PickerProps> = ({ sx }) => {
 
                   <AccordionDetails>
                     <Typography>
-                      <Button component={Link} to="artykul" startIcon={<ContentPasteGoIcon />}>
+                      <Button
+                        component={Link}
+                        to={`${PATHS_ABOUT.Nowości}/${a.id}`}
+                        startIcon={<ContentPasteGoIcon />}
+                      >
                         Zobacz artykuł
                       </Button>
                     </Typography>

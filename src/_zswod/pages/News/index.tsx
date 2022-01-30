@@ -9,6 +9,7 @@ import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { getArticles } from 'src/_zswod/redux/article/selectors';
 import { useGreeter, newsGreeter } from 'src/_zswod/utils/Greeters/useGreeter';
+import { NewsArticle } from './Article';
 
 const News: FC = () => {
   const articles = useSelector(getArticles);
@@ -65,4 +66,4 @@ const News: FC = () => {
   );
 };
 
-export { News };
+export { News, NewsArticle };

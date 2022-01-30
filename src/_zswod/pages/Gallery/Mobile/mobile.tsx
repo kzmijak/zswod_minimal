@@ -2,6 +2,7 @@ import { Button, Container, Fab, ImageList, ImageListItem, Stack, Typography } f
 import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
+import { Link } from 'react-router-dom';
 import Image from 'src/components/Image';
 import Page404 from 'src/pages/Page404';
 import { LightboxModal } from 'src/_zswod/components';
@@ -43,7 +44,13 @@ const GalleryMobile: FC<{ article: Article }> = ({ article }) => {
         <Stack direction="column" spacing={5}>
           <Typography variant="h1">{article!.title}</Typography>
           <Stack direction="row" justifyContent="center">
-            <Button variant="contained">Zobacz artykuł</Button>
+            <Button
+              component={Link}
+              to={`${PATHS_ABOUT.Nowości}/${article.id}`}
+              variant="contained"
+            >
+              Zobacz artykuł
+            </Button>
           </Stack>
           <ImageList>
             {images.map((img, index) => (
