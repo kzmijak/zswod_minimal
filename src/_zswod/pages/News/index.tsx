@@ -1,7 +1,8 @@
 import { Timeline } from '@mui/lab';
-import { Container, Grid, Paper, Stack, Typography } from '@mui/material';
-import { FC, useMemo } from 'react';
+import { Button, Container, Grid, Paper, Stack, Typography } from '@mui/material';
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
 import Image from 'src/components/Image';
 import { Page } from 'src/_zswod/components';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
@@ -12,7 +13,7 @@ import { useGreeter, newsGreeter } from 'src/_zswod/utils/Greeters/useGreeter';
 const News: FC = () => {
   const articles = useSelector(getArticles);
   const greeter = useGreeter(newsGreeter);
-
+  const navigate = useNavigate();
   const { getArticlePrimaryImage } = useArticlesContext();
   return (
     <Page title="Nowości">
@@ -43,8 +44,12 @@ const News: FC = () => {
                         />
                       </Grid>
                       <Grid item xs={9} sx={{ pl: 3 }}>
-                        <Stack direction="column" sx={{ pt: 2 }}>
-                          <Typography variant="h4">{article.title}</Typography>
+                        <Stack direction="column" alignItems="flex-start" sx={{ pt: 2 }}>
+                          <Button variant="text" onClick={() => navigate(`${article.id}`)}>
+                            <Typography variant="h4" textAlign="left">
+                              {article.title}
+                            </Typography>
+                          </Button>
                           <Typography variant="body2">{article.short}</Typography>
                         </Stack>
                       </Grid>

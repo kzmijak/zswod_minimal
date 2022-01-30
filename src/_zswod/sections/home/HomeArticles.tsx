@@ -7,6 +7,7 @@ import { MotionInView, varFade } from 'src/components/animate';
 import { CarouselCenterMode } from 'src/_zswod/components/carousel';
 import { useEffect, useRef } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components';
+import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 
 // ----------------------------------------------------------------------
 
@@ -56,7 +57,7 @@ export default function HomeArticles({ passRef }: HomeArticlesProps) {
             }}
           >
             <Typography>Jest ich więcej!</Typography>
-            <ButtonEPanel />
+            <ButtonEPanel to={PATHS_ABOUT.Nowości} />
           </Stack>
         </MotionInView>
       </Container>
