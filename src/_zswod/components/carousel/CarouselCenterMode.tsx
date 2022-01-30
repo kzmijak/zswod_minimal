@@ -106,6 +106,7 @@ export default function CarouselCenterMode() {
       {articles.map((article, index) => {
         const item: CarouselItemProps = {
           ...article,
+          description: article.short,
           image: articlesContext.getArticlePrimaryImage(article.id)?.uri ?? '',
         };
         return (

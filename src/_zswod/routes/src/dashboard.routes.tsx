@@ -3,6 +3,7 @@ import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
 import DashboardLayout from 'src/_zswod/layouts/dashboard';
 import Maintenance from 'src/_zswod/pages/Maintenance';
 import { Gallery, GalleryMobile } from 'src/_zswod/pages/Gallery';
+import { News } from 'src/_zswod/pages/News';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
@@ -15,6 +16,10 @@ const DashboardRoutes: RouteObject = {
     {
       path: `${PATHS_ABOUT.Galeria}/:articleId`,
       element: <GalleryMobile />,
+    },
+    {
+      path: `${PATHS_ABOUT.Nowości}`,
+      element: <News />,
     },
     {
       path: '*',
