@@ -10,6 +10,7 @@ import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Link } from 'react-router-dom';
 import { EditorState } from 'draft-js';
 import { DraftEditor } from 'src/_zswod/components/editor';
+import Markdown from 'src/_zswod/components/Markdown';
 
 const ImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -89,7 +90,6 @@ const ArticleGuarded: FC = () => {
 const ArticleView: FC<{ article: Article }> = ({ article }) => {
   const { getArticlePrimaryImage } = useArticlesContext();
   const mainImage = getArticlePrimaryImage(article.id);
-  const [draftSimple, setDraftSimple] = useState(EditorState.createEmpty());
 
   return (
     <Page>
@@ -100,15 +100,8 @@ const ArticleView: FC<{ article: Article }> = ({ article }) => {
             image={mainImage.uri}
             link={`${PATHS_ABOUT.Galeria}/${article.id}`}
           />
-
-          <DraftEditor
-            simple
-            editorState={draftSimple}
-            onEditorStateChange={(value) => setDraftSimple(value)}
-          />
-
-          <Typography sx={{ p: 3 }}>
-            {draftSimple.getCurrentContent().getPlainText('\u0001')}
+          <Typography sx={{ wordWrap: 'break-word' }}>
+            <Markdown children={article.content} />
           </Typography>
         </Card>
       </Container>
