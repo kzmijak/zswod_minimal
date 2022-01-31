@@ -1,4 +1,4 @@
-import { Button, Container, Fab, ImageList, ImageListItem, Stack, Typography } from '@mui/material';
+import { Button, Container, ImageList, ImageListItem, Stack, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';

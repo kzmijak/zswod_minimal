@@ -1,4 +1,3 @@
-import { useSelector } from 'react-redux';
 import { AppDispatch } from '../store';
 import { slice } from './reducer';
 

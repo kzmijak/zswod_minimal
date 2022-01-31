@@ -1,7 +1,7 @@
 type Article = {
   id: number;
   short: string;
-  content: JSX.Element;
+  content: string;
   title: string;
   date: Date;
 };
@@ -12,6 +12,7 @@ const articles: Article[] = [
     short:
       'Jak zwykle nasi uczniowie nie zawiedli! Udało się zebrać 28 kg różnego rodzaju słodkości.',
     title: 'Mikołajkowa zbiórka słodyczy',
+    content: 'Zupa pomidorowa',
     date: new Date('2022-01-27'),
   },
   {

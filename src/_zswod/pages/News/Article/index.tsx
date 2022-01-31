@@ -1,5 +1,5 @@
 import { Box, Button, Card, CardContent, Container, Paper, Typography } from '@mui/material';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
 import { Page } from 'src/_zswod/components';
@@ -8,6 +8,8 @@ import { Article } from 'src/_zswod/utils/Mock/articles';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Link } from 'react-router-dom';
+import { EditorState } from 'draft-js';
+import { DraftEditor } from 'src/_zswod/components/editor';
 
 const ImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -87,6 +89,7 @@ const ArticleGuarded: FC = () => {
 const ArticleView: FC<{ article: Article }> = ({ article }) => {
   const { getArticlePrimaryImage } = useArticlesContext();
   const mainImage = getArticlePrimaryImage(article.id);
+  const [draftSimple, setDraftSimple] = useState(EditorState.createEmpty());
 
   return (
     <Page>
@@ -97,6 +100,16 @@ const ArticleView: FC<{ article: Article }> = ({ article }) => {
             image={mainImage.uri}
             link={`${PATHS_ABOUT.Galeria}/${article.id}`}
           />
+
+          <DraftEditor
+            simple
+            editorState={draftSimple}
+            onEditorStateChange={(value) => setDraftSimple(value)}
+          />
+
+          <Typography sx={{ p: 3 }}>
+            {draftSimple.getCurrentContent().getPlainText('\u0001')}
+          </Typography>
         </Card>
       </Container>
     </Page>
