@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { getAxiosLoadableInstance } from 'src/_zswod/utils/AxiosLoadable';
-import { Article } from 'src/_zswod/utils/Mock/articles';
+import { Article } from 'src/_zswod/models/article';
 
 const initialState = getAxiosLoadableInstance<Article>();
 
@@ -17,7 +17,10 @@ const slice = createSlice({
     },
     getArticlesSuccess(state, action: PayloadAction<Article[]>) {
       state.isLoading = false;
-      state.data = action.payload;
+      state.data = action.payload.map((dto) => ({
+        ...dto,
+        date: new Date(dto.date),
+      }));
     },
   },
 });

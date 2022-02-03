@@ -15,7 +15,8 @@ const News: FC = () => {
   const articles = useSelector(getArticles);
   const greeter = useGreeter(newsGreeter);
   const navigate = useNavigate();
-  const { getArticlePrimaryImage } = useArticlesContext();
+  const { getArticlePrimaryImage, isLoading } = useArticlesContext();
+
   return (
     <Page title="Nowości">
       <Container>

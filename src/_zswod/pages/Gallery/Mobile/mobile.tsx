@@ -10,7 +10,7 @@ import Page from 'src/_zswod/components/Page';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { getNeighboringArticles } from 'src/_zswod/redux/article/selectors';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
-import { Article } from 'src/_zswod/utils/Mock/articles';
+import { Article } from 'src/_zswod/models/article';
 
 const GalleryMobilesGuarded: FC = () => {
   const { articleId } = useParams();

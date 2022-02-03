@@ -1,9 +1,9 @@
-type ImageModel = {
-  id: number;
+type Image = {
+  index: number;
   uri: string;
   alt: string;
   actors?: string[];
   articleId: number;
 };
 
-export type { ImageModel };
+export type { Image };

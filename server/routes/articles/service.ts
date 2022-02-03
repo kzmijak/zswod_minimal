@@ -1,6 +1,6 @@
 import { articlesData } from './data';
 import { AddArticleRequest, ArticleModel } from './models';
-import { Request, response, Response } from 'express';
+import { Request, Response } from 'express';
 import { nextAvailableId } from '../utils';
 
 const getArticles = (req: Request<void>, res: Response<ArticleModel[]>) => {

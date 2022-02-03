@@ -1,4 +1,4 @@
-import { Article } from 'src/_zswod/utils/Mock/articles';
+import { Article } from 'src/_zswod/models/article';
 import { RootState } from '../store';
 
 const getArticleState = (state: RootState) => state.article;

@@ -9,7 +9,7 @@ import QuillEditor from 'src/_zswod/components/editor/quill';
 import Markdown from 'src/_zswod/components/Markdown';
 import { useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
-import { Article } from 'src/_zswod/utils/Mock/articles';
+import { Article } from 'src/_zswod/models/article';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 
 // ----------------------------------------------------------------------

@@ -1,15 +1,13 @@
 import { Box, Button, Card, CardContent, Container, Paper, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import { useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
 import { Page } from 'src/_zswod/components';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
-import { Article } from 'src/_zswod/utils/Mock/articles';
+import { Article } from 'src/_zswod/models/article';
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Link } from 'react-router-dom';
-import { EditorState } from 'draft-js';
-import { DraftEditor } from 'src/_zswod/components/editor';
 import Markdown from 'src/_zswod/components/Markdown';
 
 const ImgStyle = styled('img')(({ theme }) => ({

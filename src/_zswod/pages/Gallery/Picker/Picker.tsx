@@ -13,7 +13,6 @@ import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 import { FC } from 'react';
 import { useArticlesContext } from '../../../hooks/useArticlesContext';
 import Img from 'src/components/Image';
-import { Image } from '../../../utils/Mock/images';
 import { Link, useNavigate } from 'react-router-dom';
 import Scrollbar from 'src/components/Scrollbar';
 import { useDispatch, useSelector } from 'react-redux';
@@ -22,6 +21,7 @@ import { setGalleryAction } from 'src/_zswod/redux/gallery/actions';
 import useResponsive from 'src/hooks/useResponsive';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { Image } from '../../../models/image';
 
 const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">

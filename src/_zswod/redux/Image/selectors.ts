@@ -1,6 +1,6 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store';
-import { Image } from '../../utils/Mock/images';
+import { Image } from '../../models/image';
 
 const getImagesState = (state: RootState) => state.image;
 

@@ -1,6 +1,6 @@
 import { getAxiosLoadableInstance } from 'src/_zswod/utils/AxiosLoadable';
-import { Image } from 'src/_zswod/utils/Mock/images';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { Image } from '../../models/image';
 
 const initialState = getAxiosLoadableInstance<Image>();
 

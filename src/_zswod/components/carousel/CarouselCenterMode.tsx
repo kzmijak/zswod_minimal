@@ -91,7 +91,7 @@ export default function CarouselCenterMode() {
   const carouselRef = useRef<Slider | null>(null);
   const isDesktop = useResponsive('up', 'md');
   const articles = useSelector(getArticles);
-  const articlesContext = useArticlesContext();
+  const { getArticlePrimaryImage } = useArticlesContext();
 
   const settings = {
     dots: true,
@@ -107,10 +107,13 @@ export default function CarouselCenterMode() {
         const item: CarouselItemProps = {
           ...article,
           description: article.short,
-          image: articlesContext.getArticlePrimaryImage(article.id)?.uri ?? '',
+          image: getArticlePrimaryImage(article.id)?.uri ?? '',
         };
         return (
-          <MotionInView key={index} variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}>
+          <MotionInView
+            key={article.id}
+            variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}
+          >
             <CarouselItem item={item} />
           </MotionInView>
         );

@@ -4,10 +4,15 @@ import DashboardLayout from 'src/_zswod/layouts/dashboard';
 import Maintenance from 'src/_zswod/pages/Maintenance';
 import { Gallery, GalleryMobile } from 'src/_zswod/pages/Gallery';
 import { News, NewsArticle } from 'src/_zswod/pages/News';
+import { Loadable } from 'src/_zswod/components/Loadable';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
-  element: <DashboardLayout />,
+  element: (
+    <Loadable>
+      <DashboardLayout />
+    </Loadable>
+  ),
   children: [
     {
       path: PATHS_ABOUT.Galeria,
