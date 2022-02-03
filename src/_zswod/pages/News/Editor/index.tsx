@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send'; // material
 import { styled } from '@mui/material/styles';
-import { Stack, Container, Typography, Paper, Fab } from '@mui/material';
+import { Stack, Container, Typography, Paper, Fab, TextField, Grid } from '@mui/material';
 // routes
 // components
 import Page from '../../../components/Page';
@@ -44,32 +44,42 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
 
   return (
     <RootStyle title="Components: Editor | Minimal-UI">
-      <Typography variant="h3" textAlign="center" sx={{ mb: 3 }}>
-        {header}
-      </Typography>
-      <Stack direction="row" spacing={2}>
-        <Container maxWidth="lg">
-          <Typography variant="h5">Edytor</Typography>
-          <QuillEditor
-            id="full-editor"
-            value={quillFull}
-            onChange={(value) => setQuillFull(value)}
-            sx={{ minHeight: 800 }}
-          />
-        </Container>
-        <Container maxWidth="lg">
-          <Typography variant="h5">Podgląd</Typography>
-          <Paper variant="outlined" sx={{ minHeight: 800, mt: 2 }}>
-            <Typography sx={{ wordWrap: 'break-word' }}>
-              <Markdown children={quillFull} />
-            </Typography>
-          </Paper>
-        </Container>
-      </Stack>
+      <Container maxWidth="xl">
+        <Typography variant="h3" textAlign="center" sx={{ mb: 3 }}>
+          {header}
+        </Typography>
 
-      <Fab sx={{ position: 'fixed', bottom: 50, right: 50, width: 60, height: 60, zIndex: 15 }}>
-        <SendIcon sx={{ height: 25, width: 25 }} />
-      </Fab>
+        <Grid container spacing={2}>
+          <Grid item xs={4}>
+            <TextField fullWidth required label="Tytuł" defaultValue={article?.title} />
+          </Grid>
+          <Grid item xs={8}>
+            <TextField fullWidth required label="Zapowiedź" defaultValue={article?.short} />
+          </Grid>
+
+          <Grid item xs={6}>
+            <QuillEditor
+              id="full-editor"
+              value={quillFull}
+              onChange={(value) => setQuillFull(value)}
+              sx={{ minHeight: 800 }}
+            />
+          </Grid>
+          <Grid item xs={6}>
+            <Typography variant="h5">Podgląd</Typography>
+
+            <Paper variant="outlined" sx={{ minHeight: 800, mt: 2 }}>
+              <Typography sx={{ wordWrap: 'break-word' }}>
+                <Markdown children={quillFull} />
+              </Typography>
+            </Paper>
+          </Grid>
+
+          <Fab sx={{ position: 'fixed', bottom: 50, right: 50, width: 60, height: 60, zIndex: 15 }}>
+            <SendIcon sx={{ height: 25, width: 25 }} />
+          </Fab>
+        </Grid>
+      </Container>
     </RootStyle>
   );
 };

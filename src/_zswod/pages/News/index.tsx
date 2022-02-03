@@ -1,5 +1,5 @@
 import { Timeline } from '@mui/lab';
-import { Button, Container, Grid, Paper, Stack, Typography } from '@mui/material';
+import { Button, Container, Fab, Grid, Paper, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router';
@@ -10,6 +10,7 @@ import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { getArticles } from 'src/_zswod/redux/article/selectors';
 import { useGreeter, newsGreeter } from 'src/_zswod/utils/Greeters/useGreeter';
 import { NewsArticle } from './Article';
+import { Link } from 'react-router-dom';
 
 const News: FC = () => {
   const articles = useSelector(getArticles);
@@ -23,9 +24,14 @@ const News: FC = () => {
         <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
           {greeter}
         </Typography>
-        <Typography variant="h1" sx={{ mb: 5 }}>
-          Nowości
-        </Typography>
+        <Stack direction="row" spacing={3}>
+          <Typography variant="h1" sx={{ mb: 5 }}>
+            Nowości
+          </Typography>
+          <Fab variant="circular" component={Link} to="/edytor">
+            Dodaj
+          </Fab>
+        </Stack>
 
         <Stack direction="column" spacing={3}>
           <Timeline position="left">
@@ -53,6 +59,13 @@ const News: FC = () => {
                             </Typography>
                           </Button>
                           <Typography variant="body2">{article.short}</Typography>
+                          <Button
+                            component={Link}
+                            to={`/edytor/${article.id}`}
+                            sx={{ position: 'absolute', bottom: 10, right: 25 }}
+                          >
+                            Edytuj
+                          </Button>
                         </Stack>
                       </Grid>
                     </Grid>
