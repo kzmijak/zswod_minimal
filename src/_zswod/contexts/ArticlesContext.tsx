@@ -1,4 +1,4 @@
-import { createContext, FC, ReactNode, useEffect } from 'react';
+import { createContext, FC, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { asyncGetArticlesAction } from '../redux/article/actions';
 import { getArticles } from '../redux/article/selectors';

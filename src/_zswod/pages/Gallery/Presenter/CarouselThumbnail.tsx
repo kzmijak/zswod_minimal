@@ -164,7 +164,7 @@ const CarouselThumbnail: FC = () => {
         >
           <Slider {...settings1} asNavFor={nav2} ref={slider1}>
             {images.map((image) => (
-              <LargeItem onClick={() => setImageOpen(currentIndex)} key={image.id} item={image} />
+              <LargeItem key={image.id} onClick={() => setImageOpen(currentIndex)} item={image} />
             ))}
           </Slider>
           <CarouselControlsArrowsIndex
