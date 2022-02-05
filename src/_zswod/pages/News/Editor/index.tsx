@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send'; // material
 import { styled } from '@mui/material/styles';
-import { Stack, Container, Typography, Paper, Fab, TextField, Grid, Box } from '@mui/material';
+import { Container, Typography, Paper, Fab, TextField, Grid, Box } from '@mui/material';
 // routes
 // components
 import Page from '../../../components/Page';
@@ -11,10 +11,10 @@ import { useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
 import { Article } from 'src/_zswod/models/article';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
-import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
 import { ImageNav } from './imageNav';
 import { m } from 'framer-motion';
 import { MotionContainer } from 'src/components/animate';
+import { PreviewDialog } from './PreviewDialog';
 
 // ----------------------------------------------------------------------
 
@@ -54,13 +54,26 @@ const EditorGuarded: FC = () => {
 
 const EditorView: FC<{ article?: Article }> = ({ article }) => {
   const [quillFull, setQuillFull] = useState(article?.content || '');
+  const [minimized, setMinimized] = useState(false);
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [title, setTitle] = useState(article?.title ?? '');
+  const [short, setShort] = useState(article?.short ?? '');
+
+  const handleChange = (setter: Function) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setter(event.target.value);
+  };
 
   const { getArticleGallery } = useArticlesContext();
   const initFiles = article ? getArticleGallery(article!.id).map((i) => i.uri) : [];
 
   const [files, setFiles] = useState<(File | string)[]>(initFiles);
   const header = article ? `Edycja artykułu: ${article.title}` : 'Dodawanie nowego artykułu';
-  const [minimized, setMinimized] = useState(false);
+
+  const getResultArticle = () => ({
+    title,
+    short,
+    content: quillFull,
+  });
 
   return (
     <MotionContainer>
@@ -72,10 +85,22 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
 
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <TextField fullWidth required label="Tytuł" defaultValue={article?.title} />
+              <TextField
+                fullWidth
+                required
+                label="Tytuł"
+                value={title}
+                onChange={handleChange(setTitle)}
+              />
             </Grid>
             <Grid item xs={8}>
-              <TextField fullWidth required label="Zapowiedź" defaultValue={article?.short} />
+              <TextField
+                fullWidth
+                required
+                label="Zapowiedź"
+                value={short}
+                onChange={handleChange(setShort)}
+              />
             </Grid>
 
             <Grid item xs={6}>
@@ -87,19 +112,21 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
               />
             </Grid>
             <Grid item xs={6}>
-              <Typography variant="h5">Podgląd</Typography>
-
-              <Paper variant="outlined" sx={{ minHeight: 800, mt: 2 }}>
-                <Typography sx={{ wordWrap: 'break-word' }}>
-                  <Markdown children={quillFull} />
+              <Box sx={{ minHeight: 800 }}>
+                <Typography variant="h5" sx={{ mb: 5 }}>
+                  Podgląd
                 </Typography>
-              </Paper>
+
+                <Paper variant="outlined" sx={{ minHeight: 730, padding: 3 }}>
+                  <Markdown children={quillFull} />
+                </Paper>
+              </Box>
             </Grid>
 
             <Fab
               sx={{ position: 'fixed', bottom: 50, right: 50, width: 60, height: 60, zIndex: 15 }}
             >
-              <SendIcon sx={{ height: 25, width: 25 }} />
+              <SendIcon onClick={() => setDialogOpen(true)} sx={{ height: 25, width: 25 }} />
             </Fab>
           </Grid>
         </Container>
@@ -138,6 +165,13 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
           </m.div>
           <ImageNav files={files} setFiles={setFiles} />
         </m.div>
+
+        <PreviewDialog
+          open={dialogOpen}
+          article={getResultArticle()}
+          images={files}
+          onClose={() => setDialogOpen(false)}
+        />
       </RootStyle>
     </MotionContainer>
   );

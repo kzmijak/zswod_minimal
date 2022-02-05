@@ -1,3 +1,4 @@
+import { Box, Card } from '@mui/material';
 import { FC, useCallback, useState } from 'react';
 import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
 
@@ -25,12 +26,16 @@ const ImageNav: FC<{ files: (File | string)[]; setFiles: Function }> = ({ files,
   };
 
   return (
-    <UploadMultiFile
-      files={files}
-      onDrop={handleDropMultiFile}
-      onRemove={handleRemove}
-      onRemoveAll={handleRemoveAll}
-    />
+    <Box>
+      <Card>
+        <UploadMultiFile
+          files={files}
+          onDrop={handleDropMultiFile}
+          onRemove={handleRemove}
+          onRemoveAll={handleRemoveAll}
+        />
+      </Card>
+    </Box>
   );
 };
 

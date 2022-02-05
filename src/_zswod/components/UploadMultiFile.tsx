@@ -4,7 +4,7 @@ import CloseFill from '@mui/icons-material/Cancel';
 import { m, AnimatePresence } from 'framer-motion';
 // material
 import { alpha, Theme, styled } from '@mui/material/styles';
-import { Box, List, Stack, Paper, Button, ListItem, Typography, Fab } from '@mui/material';
+import { Box, List, Paper, Button, ListItem, Typography } from '@mui/material';
 import { SxProps } from '@mui/system';
 // utils
 import { fData } from '../../utils/formatNumber';
@@ -139,7 +139,7 @@ export default function UploadMultiFile({
       <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
         <AnimatePresence>
           {files.map((file) => {
-            const { key, name, size, preview } = getFileData(file as CustomFile);
+            const { key, preview } = getFileData(file as CustomFile);
 
             return (
               <ListItem
