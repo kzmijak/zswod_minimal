@@ -13,8 +13,6 @@ import { FC } from 'react';
 import Markdown from 'src/_zswod/components/Markdown';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Link } from 'react-router-dom';
-import { Article } from 'src/_zswod/models/article';
-import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 
 const ImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -92,7 +90,8 @@ type ArticleContentProps = {
 
 const ArticleContent: FC<ArticleContentProps> = ({ articleContent, mainImage }) => {
   if (typeof mainImage !== 'string') {
-    mainImage = mainImage.webkitRelativePath;
+    console.log(mainImage);
+    mainImage = (mainImage as any).preview as string;
   }
 
   return (

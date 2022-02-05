@@ -1,5 +1,5 @@
 import { Box, Card } from '@mui/material';
-import { FC, useCallback, useState } from 'react';
+import { FC, useCallback } from 'react';
 import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
 
 const ImageNav: FC<{ files: (File | string)[]; setFiles: Function }> = ({ files, setFiles }) => {

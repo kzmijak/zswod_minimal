@@ -1,7 +1,17 @@
 import { FC, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send'; // material
 import { styled } from '@mui/material/styles';
-import { Container, Typography, Paper, Fab, TextField, Grid, Box } from '@mui/material';
+import {
+  Container,
+  Typography,
+  Paper,
+  Fab,
+  TextField,
+  Grid,
+  Box,
+  Snackbar,
+  Alert,
+} from '@mui/material';
 // routes
 // components
 import Page from '../../../components/Page';
@@ -52,12 +62,33 @@ const EditorGuarded: FC = () => {
   return <EditorView article={article} />;
 };
 
+type InvalidFields = 'title' | 'short' | 'content' | 'image';
+
 const EditorView: FC<{ article?: Article }> = ({ article }) => {
   const [quillFull, setQuillFull] = useState(article?.content || '');
   const [minimized, setMinimized] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [title, setTitle] = useState(article?.title ?? '');
   const [short, setShort] = useState(article?.short ?? '');
+  const [errors, setErrors] = useState<InvalidFields[]>([]);
+
+  const checkForErrors = () => {
+    let seeker: InvalidFields[] = [];
+
+    if (title.length === 0) seeker.push('title');
+    if (short.length === 0) seeker.push('short');
+    if (quillFull.length === 0) seeker.push('content');
+    if (files.length === 0) seeker.push('image');
+
+    setErrors(seeker);
+    return seeker;
+  };
+
+  const hasError = (field: InvalidFields) => errors.includes(field);
+  const submitClicked = () => {
+    const seekerResult = checkForErrors();
+    if (seekerResult.length === 0) setDialogOpen(true);
+  };
 
   const handleChange = (setter: Function) => (event: React.ChangeEvent<HTMLInputElement>) => {
     setter(event.target.value);
@@ -86,6 +117,7 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
           <Grid container spacing={2}>
             <Grid item xs={4}>
               <TextField
+                error={hasError('title')}
                 fullWidth
                 required
                 label="Tytuł"
@@ -95,6 +127,7 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
             </Grid>
             <Grid item xs={8}>
               <TextField
+                error={hasError('short')}
                 fullWidth
                 required
                 label="Zapowiedź"
@@ -105,6 +138,7 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
 
             <Grid item xs={6}>
               <QuillEditor
+                error={hasError('content')}
                 id="full-editor"
                 value={quillFull}
                 onChange={(value) => setQuillFull(value)}
@@ -126,10 +160,16 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
             <Fab
               sx={{ position: 'fixed', bottom: 50, right: 50, width: 60, height: 60, zIndex: 15 }}
             >
-              <SendIcon onClick={() => setDialogOpen(true)} sx={{ height: 25, width: 25 }} />
+              <SendIcon onClick={() => submitClicked()} sx={{ height: 25, width: 25 }} />
             </Fab>
           </Grid>
         </Container>
+
+        <Snackbar open={errors.length > 0} autoHideDuration={500}>
+          <Alert variant="filled" severity="error">
+            Artykuł musi zawierać tytuł, zapowiedź, minimalnie jedno zdjęcie oraz treść.
+          </Alert>
+        </Snackbar>
 
         <m.div
           initial={{

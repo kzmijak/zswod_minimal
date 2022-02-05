@@ -1,4 +1,4 @@
-import { Box, Container, Dialog } from '@mui/material';
+import { Box, Dialog } from '@mui/material';
 import { FC } from 'react';
 import { ArticleContent, ArticleSkeleton } from '../ArticleContent';
 
