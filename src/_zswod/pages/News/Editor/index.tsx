@@ -1,7 +1,7 @@
 import { FC, useState } from 'react';
 import SendIcon from '@mui/icons-material/Send'; // material
 import { styled } from '@mui/material/styles';
-import { Stack, Container, Typography, Paper, Fab, TextField, Grid } from '@mui/material';
+import { Stack, Container, Typography, Paper, Fab, TextField, Grid, Box } from '@mui/material';
 // routes
 // components
 import Page from '../../../components/Page';
@@ -11,6 +11,10 @@ import { useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
 import { Article } from 'src/_zswod/models/article';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
+import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
+import { ImageNav } from './imageNav';
+import { m } from 'framer-motion';
+import { MotionContainer } from 'src/components/animate';
 
 // ----------------------------------------------------------------------
 
@@ -20,6 +24,16 @@ const RootStyle = styled(Page)(({ theme }) => ({
 }));
 
 // ----------------------------------------------------------------------
+
+const imagesPicker = {
+  minimized: { height: 85, transition: { duration: 0.2 } },
+  maximized: { height: 'unset', transition: { duration: 0.17 } },
+};
+
+const minimizeFab = {
+  minimized: { rigth: 120, transition: { duration: 0.17 } },
+  maximized: { right: 50, transition: { duration: 0.17 } },
+};
 
 const EditorGuarded: FC = () => {
   const { articleId } = useParams();
@@ -40,47 +54,92 @@ const EditorGuarded: FC = () => {
 
 const EditorView: FC<{ article?: Article }> = ({ article }) => {
   const [quillFull, setQuillFull] = useState(article?.content || '');
+
+  const { getArticleGallery } = useArticlesContext();
+  const initFiles = article ? getArticleGallery(article!.id).map((i) => i.uri) : [];
+
+  const [files, setFiles] = useState<(File | string)[]>(initFiles);
   const header = article ? `Edycja artykułu: ${article.title}` : 'Dodawanie nowego artykułu';
+  const [minimized, setMinimized] = useState(false);
 
   return (
-    <RootStyle title="Components: Editor | Minimal-UI">
-      <Container maxWidth="xl">
-        <Typography variant="h3" textAlign="center" sx={{ mb: 3 }}>
-          {header}
-        </Typography>
+    <MotionContainer>
+      <RootStyle title="Components: Editor | Minimal-UI">
+        <Container maxWidth="xl">
+          <Typography variant="h3" textAlign="center" sx={{ mb: 3 }}>
+            {header}
+          </Typography>
 
-        <Grid container spacing={2}>
-          <Grid item xs={4}>
-            <TextField fullWidth required label="Tytuł" defaultValue={article?.title} />
-          </Grid>
-          <Grid item xs={8}>
-            <TextField fullWidth required label="Zapowiedź" defaultValue={article?.short} />
-          </Grid>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <TextField fullWidth required label="Tytuł" defaultValue={article?.title} />
+            </Grid>
+            <Grid item xs={8}>
+              <TextField fullWidth required label="Zapowiedź" defaultValue={article?.short} />
+            </Grid>
 
-          <Grid item xs={6}>
-            <QuillEditor
-              id="full-editor"
-              value={quillFull}
-              onChange={(value) => setQuillFull(value)}
-              sx={{ minHeight: 800 }}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <Typography variant="h5">Podgląd</Typography>
+            <Grid item xs={6}>
+              <QuillEditor
+                id="full-editor"
+                value={quillFull}
+                onChange={(value) => setQuillFull(value)}
+                sx={{ minHeight: 800 }}
+              />
+            </Grid>
+            <Grid item xs={6}>
+              <Typography variant="h5">Podgląd</Typography>
 
-            <Paper variant="outlined" sx={{ minHeight: 800, mt: 2 }}>
-              <Typography sx={{ wordWrap: 'break-word' }}>
-                <Markdown children={quillFull} />
-              </Typography>
-            </Paper>
-          </Grid>
+              <Paper variant="outlined" sx={{ minHeight: 800, mt: 2 }}>
+                <Typography sx={{ wordWrap: 'break-word' }}>
+                  <Markdown children={quillFull} />
+                </Typography>
+              </Paper>
+            </Grid>
 
-          <Fab sx={{ position: 'fixed', bottom: 50, right: 50, width: 60, height: 60, zIndex: 15 }}>
-            <SendIcon sx={{ height: 25, width: 25 }} />
-          </Fab>
-        </Grid>
-      </Container>
-    </RootStyle>
+            <Fab
+              sx={{ position: 'fixed', bottom: 50, right: 50, width: 60, height: 60, zIndex: 15 }}
+            >
+              <SendIcon sx={{ height: 25, width: 25 }} />
+            </Fab>
+          </Grid>
+        </Container>
+
+        <m.div
+          initial={{
+            width: '100%',
+            position: 'fixed',
+            textAlign: 'center',
+            bottom: 0,
+            maxHeight: 650,
+          }}
+          variants={imagesPicker}
+          animate={minimized ? 'minimized' : 'maximized'}
+        >
+          <m.div
+            initial={{
+              position: 'absolute',
+              top: -25,
+              width: 60,
+              height: 60,
+              zIndex: 15,
+              right: 120,
+            }}
+            variants={minimizeFab}
+            animate={minimized ? '' : 'maximized'}
+          >
+            <Fab
+              onClick={() => {
+                setMinimized(!minimized);
+                console.log(minimized);
+              }}
+            >
+              {'_'}
+            </Fab>
+          </m.div>
+          <ImageNav files={files} setFiles={setFiles} />
+        </m.div>
+      </RootStyle>
+    </MotionContainer>
   );
 };
 
