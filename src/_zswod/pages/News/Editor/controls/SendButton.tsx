@@ -1,5 +1,5 @@
 import { Fab } from '@mui/material';
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
 import SendIcon from '@mui/icons-material/Send'; // material
 import { styled } from '@mui/system';
 
@@ -17,10 +17,10 @@ const SendIconStyled = styled(SendIcon)(({ theme }) => ({
   width: 25,
 }));
 
-type SendButtonProps = { onClick: MouseEventHandler<HTMLButtonElement> };
+type SendButtonProps = {};
 
-const SendButton: FC<SendButtonProps> = ({ onClick }) => (
-  <FixedFabStyled onClick={onClick}>
+const SendButton: FC<SendButtonProps> = () => (
+  <FixedFabStyled type="submit">
     <SendIconStyled />
   </FixedFabStyled>
 );

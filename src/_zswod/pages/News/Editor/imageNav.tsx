@@ -1,7 +1,14 @@
-import { Box, Card, Fab } from '@mui/material';
+import { Alert, Box, Card, Fab, FormHelperText } from '@mui/material';
 import { m } from 'framer-motion';
 import { FC, useCallback, useEffect, useState } from 'react';
-import { UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
+import {
+  Control,
+  Controller,
+  FormState,
+  UseFormRegister,
+  UseFormSetValue,
+  UseFormWatch,
+} from 'react-hook-form';
 import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
 import { ContentState } from '.';
 
@@ -15,35 +22,39 @@ const minimizeFab = {
   maximized: { right: 50, transition: { duration: 0.17 } },
 };
 
+const alertVar = {
+  minimized: { top: 15, bottom: 'unset', transition: { duration: 0.17 } },
+  maximized: {
+    bottom: 25,
+    left: '45%',
+    top: 'unset',
+    transition: { duration: 0.17 },
+  },
+};
+
 type ImageNavProps = {
   register: UseFormRegister<ContentState>;
   watch: UseFormWatch<ContentState>;
   setValue: UseFormSetValue<ContentState>;
+  control: Control<ContentState>;
+  formState: FormState<ContentState>;
 };
 
-const ImageNav: FC<ImageNavProps> = ({ register, watch, setValue }) => {
+const ImageNav: FC<ImageNavProps> = ({ formState, watch, setValue, control }) => {
   const [minimized, setMinimized] = useState(false);
 
-  useEffect(() => {
-    register('images', { required: true });
-  }, [register]);
+  const { images } = watch();
 
-  const images = watch('images');
-
-  const handleDropMultiFile = useCallback(
-    (acceptedFiles) => {
-      setValue('images', [
-        ...images,
-
-        ...acceptedFiles.map((file: File) =>
-          Object.assign(file, {
-            preview: URL.createObjectURL(file),
-          })
-        ),
-      ]);
-    },
-    [setValue, images]
-  );
+  const handleDropMultiFile = (files: File[]) => {
+    setValue('images', [
+      ...images,
+      ...files.map((file: File) =>
+        Object.assign(file, {
+          preview: URL.createObjectURL(file),
+        })
+      ),
+    ]);
+  };
 
   const handleRemove = (file: File | string) => {
     const filteredItems = images.filter((_file) => _file !== file);
@@ -85,7 +96,32 @@ const ImageNav: FC<ImageNavProps> = ({ register, watch, setValue }) => {
       </m.div>
       <Box>
         <Card>
-          <UploadMultiFile files={images} onDrop={handleDropMultiFile} onRemove={handleRemove} />
+          <Controller
+            name="images"
+            control={control}
+            render={({ field }) => (
+              <UploadMultiFile
+                files={field.value}
+                onDrop={handleDropMultiFile}
+                onRemove={handleRemove}
+              />
+            )}
+          />
+
+          {watch().images.length < 1 && (
+            <m.div
+              animate={minimized ? 'minimized' : 'maximized'}
+              variants={alertVar}
+              initial={{ position: 'absolute', top: 5, width: 350, left: 'calc(50% - 175px)' }}
+            >
+              <Alert
+                variant={minimized ? 'outlined' : 'standard'}
+                severity={minimized ? 'error' : 'warning'}
+              >
+                Minimalnie jedno zdjęcie jest wymagane
+              </Alert>
+            </m.div>
+          )}
         </Card>
       </Box>
     </m.div>

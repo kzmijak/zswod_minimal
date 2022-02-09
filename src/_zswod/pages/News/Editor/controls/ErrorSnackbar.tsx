@@ -2,13 +2,13 @@ import { Snackbar, Alert } from '@mui/material';
 import { FC } from 'react';
 
 type ErrorSnackbarProps = {
-  open: boolean;
+  message?: string;
 };
 
-const ErrorSnackbar: FC<ErrorSnackbarProps> = ({ open }) => (
-  <Snackbar open={open} autoHideDuration={500}>
+const ErrorSnackbar: FC<ErrorSnackbarProps> = ({ message }) => (
+  <Snackbar open={Boolean(message)} autoHideDuration={100}>
     <Alert variant="filled" severity="error">
-      Artykuł musi zawierać tytuł, zapowiedź, minimalnie jedno zdjęcie oraz treść.
+      {message}
     </Alert>
   </Snackbar>
 );

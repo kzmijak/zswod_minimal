@@ -13,6 +13,8 @@ import { ErrorSnackbar } from './controls/ErrorSnackbar';
 import { SendButton } from './controls/SendButton';
 import { ImageNav } from './ImageNav';
 import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +54,30 @@ type ContentState = {
 };
 
 const EditorView: FC<{ article?: Article }> = ({ article }) => {
-  const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
+  const schema = yup.object().shape({
+    title: yup
+      .string()
+      .required('Tytuł jest wymagany.')
+      .min(4, 'Minimalnie 8 znaków')
+      .max(35, 'Maksymalnie 35 znaków.'),
+    short: yup
+      .string()
+      .required('Zapowiedź jest wymagana')
+      .min(8, 'Minimum 8 znaków')
+      .max(100, 'Maksymalnie 100 znaków'),
+    content: yup
+      .string()
+      .required('Treść nie może być pusta')
+      .min(30, 'Treść musi zawierać przynajmniej 30 znaków'),
+    images: yup
+      .mixed()
+      .required('Minimalnie jedno zdjęcie jest wymagane.')
+      .test('files amount', 'Minimalnie jeden plik wymagany.', (value) => {
+        console.log(value);
+        return value && value.length > 0;
+      }),
+  });
+
   const [dialogOpen, setDialogOpen] = useState(false);
   const { getArticleGallery } = useArticlesContext();
   const initialImages = article ? getArticleGallery(article!.id).map((i) => i.uri) : [];
@@ -62,38 +87,47 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
     content: article?.content ?? '',
     images: initialImages,
   };
-  const { register, watch, setValue, formState } = useForm<ContentState>({
+  const { register, watch, setValue, formState, control, handleSubmit } = useForm<ContentState>({
     defaultValues: initialArticle,
+    mode: 'onTouched',
+    resolver: yupResolver(schema),
   });
 
-  const submitClicked = () => {
-    // console.log(watch());
-    console.log(formState.errors.title);
-    formState.isValid ? setDialogOpen(true) : setErrorSnackbarOpen(true);
+  const submitClicked = (values: ContentState) => {
+    setDialogOpen(true);
+    // reset();
   };
 
   return (
     <MotionContainer>
       <RootStyle title="Components: Editor | Minimal-UI">
-        <Container maxWidth="xl">
-          <Typography variant="h3" textAlign="center" sx={{ mb: 3 }}>
-            {article ? `Edycja artykułu: ${article.title}` : 'Dodawanie nowego artykułu'}
-          </Typography>
+        <form onSubmit={handleSubmit(submitClicked)}>
+          <Container maxWidth="xl">
+            <Typography variant="h3" textAlign="center" sx={{ mb: 3 }}>
+              {article ? `Edycja artykułu: ${article.title}` : 'Dodawanie nowego artykułu'}
+            </Typography>
 
-          <ContentForm
+            <ContentForm
+              control={control}
+              formState={formState}
+              register={register}
+              setValue={setValue}
+              watch={watch}
+            />
+
+            <SendButton />
+          </Container>
+
+          <ErrorSnackbar message={formState.errors.content?.message} />
+
+          <ImageNav
             formState={formState}
+            control={control}
             register={register}
             setValue={setValue}
             watch={watch}
           />
-
-          <SendButton onClick={() => submitClicked()} />
-        </Container>
-
-        <ErrorSnackbar open={errorSnackbarOpen} />
-
-        <ImageNav register={register} setValue={setValue} watch={watch} />
-
+        </form>
         <PreviewDialog open={dialogOpen} content={watch()} onClose={() => setDialogOpen(false)} />
       </RootStyle>
     </MotionContainer>
