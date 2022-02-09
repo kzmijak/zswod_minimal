@@ -7,7 +7,6 @@ import { alpha, Theme, styled } from '@mui/material/styles';
 import { Box, List, Paper, Button, ListItem, Typography } from '@mui/material';
 import { SxProps } from '@mui/system';
 // utils
-import { fData } from '../../utils/formatNumber';
 //
 import { varFade } from 'src/components/animate';
 import { UploadIllustration } from '../../assets';
@@ -40,7 +39,6 @@ interface UploadMultiFileProps extends DropzoneOptions {
   error?: boolean;
   files: (File | string)[];
   onRemove: (file: File | string) => void;
-  onRemoveAll: VoidFunction;
   sx?: SxProps<Theme>;
 }
 
@@ -61,45 +59,15 @@ export default function UploadMultiFile({
   error,
   files,
   onRemove,
-  onRemoveAll,
   sx,
   ...other
 }: UploadMultiFileProps) {
-  const hasFile = files.length > 0;
+  const hasFile = files?.length > 0;
 
-  const { getRootProps, getInputProps, isDragActive, isDragReject, fileRejections } = useDropzone({
+  const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     ...other,
     accept: 'image/*',
   });
-
-  const ShowRejectionItems = () => (
-    <Paper
-      variant="outlined"
-      sx={{
-        py: 1,
-        px: 2,
-        mt: 3,
-        borderColor: 'error.light',
-        bgcolor: (theme) => alpha(theme.palette.error.main, 0.08),
-      }}
-    >
-      {fileRejections.map(({ file, errors }) => {
-        const { path, size }: CustomFile = file;
-        return (
-          <Box key={path} sx={{ my: 1 }}>
-            <Typography variant="subtitle2" noWrap>
-              {path} - {fData(size)}
-            </Typography>
-            {errors.map((e) => (
-              <Typography key={e.code} variant="caption" component="p">
-                - {e.message}
-              </Typography>
-            ))}
-          </Box>
-        );
-      })}
-    </Paper>
-  );
 
   return (
     <Box sx={{ width: '100%', ...sx }}>
@@ -133,8 +101,6 @@ export default function UploadMultiFile({
           </Typography>
         </Box>
       </DropZoneStyle>
-
-      {fileRejections.length > 0 && <ShowRejectionItems />}
 
       <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
         <AnimatePresence>

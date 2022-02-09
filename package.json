@@ -70,6 +70,7 @@
     "react-draft-wysiwyg": "^1.14.7",
     "react-dropzone": "^11.5.3",
     "react-helmet-async": "^1.2.2",
+    "react-hook-form": "^7.26.1",
     "react-image-lightbox": "^5.1.4",
     "react-intersection-observer": "^8.33.1",
     "react-lazy-load-image-component": "^1.5.1",

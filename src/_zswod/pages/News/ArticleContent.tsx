@@ -81,6 +81,7 @@ type ArticleSkeleton = {
   title: string;
   short: string;
   content: string;
+  mainImage?: string | File;
 };
 
 type ArticleContentProps = {
