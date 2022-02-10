@@ -1,10 +1,11 @@
 import { Container } from '@mui/material';
 import { FC } from 'react';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
 import { Page } from 'src/_zswod/components';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { Article } from 'src/_zswod/models/article';
+import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { ArticleContent } from '../ArticleContent';
 
 const ArticleGuarded: FC = () => {
@@ -23,11 +24,16 @@ const ArticleGuarded: FC = () => {
 const ArticleView: FC<{ article: Article }> = ({ article }) => {
   const { getArticlePrimaryImage } = useArticlesContext();
   const mainImage = getArticlePrimaryImage(article.id);
+  const navigate = useNavigate();
 
   return (
     <Page>
       <Container>
-        <ArticleContent articleContent={article} mainImage={mainImage.uri} />
+        <ArticleContent
+          articleContent={article}
+          mainImage={mainImage.uri}
+          onGoToArticle={() => navigate(`${PATHS_ABOUT.Galeria}/${article.id}`)}
+        />
       </Container>
     </Page>
   );

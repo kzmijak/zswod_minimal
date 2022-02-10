@@ -9,10 +9,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { FC } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import Markdown from 'src/_zswod/components/Markdown';
-import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
-import { Link } from 'react-router-dom';
 
 const ImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -25,10 +23,10 @@ const ImgStyle = styled('img')(({ theme }) => ({
 type ArticleImageProps = {
   title: string;
   image: string;
-  link: string;
+  onGoToArticle: MouseEventHandler<HTMLButtonElement>;
 };
 
-function ArticleImage({ image, title, link }: ArticleImageProps) {
+function ArticleImage({ image, title, onGoToArticle }: ArticleImageProps) {
   const theme = useTheme();
   return (
     <Paper
@@ -63,12 +61,7 @@ function ArticleImage({ image, title, link }: ArticleImageProps) {
         <Typography variant="h3" gutterBottom>
           {title}
         </Typography>
-        <Button
-          component={Link}
-          variant="contained"
-          to={link}
-          sx={{ position: 'relative', left: 0 }}
-        >
+        <Button variant="contained" onClick={onGoToArticle} sx={{ position: 'relative', left: 0 }}>
           Zobacz galerię
         </Button>
       </CardContent>
@@ -87,21 +80,17 @@ type ArticleSkeleton = {
 type ArticleContentProps = {
   articleContent: ArticleSkeleton;
   mainImage: string | File;
+  onGoToArticle: MouseEventHandler<HTMLButtonElement>;
 };
 
-const ArticleContent: FC<ArticleContentProps> = ({ articleContent, mainImage }) => {
+const ArticleContent: FC<ArticleContentProps> = ({ articleContent, mainImage, onGoToArticle }) => {
   if (typeof mainImage !== 'string') {
-    console.log(mainImage);
     mainImage = (mainImage as any).preview as string;
   }
 
   return (
     <Card>
-      <ArticleImage
-        title={articleContent.title}
-        image={mainImage}
-        link={`${PATHS_ABOUT.Galeria}/${articleContent.id}`}
-      />
+      <ArticleImage title={articleContent.title} image={mainImage} onGoToArticle={onGoToArticle} />
       <Box sx={{ margin: 3.5 }}>
         <Markdown children={articleContent.content} />
       </Box>
