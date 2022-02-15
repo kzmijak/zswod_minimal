@@ -1,11 +1,8 @@
-import { Button, Container, ImageList, ImageListItem, Stack, Typography } from '@mui/material';
-import { FC, useState } from 'react';
+import { Container } from '@mui/material';
+import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
-import { Link } from 'react-router-dom';
-import Image from 'src/components/Image';
 import Page404 from 'src/pages/Page404';
-import { LightboxModal } from 'src/_zswod/components';
 import Page from 'src/_zswod/components/Page';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { getNeighboringArticles } from 'src/_zswod/redux/article/selectors';

@@ -1,4 +1,4 @@
-import { Box, Card, Dialog } from '@mui/material';
+import { Box, Dialog } from '@mui/material';
 import { FC, useState } from 'react';
 import { ContentState } from '.';
 import { GalleryContent } from '../../Shared/GalleryContent';
