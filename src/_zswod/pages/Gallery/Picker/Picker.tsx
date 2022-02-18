@@ -25,7 +25,7 @@ import { Image } from '../../../models/image';
 
 const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">
-    <Img key={image.index} src={image.uri} sx={{ height: 39, width: 39, borderRadius: 5 }} />
+    <Img key={image.id} src={image.uri} sx={{ height: 39, width: 39, borderRadius: 5 }} />
   </Stack>
 );
 

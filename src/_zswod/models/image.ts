@@ -1,5 +1,5 @@
 type Image = {
-  index: number;
+  id: number;
   order: number;
   uri: string;
   alt: string;

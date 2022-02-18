@@ -1,5 +1,5 @@
 import { Grid, TextField, Box, Typography, Paper } from '@mui/material';
-import { FC, useEffect } from 'react';
+import { FC } from 'react';
 import {
   Control,
   Controller,

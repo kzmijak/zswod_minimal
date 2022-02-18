@@ -102,7 +102,7 @@ const CarouselThumbnail: FC = () => {
   const images = getArticleGallery(openedGallery ?? previousGallery!).map<
     CarouselItemProps & { id: number }
   >((i) => ({
-    id: i.index,
+    id: i.id,
     alt: i.alt,
     image: i.uri,
   }));

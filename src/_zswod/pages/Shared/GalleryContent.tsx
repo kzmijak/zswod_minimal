@@ -41,7 +41,7 @@ const GalleryContent: FC<GalleryContentProps> = ({
         <ImageList>
           {images
             ? images.map((img, index) => (
-                <ImageListItem key={img.index}>
+                <ImageListItem key={img.id}>
                   <Img onClick={() => setImageOpen(index)} src={img.uri} alt={img.alt} />
                 </ImageListItem>
               ))
