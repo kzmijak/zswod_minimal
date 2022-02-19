@@ -96,6 +96,7 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
   });
 
   const submitClicked = (values: ContentState) => {
+    console.log('Hello!');
     setDialogOpen(true);
     // reset();
   };
@@ -123,12 +124,14 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
 
           <ImageNav control={control} register={register} setValue={setValue} watch={watch} />
         </form>
-        <PreviewDialog
-          setValue={setValue}
-          open={dialogOpen}
-          content={watch()}
-          onClose={() => setDialogOpen(false)}
-        />
+        {watch().images?.length > 0 && (
+          <PreviewDialog
+            setValue={setValue}
+            open={dialogOpen}
+            content={watch()}
+            onClose={() => setDialogOpen(false)}
+          />
+        )}
       </RootStyle>
     </MotionContainer>
   );
