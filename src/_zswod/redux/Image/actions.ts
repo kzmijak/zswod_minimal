@@ -18,17 +18,13 @@ const asyncGetImagesAction = () => async (dispatch: AppDispatch) => {
     const response = await axios.get<ImageResponse[]>(`${HOST_API}/images`);
 
     console.log(response.data);
-    let images: Image[] = response.data.map((i: ImageResponse) => {
-      console.log(new Blob([i.blob], { type: 'image/png' }));
-
-      return {
-        alt: i.alt,
-        uri: `data:image/jpeg;base64,${i.blob}`,
-        articleId: i.articleId,
-        id: i.id,
-        order: i.order,
-      };
-    });
+    let images: Image[] = response.data.map((i: ImageResponse) => ({
+      alt: i.alt,
+      uri: `data:image;base64,${i.blob}`,
+      articleId: i.articleId,
+      id: i.id,
+      order: i.order,
+    }));
     console.log(images);
 
     dispatch(slice.actions.getImagesSuccess(images));

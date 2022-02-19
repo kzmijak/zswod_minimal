@@ -111,7 +111,6 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
               control={control}
               formState={formState}
               register={register}
-              setValue={setValue}
               watch={watch}
             />
 
@@ -120,13 +119,7 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
 
           <ErrorSnackbar message={formState.errors.content?.message} />
 
-          <ImageNav
-            formState={formState}
-            control={control}
-            register={register}
-            setValue={setValue}
-            watch={watch}
-          />
+          <ImageNav control={control} register={register} setValue={setValue} watch={watch} />
         </form>
         <PreviewDialog open={dialogOpen} content={watch()} onClose={() => setDialogOpen(false)} />
       </RootStyle>

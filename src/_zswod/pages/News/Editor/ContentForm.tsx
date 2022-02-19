@@ -1,13 +1,6 @@
 import { Grid, TextField, Box, Typography, Paper } from '@mui/material';
 import { FC } from 'react';
-import {
-  Control,
-  Controller,
-  FormState,
-  UseFormRegister,
-  UseFormSetValue,
-  UseFormWatch,
-} from 'react-hook-form';
+import { Control, Controller, FormState, UseFormRegister, UseFormWatch } from 'react-hook-form';
 import QuillEditor from 'src/_zswod/components/editor/quill';
 import Markdown from 'src/_zswod/components/Markdown';
 import { ContentState } from '.';
@@ -15,28 +8,13 @@ import { ContentState } from '.';
 type ContentFormProps = {
   register: UseFormRegister<ContentState>;
   watch: UseFormWatch<ContentState>;
-  setValue: UseFormSetValue<ContentState>;
   formState: FormState<ContentState>;
   control: Control<ContentState>;
 };
 
-const ContentForm: FC<ContentFormProps> = ({ watch, register, setValue, formState, control }) => (
+const ContentForm: FC<ContentFormProps> = ({ watch, register, formState, control }) => (
   <Grid container spacing={2}>
     <Grid item xs={4}>
-      {/* <Controller
-          name="title"
-          control={control}
-          rules={{ required: true }}
-          render={({ field, fieldState }) => (
-            <TextField
-              {...field}
-              error={Boolean(fieldState.error)}
-              helperText={fieldState.error?.message}
-              fullWidth
-              label="Tytuł"
-            />
-          )}
-        /> */}
       <TextField
         {...register('title')}
         error={Boolean(formState.errors.title)}

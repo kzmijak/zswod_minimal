@@ -1,10 +1,9 @@
-import { Alert, Box, Card, Fab } from '@mui/material';
+import { Alert, Box, Button, Card, Fab } from '@mui/material';
 import { m } from 'framer-motion';
-import { FC, useState } from 'react';
+import { FC, MouseEventHandler, useState } from 'react';
 import {
   Control,
   Controller,
-  FormState,
   UseFormRegister,
   UseFormSetValue,
   UseFormWatch,
@@ -37,10 +36,9 @@ type ImageNavProps = {
   watch: UseFormWatch<ContentState>;
   setValue: UseFormSetValue<ContentState>;
   control: Control<ContentState>;
-  formState: FormState<ContentState>;
 };
 
-const ImageNav: FC<ImageNavProps> = ({ formState, watch, setValue, control }) => {
+const ImageNav: FC<ImageNavProps> = ({ watch, setValue, control }) => {
   const [minimized, setMinimized] = useState(false);
 
   const { images } = watch();
@@ -114,12 +112,15 @@ const ImageNav: FC<ImageNavProps> = ({ formState, watch, setValue, control }) =>
               variants={alertVar}
               initial={{ position: 'absolute', top: 5, width: 350, left: 'calc(50% - 175px)' }}
             >
-              <Alert
-                variant={minimized ? 'outlined' : 'standard'}
+              <Button
+                disabled={!minimized}
+                onClick={() => setMinimized(false)}
+                component={Alert}
                 severity={minimized ? 'error' : 'warning'}
+                sx={{ color: 'unset' }}
               >
                 Minimalnie jedno zdjęcie jest wymagane
-              </Alert>
+              </Button>
             </m.div>
           )}
         </Card>
