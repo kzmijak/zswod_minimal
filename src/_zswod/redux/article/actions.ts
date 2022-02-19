@@ -18,7 +18,6 @@ const asyncGetArticlesAction = () => async (dispatch: AppDispatch) => {
 
     dispatch(slice.actions.getArticlesSuccess(response.data));
   } catch (error) {
-    console.log(error);
     dispatch(slice.actions.hasError(error as string));
   }
 };

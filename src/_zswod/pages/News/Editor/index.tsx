@@ -15,6 +15,7 @@ import { ImageNav } from './ImageNav';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
+import { Image } from 'src/_zswod/models/image';
 
 // ----------------------------------------------------------------------
 
@@ -50,7 +51,7 @@ type ContentState = {
   title: string;
   short: string;
   content: string;
-  images: (string | File)[];
+  images: Image[];
 };
 
 const EditorView: FC<{ article?: Article }> = ({ article }) => {
@@ -72,15 +73,16 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
     images: yup
       .mixed()
       .required('Minimalnie jedno zdjęcie jest wymagane.')
-      .test('files amount', 'Minimalnie jeden plik wymagany.', (value) => {
-        console.log(value);
-        return value && value.length > 0;
-      }),
+      .test(
+        'files amount',
+        'Minimalnie jeden plik wymagany.',
+        (value) => value && value.length > 0
+      ),
   });
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const { getArticleGallery } = useArticlesContext();
-  const initialImages = article ? getArticleGallery(article!.id).map((i) => i.uri) : [];
+  const initialImages = article ? getArticleGallery(article!.id) : [];
   const initialArticle = {
     title: article?.title ?? '',
     short: article?.short ?? '',
@@ -121,7 +123,12 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
 
           <ImageNav control={control} register={register} setValue={setValue} watch={watch} />
         </form>
-        <PreviewDialog open={dialogOpen} content={watch()} onClose={() => setDialogOpen(false)} />
+        <PreviewDialog
+          setValue={setValue}
+          open={dialogOpen}
+          content={watch()}
+          onClose={() => setDialogOpen(false)}
+        />
       </RootStyle>
     </MotionContainer>
   );

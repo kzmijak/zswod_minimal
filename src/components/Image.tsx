@@ -28,6 +28,7 @@ export default function Image({
         component="span"
         sx={{
           width: 1,
+          cursor: 'pointer',
           lineHeight: 0,
           display: 'block',
           overflow: 'hidden',

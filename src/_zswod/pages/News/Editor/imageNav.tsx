@@ -1,6 +1,6 @@
 import { Alert, Box, Button, Card, Fab } from '@mui/material';
 import { m } from 'framer-motion';
-import { FC, MouseEventHandler, useState } from 'react';
+import { FC, useState } from 'react';
 import {
   Control,
   Controller,
@@ -9,6 +9,7 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
+import { Image } from 'src/_zswod/models/image';
 import { ContentState } from '.';
 
 const imagesPicker = {
@@ -44,18 +45,24 @@ const ImageNav: FC<ImageNavProps> = ({ watch, setValue, control }) => {
   const { images } = watch();
 
   const handleDropMultiFile = (files: File[]) => {
-    setValue('images', [
+    const concatResult = [
       ...images,
-      ...files.map((file: File) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      ),
-    ]);
+      ...files.map<Image>((file: File) => ({
+        alt: '',
+        articleId: -1,
+        id: -1,
+        order: -1,
+        title: '',
+        uri: URL.createObjectURL(file),
+      })),
+    ];
+    setValue('images', concatResult);
   };
 
   const handleRemove = (file: File | string) => {
-    const filteredItems = images.filter((_file) => _file !== file);
+    const uri = typeof file === 'string' ? file : URL.createObjectURL(file);
+
+    const filteredItems = images.filter((_file) => _file.uri !== uri);
     setValue('images', filteredItems);
   };
 
@@ -86,7 +93,6 @@ const ImageNav: FC<ImageNavProps> = ({ watch, setValue, control }) => {
         <Fab
           onClick={() => {
             setMinimized(!minimized);
-            console.log(minimized);
           }}
         >
           {'_'}
@@ -99,7 +105,7 @@ const ImageNav: FC<ImageNavProps> = ({ watch, setValue, control }) => {
             control={control}
             render={({ field }) => (
               <UploadMultiFile
-                files={field.value}
+                files={field.value.map((f) => f.uri)}
                 onDrop={handleDropMultiFile}
                 onRemove={handleRemove}
               />

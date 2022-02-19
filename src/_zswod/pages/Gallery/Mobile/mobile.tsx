@@ -1,5 +1,5 @@
 import { Container } from '@mui/material';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
@@ -38,11 +38,12 @@ const GalleryMobile: FC<{ article: Article }> = ({ article }) => {
     navigate(`${PATHS_ABOUT.Nowości}/${article.id}`);
   };
 
-  const images = getArticleGallery(article.id);
+  const [images, setImages] = useState(getArticleGallery(article.id));
   return (
     <Page>
       <Container>
         <GalleryContent
+          setImages={setImages}
           articleTitle={article.title}
           images={images}
           hasNextArticle={Boolean(newerArticle)}

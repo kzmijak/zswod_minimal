@@ -6,6 +6,7 @@ import { Image } from 'src/_zswod/models/image';
 
 type ImageResponse = {
   id: number;
+  title: string;
   articleId: number;
   order: number;
   blob: string;
@@ -17,15 +18,14 @@ const asyncGetImagesAction = () => async (dispatch: AppDispatch) => {
   try {
     const response = await axios.get<ImageResponse[]>(`${HOST_API}/images`);
 
-    console.log(response.data);
     let images: Image[] = response.data.map((i: ImageResponse) => ({
       alt: i.alt,
+      title: i.title,
       uri: `data:image;base64,${i.blob}`,
       articleId: i.articleId,
       id: i.id,
       order: i.order,
     }));
-    console.log(images);
 
     dispatch(slice.actions.getImagesSuccess(images));
   } catch (error) {

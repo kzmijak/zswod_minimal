@@ -1,5 +1,6 @@
 type Image = {
   id: number;
+  title: string;
   order: number;
   uri: string;
   alt: string;

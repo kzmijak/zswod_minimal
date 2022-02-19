@@ -104,12 +104,12 @@ export default function UploadMultiFile({
 
       <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
         <AnimatePresence>
-          {files.map((file) => {
-            const { key, preview } = getFileData(file as CustomFile);
+          {files.map((file, index) => {
+            const { preview } = getFileData(file as CustomFile);
 
             return (
               <ListItem
-                key={key}
+                key={index}
                 component={m.div}
                 {...varFade().inRight}
                 sx={{

@@ -191,7 +191,7 @@ const CarouselThumbnail: FC = () => {
         >
           <Slider {...settings2} asNavFor={nav1} ref={slider2}>
             {images.map((item) => (
-              <ThumbnailItem key={item.alt} item={item} />
+              <ThumbnailItem key={item.id} item={item} />
             ))}
           </Slider>
         </Box>
