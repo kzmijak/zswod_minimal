@@ -6,6 +6,7 @@ import {
   CardContent,
   Paper,
   styled,
+  Tooltip,
   Typography,
   useTheme,
 } from '@mui/material';
@@ -23,10 +24,11 @@ const ImgStyle = styled('img')(({ theme }) => ({
 type ArticleImageProps = {
   title: string;
   image: string;
-  onGoToArticle: MouseEventHandler<HTMLButtonElement>;
+  onGoToGallery: MouseEventHandler<HTMLButtonElement>;
+  alertTooltipContent?: string;
 };
 
-function ArticleImage({ image, title, onGoToArticle }: ArticleImageProps) {
+function ArticleImage({ image, title, onGoToGallery, alertTooltipContent }: ArticleImageProps) {
   const theme = useTheme();
   return (
     <Paper
@@ -61,9 +63,24 @@ function ArticleImage({ image, title, onGoToArticle }: ArticleImageProps) {
         <Typography variant="h3" gutterBottom>
           {title}
         </Typography>
-        <Button variant="contained" onClick={onGoToArticle} sx={{ position: 'relative', left: 0 }}>
-          Zobacz galerię
-        </Button>
+        <Tooltip
+          open={true}
+          placement="right"
+          arrow
+          title={alertTooltipContent ?? ''}
+          componentsProps={{
+            tooltip: { sx: { backgroundColor: theme.palette.error.dark } },
+            arrow: { sx: { color: theme.palette.error.dark } },
+          }}
+        >
+          <Button
+            variant="contained"
+            onClick={onGoToGallery}
+            sx={{ position: 'relative', left: 0 }}
+          >
+            Zobacz galerię
+          </Button>
+        </Tooltip>
       </CardContent>
     </Paper>
   );
@@ -80,17 +97,28 @@ type ArticleSkeleton = {
 type ArticleContentProps = {
   articleContent: ArticleSkeleton;
   mainImage: string | File;
-  onGoToArticle: MouseEventHandler<HTMLButtonElement>;
+  onGoToGallery: MouseEventHandler<HTMLButtonElement>;
+  alertTooltipContent?: string;
 };
 
-const ArticleContent: FC<ArticleContentProps> = ({ articleContent, mainImage, onGoToArticle }) => {
+const ArticleContent: FC<ArticleContentProps> = ({
+  articleContent,
+  mainImage,
+  onGoToGallery,
+  alertTooltipContent,
+}) => {
   if (typeof mainImage !== 'string') {
     mainImage = (mainImage as any).preview as string;
   }
 
   return (
     <Card>
-      <ArticleImage title={articleContent.title} image={mainImage} onGoToArticle={onGoToArticle} />
+      <ArticleImage
+        title={articleContent.title}
+        image={mainImage}
+        onGoToGallery={onGoToGallery}
+        alertTooltipContent={alertTooltipContent}
+      />
       <Box sx={{ margin: 3.5 }}>
         <Markdown children={articleContent.content} />
       </Box>

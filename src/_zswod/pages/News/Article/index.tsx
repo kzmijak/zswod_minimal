@@ -32,7 +32,7 @@ const ArticleView: FC<{ article: Article }> = ({ article }) => {
         <ArticleContent
           articleContent={article}
           mainImage={mainImage.uri}
-          onGoToArticle={() => navigate(`${PATHS_ABOUT.Galeria}/${article.id}`)}
+          onGoToGallery={() => navigate(`${PATHS_ABOUT.Galeria}/${article.id}`)}
         />
       </Container>
     </Page>

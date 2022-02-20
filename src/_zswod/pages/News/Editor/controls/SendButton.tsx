@@ -1,6 +1,5 @@
-import { Fab } from '@mui/material';
-import { FC } from 'react';
-import SendIcon from '@mui/icons-material/Send'; // material
+import { Fab, Tooltip, useTheme } from '@mui/material';
+import { FC, MouseEventHandler, ReactNode } from 'react';
 import { styled } from '@mui/system';
 
 const FixedFabStyled = styled(Fab)(({ theme }) => ({
@@ -12,17 +11,33 @@ const FixedFabStyled = styled(Fab)(({ theme }) => ({
   zIndex: 15,
 }));
 
-const SendIconStyled = styled(SendIcon)(({ theme }) => ({
-  height: 25,
-  width: 25,
-}));
+type SendButtonProps = {
+  tooltip: string;
+  tooltipOpen: boolean;
+  icon: ReactNode;
+  onClick?: MouseEventHandler<HTMLButtonElement>;
+  disabled?: boolean;
+};
 
-type SendButtonProps = {};
+const SendButton: FC<SendButtonProps> = ({ tooltip, icon, onClick, disabled, tooltipOpen }) => {
+  const theme = useTheme();
 
-const SendButton: FC<SendButtonProps> = () => (
-  <FixedFabStyled type="submit">
-    <SendIconStyled />
-  </FixedFabStyled>
-);
+  return (
+    <Tooltip
+      title={tooltip}
+      open={tooltipOpen}
+      arrow
+      placement="left"
+      componentsProps={{
+        tooltip: { sx: { backgroundColor: theme.palette.success.dark } },
+        arrow: { sx: { color: theme.palette.success.dark } },
+      }}
+    >
+      <FixedFabStyled disabled={disabled} type="submit" onClick={onClick}>
+        {icon}
+      </FixedFabStyled>
+    </Tooltip>
+  );
+};
 
 export { SendButton };

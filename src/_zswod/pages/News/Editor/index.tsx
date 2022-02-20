@@ -7,7 +7,7 @@ import Page404 from 'src/pages/Page404';
 import { Article } from 'src/_zswod/models/article';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { MotionContainer } from 'src/components/animate';
-import { PreviewDialog } from './PreviewDialog';
+import { ArticlePreviewDialog } from './PreviewDialogs/ArticlePreviewDialog';
 import { ContentForm } from './ContentForm';
 import { ErrorSnackbar } from './controls/ErrorSnackbar';
 import { SendButton } from './controls/SendButton';
@@ -16,6 +16,8 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Image } from 'src/_zswod/models/image';
+import { GalleryPreviewDialog } from './PreviewDialogs/GalleryPreviewDialog';
+import ForwardIcon from '@mui/icons-material/Forward';
 
 // ----------------------------------------------------------------------
 
@@ -80,7 +82,23 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
       ),
   });
 
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [articlePreviewOpen, setArticlePreviewOpen] = useState(false);
+  const [galleryPreviewOpen, setGalleryPreviewOpen] = useState(false);
+
+  const onGoToArticle = () => {
+    setGalleryPreviewOpen(false);
+    setArticlePreviewOpen(true);
+  };
+
+  const onGoToGallery = () => {
+    setArticlePreviewOpen(false);
+    setGalleryPreviewOpen(true);
+  };
+
+  const closeArticlePreview = () => {
+    setArticlePreviewOpen(false);
+  };
+
   const { getArticleGallery } = useArticlesContext();
   const initialImages = article ? getArticleGallery(article!.id) : [];
   const initialArticle = {
@@ -96,8 +114,7 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
   });
 
   const submitClicked = (values: ContentState) => {
-    console.log('Hello!');
-    setDialogOpen(true);
+    setArticlePreviewOpen(true);
     // reset();
   };
 
@@ -117,7 +134,16 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
               watch={watch}
             />
 
-            <SendButton />
+            <SendButton
+              tooltipOpen={
+                !articlePreviewOpen &&
+                !galleryPreviewOpen &&
+                watch().images?.length > 0 &&
+                formState.isValid
+              }
+              tooltip="Możesz już przejść do następnego etapu"
+              icon={<ForwardIcon />}
+            />
           </Container>
 
           <ErrorSnackbar message={formState.errors.content?.message} />
@@ -125,12 +151,21 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
           <ImageNav control={control} register={register} setValue={setValue} watch={watch} />
         </form>
         {watch().images?.length > 0 && (
-          <PreviewDialog
-            setValue={setValue}
-            open={dialogOpen}
-            content={watch()}
-            onClose={() => setDialogOpen(false)}
-          />
+          <>
+            <ArticlePreviewDialog
+              open={articlePreviewOpen}
+              content={watch()}
+              onClose={() => closeArticlePreview()}
+              onGoToGallery={() => onGoToGallery()}
+            />
+            <GalleryPreviewDialog
+              content={watch()}
+              onClose={() => onGoToArticle()}
+              onGoToArticle={() => onGoToArticle()}
+              open={galleryPreviewOpen}
+              setValue={setValue}
+            />
+          </>
         )}
       </RootStyle>
     </MotionContainer>
