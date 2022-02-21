@@ -1,10 +1,10 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Container, Typography } from '@mui/material';
 import Page from '../../../components/Page';
-import { useParams } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
-import { Article } from 'src/_zswod/models/article';
+import { Article } from 'src/_zswod/models/Article/article';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { MotionContainer } from 'src/components/animate';
 import { ArticlePreviewDialog } from './PreviewDialogs/ArticlePreviewDialog';
@@ -15,7 +15,7 @@ import { ImageNav } from './ImageNav';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { Image } from 'src/_zswod/models/image';
+import { Image } from 'src/_zswod/models/Image/image';
 import { GalleryPreviewDialog } from './PreviewDialogs/GalleryPreviewDialog';
 import ForwardIcon from '@mui/icons-material/Forward';
 
@@ -34,7 +34,7 @@ type InvalidFields = 'title' | 'short' | 'content' | 'images';
 
 const EditorGuarded: FC = () => {
   const { articleId } = useParams();
-  const { getArticle } = useArticlesContext();
+  const { getArticle, loadArticle, isLoading, isLoaded } = useArticlesContext();
 
   if (articleId === undefined) {
     return <EditorView />;
@@ -42,11 +42,19 @@ const EditorGuarded: FC = () => {
 
   if (isNaN(Number(articleId))) return <Page404 />;
 
+  if (!isLoaded()) {
+    loadArticle(Number(articleId));
+  }
+
+  if (isLoading()) {
+    return null;
+  }
+
   const article = getArticle(Number(articleId));
 
-  if (article === undefined) return <Page404 />;
+  if (!Boolean(article)) return <Page404 />;
 
-  return <EditorView article={article} />;
+  return <EditorView article={article!} />;
 };
 
 type ContentState = {
@@ -99,13 +107,11 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
     setArticlePreviewOpen(false);
   };
 
-  const { getArticleGallery } = useArticlesContext();
-  const initialImages = article ? getArticleGallery(article!.id) : [];
   const initialArticle = {
     title: article?.title ?? '',
     short: article?.short ?? '',
     content: article?.content ?? '',
-    images: initialImages,
+    images: article?.images ?? [],
   };
   const { register, watch, setValue, formState, control, handleSubmit } = useForm<ContentState>({
     defaultValues: initialArticle,

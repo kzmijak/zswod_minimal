@@ -1,4 +1,4 @@
-import { Article } from 'src/_zswod/models/article';
+import { Article } from 'src/_zswod/models/Article/article';
 import { RootState } from '../store';
 
 const getArticleState = (state: RootState) => state.article;

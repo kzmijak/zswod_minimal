@@ -17,7 +17,7 @@ import {
 import { FC, MouseEventHandler, ReactNode, useState } from 'react';
 import Img from 'src/components/Image';
 import { LightboxModal } from 'src/_zswod/components';
-import { Image } from 'src/_zswod/models/image';
+import { Image } from 'src/_zswod/models/Image/image';
 import ReportRoundedIcon from '@mui/icons-material/ReportRounded';
 import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';

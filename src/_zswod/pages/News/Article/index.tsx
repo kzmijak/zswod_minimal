@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
 import { Page } from 'src/_zswod/components';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
-import { Article } from 'src/_zswod/models/article';
+import { Article } from 'src/_zswod/models/Article/article';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { ArticleContent } from '../ArticleContent';
 

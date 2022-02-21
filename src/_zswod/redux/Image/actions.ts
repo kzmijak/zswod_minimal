@@ -2,16 +2,8 @@ import { AppDispatch } from '../store';
 import { slice } from './reducer';
 import axios from 'axios';
 import { HOST_API } from 'src/_zswod/config';
-import { Image } from 'src/_zswod/models/image';
-
-type ImageResponse = {
-  id: number;
-  title: string;
-  articleId: number;
-  order: number;
-  blob: string;
-  alt: string;
-};
+import { Image } from 'src/_zswod/models/Image/image';
+import { ImageResponse } from 'src/_zswod/models/Image/imageResponse';
 
 const asyncGetImagesAction = () => async (dispatch: AppDispatch) => {
   dispatch(slice.actions.startLoading());

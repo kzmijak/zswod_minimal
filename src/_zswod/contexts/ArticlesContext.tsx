@@ -1,18 +1,27 @@
 import { createContext, FC, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { asyncGetArticlesAction } from '../redux/article/actions';
-import { getArticles } from '../redux/article/selectors';
-import { asyncGetImagesAction } from '../redux/Image/actions';
-import { getImages } from '../redux/Image/selectors';
-import { Article } from '../models/article';
-import { Image } from '../models/image';
+import {
+  asyncCreateArticleAction,
+  asyncGetArticleAction,
+  asyncGetArticlesAction,
+} from '../redux/article/actions';
+import { getArticles, getArticleState } from '../redux/article/selectors';
+import { getImages, getImagesState } from '../redux/Image/selectors';
+import { Article } from '../models/Article/article';
+import { Image } from '../models/Image/image';
+import { CreateArticleRequest } from '../models/Article/createArticleRequest';
 
 type ArticlesContextProps = {
   articles: Article[];
   getArticle: (articleId: number) => Article | undefined;
+  getArticlesList: () => Article[];
   getArticleGallery: (articleId: number) => Image[];
   getArticlePrimaryImage: (articleId: number) => Image;
-  isLoading: boolean;
+  createArticle: (request: CreateArticleRequest) => void;
+  loadArticle: (id: number) => void;
+  loadArticles: () => void;
+  isLoading: () => boolean;
+  isLoaded: () => boolean;
 };
 
 const ArticlesContext = createContext<ArticlesContextProps>(null!);
@@ -24,16 +33,24 @@ type ArticlesProviderProps = {
 const ArticlesProvider: FC<ArticlesProviderProps> = ({ children }) => {
   const dispatch = useDispatch();
 
+  const articlesState = useSelector(getArticleState);
+  const imagesState = useSelector(getImagesState);
+  const isLoading = () => articlesState.isLoading || imagesState.isLoading;
+  const isLoaded = () => articlesState.isLoaded || imagesState.isLoaded;
+
   const articles = useSelector(getArticles);
   const images = useSelector(getImages);
-  let isLoading = false;
-  if (articles.length === 0) dispatch(asyncGetArticlesAction());
-  if (images.length === 0) dispatch(asyncGetImagesAction());
-  if (images.length === 0 || articles.length === 0) {
-    isLoading = true;
-  }
+
+  const createArticle = (request: CreateArticleRequest) =>
+    dispatch(asyncCreateArticleAction(request));
+
+  const loadArticle = (id: number) => dispatch(asyncGetArticleAction(id));
+
+  const loadArticles = async () => dispatch(asyncGetArticlesAction());
 
   const getArticle = (articleId: number) => articles.find((a) => a.id === articleId);
+
+  const getArticlesList = () => articles;
 
   const getArticleGallery = (articleId: number) => images.filter((i) => i.articleId === articleId);
 
@@ -44,7 +61,12 @@ const ArticlesProvider: FC<ArticlesProviderProps> = ({ children }) => {
     getArticle,
     getArticleGallery,
     getArticlePrimaryImage,
+    loadArticle,
+    loadArticles,
     isLoading,
+    isLoaded,
+    createArticle,
+    getArticlesList,
   };
 
   return <ArticlesContext.Provider value={value}>{children}</ArticlesContext.Provider>;

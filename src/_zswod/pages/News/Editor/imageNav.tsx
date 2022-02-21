@@ -9,7 +9,7 @@ import {
   UseFormWatch,
 } from 'react-hook-form';
 import UploadMultiFile from 'src/_zswod/components/UploadMultiFile';
-import { Image } from 'src/_zswod/models/image';
+import { Image } from 'src/_zswod/models/Image/image';
 import { ContentState } from '.';
 
 const imagesPicker = {

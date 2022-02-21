@@ -1,7 +1,7 @@
 import { Box, Dialog } from '@mui/material';
 import { FC, MouseEventHandler } from 'react';
 import { UseFormSetValue } from 'react-hook-form';
-import { Image } from 'src/_zswod/models/image';
+import { Image } from 'src/_zswod/models/Image/image';
 import { ContentState } from '..';
 import { GalleryContent } from '../../../Shared/GalleryContent';
 

@@ -5,7 +5,7 @@ import { useArticlesContext } from '../hooks/useArticlesContext';
 const Loadable: FC<{ children: JSX.Element }> = ({ children }) => {
   const { isLoading } = useArticlesContext();
 
-  if (isLoading) {
+  if (isLoading()) {
     return <LoadingScreen />;
   }
 

@@ -7,7 +7,7 @@ import Page from 'src/_zswod/components/Page';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { getNeighboringArticles } from 'src/_zswod/redux/article/selectors';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
-import { Article } from 'src/_zswod/models/article';
+import { Article } from 'src/_zswod/models/Article/article';
 import { GalleryContent } from '../../Shared/GalleryContent';
 
 const GalleryMobilesGuarded: FC = () => {
