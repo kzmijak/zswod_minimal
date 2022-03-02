@@ -11,17 +11,17 @@ import {
 import { Timeline } from '@mui/lab';
 import ContentPasteGoIcon from '@mui/icons-material/ContentPasteGo';
 import { FC } from 'react';
-import { useArticlesContext } from '../../../hooks/useArticlesContext';
 import Img from 'src/components/Image';
 import { Link, useNavigate } from 'react-router-dom';
 import Scrollbar from 'src/components/Scrollbar';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCurrentGallery } from 'src/_zswod/redux/gallery/selectors';
-import { setGalleryAction } from 'src/_zswod/redux/gallery/actions';
+import { getArticles, getCurrentGallery } from 'src/_zswod/redux/gallery/selectors';
+import { useGalleryActions } from 'src/_zswod/redux/gallery/actions';
 import useResponsive from 'src/hooks/useResponsive';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Image } from '../../../models/Image/image';
+import { Article } from 'src/_zswod/models/Article/article';
 
 const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -34,36 +34,39 @@ type PickerProps = {
 };
 
 const Picker: FC<PickerProps> = ({ sx }) => {
-  const { articles, getArticlePrimaryImage } = useArticlesContext();
+  const articles = useSelector(getArticles);
+
+  console.log(articles);
   const gallery = useSelector(getCurrentGallery);
   const dispatch = useDispatch();
   const isDesktop = useResponsive('up', 'lg');
   const navigate = useNavigate();
+  const { setGalleryAction } = useGalleryActions();
 
-  const toggleGallery = (id: number) => {
-    const isCurrent = id === gallery;
+  const toggleGallery = (next: Article) => {
+    const isCurrent = next.id === gallery?.id;
 
     if (!isDesktop) {
-      return navigate(id.toString());
+      return navigate(next.id.toString());
     }
 
-    dispatch(setGalleryAction(isCurrent ? null : id));
+    dispatch(setGalleryAction(isCurrent ? null : next));
   };
 
   return (
     <Container sx={sx}>
       <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
         <Timeline position="left">
-          {articles
-            .filter((a) => getArticlePrimaryImage(a.id) !== undefined)
+          {articles!
+            .filter((a) => a.images !== undefined)
             .map((a) => (
               <TimeOutlinedList key={a.id} date={a.date}>
-                <Accordion expanded={gallery === a.id} onClick={() => toggleGallery(a.id)}>
+                <Accordion expanded={gallery?.id === a.id} onClick={() => toggleGallery(a)}>
                   <AccordionSummary>
                     <Typography variant="h6" sx={{ width: '80%', flexShrink: 0 }}>
                       {a.title}
                     </Typography>
-                    <ImagesDemo image={getArticlePrimaryImage(a.id)} />
+                    <ImagesDemo image={a.images[0]} />
                   </AccordionSummary>
 
                   <AccordionDetails>

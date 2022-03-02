@@ -1,5 +1,5 @@
 import { Box, Dialog } from '@mui/material';
-import { FC, MouseEventHandler, useEffect } from 'react';
+import { FC, MouseEventHandler } from 'react';
 import { ContentState } from '..';
 import { ArticleContent } from '../../ArticleContent';
 import { SendButton } from '../controls/SendButton';
@@ -7,7 +7,6 @@ import SendIcon from '@mui/icons-material/Send';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { ImageSubrequest } from 'src/_zswod/models/Article/createArticleRequest';
 import { useNavigate } from 'react-router';
-import { Article } from 'src/_zswod/models/Article/article';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 
 type ArticlePreviewDialogProps = {
@@ -23,7 +22,9 @@ const ArticlePreviewDialog: FC<ArticlePreviewDialogProps> = ({
   content,
   onGoToGallery,
 }) => {
-  const { createArticle } = useArticlesContext();
+  const {
+    actions: { createArticle },
+  } = useArticlesContext();
   const navigate = useNavigate();
 
   const findIncompleteImages = () =>
@@ -58,14 +59,18 @@ const ArticlePreviewDialog: FC<ArticlePreviewDialogProps> = ({
       }))
     );
 
-    const newArticleId = await createArticle({
-      content: content.content,
-      images: imagesWithUris as ImageSubrequest[],
-      short: content.short,
-      title: content.title,
-    });
+    try {
+      const articleResponse = await createArticle({
+        content: content.content,
+        images: imagesWithUris as ImageSubrequest[],
+        short: content.short,
+        title: content.title,
+      });
 
-    navigate(`${PATHS_ABOUT.Nowości}/${newArticleId}`);
+      navigate(`${PATHS_ABOUT.Nowości}/${articleResponse.id}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (

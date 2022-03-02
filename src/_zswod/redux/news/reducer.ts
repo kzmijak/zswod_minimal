@@ -1,14 +1,21 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { getAxiosLoadableInstance } from 'src/_zswod/utils/AxiosLoadable';
+import { AxiosLoadable, getAxiosLoadableInstance } from 'src/_zswod/hooks/useAxiosLoadable';
+import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
 import { Article } from 'src/_zswod/models/Article/article';
 import { ArticleResponse } from 'src/_zswod/models/Article/articleResponse';
-import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
 
-const initialState = getAxiosLoadableInstance<Article>();
+type NewsState = AxiosLoadable<Article[]> & {
+  currentArticle: Article | null;
+};
+
+const initialState: NewsState = {
+  ...getAxiosLoadableInstance<Article[]>(),
+  currentArticle: null,
+};
 
 const slice = createSlice({
-  name: 'article',
-  initialState,
+  name: 'news',
+  initialState: initialState,
   reducers: {
     startLoading(state) {
       state.isLoading = true;
@@ -20,22 +27,17 @@ const slice = createSlice({
       state.error = action.payload;
     },
     getArticleSuccess(state, action: PayloadAction<ArticleResponse>) {
-      state.isLoaded = true;
       state.isLoading = false;
-      state.data = [ArticlesMapper.ResponseToModel(action.payload)];
+      state.isLoaded = true;
+      state.currentArticle = ArticlesMapper.ResponseToModel(action.payload);
     },
     getArticlesSuccess(state, action: PayloadAction<ArticleResponse[]>) {
       state.isLoading = false;
       state.isLoaded = true;
       state.data = ArticlesMapper.ListResponseToModel(action.payload);
     },
-    postArticleSuccess(state, action: PayloadAction<ArticleResponse>) {
-      state.isLoading = false;
-      state.isLoaded = true;
-      state.data = [ArticlesMapper.ResponseToModel(action.payload)];
-    },
   },
 });
 
-const articleReducer = slice.reducer;
-export { articleReducer, slice };
+const newsReducer = slice.reducer;
+export { newsReducer, slice };

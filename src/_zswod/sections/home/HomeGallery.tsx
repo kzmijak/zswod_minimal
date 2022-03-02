@@ -2,14 +2,17 @@
 import { alpha, styled } from '@mui/material/styles';
 import { Container, Grid, Stack, Typography, useTheme } from '@mui/material';
 // components
-import Image from 'src/components/Image';
 import { MotionInView, varFade } from 'src/components/animate';
 import { LightboxModal, ButtonEPanel } from 'src/_zswod/components';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useResponsive from 'src/hooks/useResponsive';
-import { useSelector } from 'react-redux';
-import { getImagesSliced } from 'src/_zswod/redux/Image/selectors';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
+import { useAxiosLoadable } from 'src/_zswod/hooks/useAxiosLoadable';
+import { Image as ImageModel } from 'src/_zswod/models/Image/image';
+import { ImagesMapper } from 'src/_zswod/mappers/imagesMapper';
+import useIsMountedRef from 'use-is-mounted-ref';
+import Image from 'src/components/Image';
 
 // ----------------------------------------------------------------------
 
@@ -39,16 +42,51 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
   const isDesktop = useResponsive('up', 'md');
+  const isMountedRef = useIsMountedRef();
 
-  const images = useSelector(getImagesSliced(isDesktop ? 12 : 6));
-  const imageUrls = images.map((image) => image.uri);
+  const {
+    actions: { getSampleImages },
+  } = useArticlesContext();
+
   const [imageOpen, setImageOpen] = useState<number>(-1);
 
+  const { ListResponseToModel } = ImagesMapper;
+
+  const {
+    requestState: { data: images, isLoaded },
+    onError,
+    onSuccess,
+    startLoading,
+  } = useAxiosLoadable<ImageModel[]>();
+
+  const loadImages = useCallback(
+    async (count: number) => {
+      startLoading();
+      try {
+        const response = await getSampleImages(count);
+        onSuccess(ListResponseToModel(response));
+      } catch (error) {
+        onError(error);
+      }
+    },
+    [isMountedRef]
+  );
+
+  useEffect(() => {
+    loadImages(isDesktop ? 12 : 6);
+  }, [loadImages, isDesktop]);
+
   const ref = useRef(null);
+
+  useEffect(() => {});
 
   useEffect(() => {
     passRef(ref);
   }, [passRef, ref]);
+
+  if (!isLoaded) return null;
+
+  const imageUrls = images!.map((image) => image.uri);
 
   return (
     <RootStyle ref={ref}>
@@ -76,7 +114,7 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
         </ContentStyle>
 
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
-          {images.map((item, index) => (
+          {images!.map((item, index) => (
             <Grid item xs={2} sm={4} md={3} key={index}>
               <MotionInView variants={varFade().inUp}>
                 <Image

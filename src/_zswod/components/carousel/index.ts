@@ -1,1 +1,1 @@
-export { default as CarouselCenterMode } from './CarouselCenterMode';
+export { CarouselCenterMode } from './CarouselCenterMode';

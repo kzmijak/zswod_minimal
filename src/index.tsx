@@ -22,7 +22,7 @@ import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
 //
 import App from './App';
-import { ArticlesProvider } from './_zswod/contexts/ArticlesContext';
+import { ArticlesProvider } from './_zswod/contexts/Article/ArticlesContext';
 import { store } from './_zswod/redux/store';
 
 // ----------------------------------------------------------------------

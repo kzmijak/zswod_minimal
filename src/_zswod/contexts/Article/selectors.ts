@@ -1,18 +1,13 @@
 import { Article } from 'src/_zswod/models/Article/article';
-import { RootState } from '../store';
 
-const getArticleState = (state: RootState) => state.article;
-
-const getArticles = (state: RootState) => getArticleState(state).data;
-
-const getNeighboringArticles = (article: Article) => (state: RootState) => {
-  const newerArticles = state.article.data
+const getNeighboringArticles = (article: Article, scope: Article[]) => {
+  const newerArticles = scope
     .filter((a) => a.date > article.date)
     .sort((a, b) => a.date.getTime() - b.date.getTime());
 
   const newerArticle = newerArticles.length > 0 ? newerArticles[0] : null;
 
-  const olderArticles = state.article.data
+  const olderArticles = scope
     .filter((a) => a.date < article.date)
     .sort((a, b) => b.date.getTime() - a.date.getTime());
 
@@ -24,4 +19,4 @@ const getNeighboringArticles = (article: Article) => (state: RootState) => {
   };
 };
 
-export { getArticleState, getArticles, getNeighboringArticles };
+export { getNeighboringArticles };

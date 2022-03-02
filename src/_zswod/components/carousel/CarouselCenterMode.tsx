@@ -1,5 +1,5 @@
 import Slider from 'react-slick';
-import { useRef } from 'react';
+import { FC, useCallback, useEffect, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import { Link as RouterLink } from 'react-router-dom';
 // material
@@ -8,9 +8,11 @@ import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
 // utils
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
-import { useSelector } from 'react-redux';
-import { getArticles } from 'src/_zswod/redux/article/selectors';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
+import { useAxiosLoadable } from 'src/_zswod/hooks/useAxiosLoadable';
+import useIsMountedRef from 'use-is-mounted-ref';
+import { Article } from 'src/_zswod/models/Article/article';
+import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
 
 // ----------------------------------------------------------------------
 
@@ -87,11 +89,44 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
   );
 }
 
-export default function CarouselCenterMode() {
+const CarouselCenterMode: FC = () => {
   const carouselRef = useRef<Slider | null>(null);
   const isDesktop = useResponsive('up', 'md');
-  const articles = useSelector(getArticles);
-  const { getArticlePrimaryImage } = useArticlesContext();
+  const {
+    actions: { getArticlesList },
+  } = useArticlesContext();
+
+  const isMountedRef = useIsMountedRef();
+
+  const {
+    requestState: { isLoaded, data: articles },
+    onError,
+    onSuccess,
+    startLoading,
+  } = useAxiosLoadable<Article[]>();
+
+  const { ListResponseToModel } = ArticlesMapper;
+
+  const getArticles = useCallback(
+    async (count: number) => {
+      startLoading();
+      try {
+        const response = await getArticlesList(count);
+        onSuccess(ListResponseToModel(response));
+      } catch (error) {
+        onError(error);
+      }
+    },
+    [isMountedRef]
+  );
+
+  useEffect(() => {
+    getArticles(6);
+  }, [getArticles]);
+
+  if (!isLoaded) {
+    return null;
+  }
 
   const settings = {
     dots: true,
@@ -103,11 +138,11 @@ export default function CarouselCenterMode() {
 
   return (
     <Slider ref={carouselRef} {...settings}>
-      {articles.map((article, index) => {
+      {articles!.map((article, index) => {
         const item: CarouselItemProps = {
           ...article,
           description: article.short,
-          image: getArticlePrimaryImage(article.id)?.uri ?? '',
+          image: articles![index].images[0]?.uri ?? '',
         };
         return (
           <MotionInView
@@ -120,4 +155,6 @@ export default function CarouselCenterMode() {
       })}
     </Slider>
   );
-}
+};
+
+export { CarouselCenterMode };

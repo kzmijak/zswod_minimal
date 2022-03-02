@@ -6,7 +6,6 @@ import { useState, useRef, useEffect, FC, MouseEventHandler } from 'react';
 import { styled } from '@mui/material/styles';
 import { Box } from '@mui/material';
 import CarouselControlsArrowsIndex from './CarouselControlsArrowsIndex';
-import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { LightboxModal } from 'src/_zswod/components';
 import { useSelector } from 'react-redux';
 import { RootState } from 'src/_zswod/redux/store';
@@ -95,19 +94,27 @@ const CarouselThumbnail: FC = () => {
   const [nav2, setNav2] = useState<Slider | undefined>(undefined);
   const slider1 = useRef<Slider | null>(null);
   const slider2 = useRef<Slider | null>(null);
-
+  const [imageOpen, setImageOpen] = useState<number>(-1);
   const { openedGallery, previousGallery } = useSelector((state: RootState) => state.gallery);
 
-  const { getArticleGallery } = useArticlesContext();
-  const images = getArticleGallery(openedGallery ?? previousGallery!).map<
-    CarouselItemProps & { id: number }
-  >((i) => ({
-    id: i.id,
-    alt: i.alt,
-    image: i.uri,
-  }));
+  useEffect(() => {
+    if (slider1.current) {
+      setNav1(slider1.current);
+    }
+    if (slider2.current) {
+      setNav2(slider2.current);
+    }
+  }, []);
 
-  const [imageOpen, setImageOpen] = useState<number>(-1);
+  if (!Boolean(openedGallery) && !Boolean(previousGallery)) return null;
+
+  const images = (openedGallery ?? previousGallery!).images.map<CarouselItemProps & { id: number }>(
+    (i) => ({
+      id: i.id,
+      alt: i.alt,
+      image: i.uri,
+    })
+  );
 
   const settings1 = {
     dots: false,
@@ -129,15 +136,6 @@ const CarouselThumbnail: FC = () => {
     centerPadding: '0px',
     slidesToShow: images.length > 3 ? 3 : images.length,
   };
-
-  useEffect(() => {
-    if (slider1.current) {
-      setNav1(slider1.current);
-    }
-    if (slider2.current) {
-      setNav2(slider2.current);
-    }
-  }, []);
 
   const handlePrevious = () => {
     slider2.current?.slickPrev();

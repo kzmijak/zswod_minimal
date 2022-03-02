@@ -6,17 +6,15 @@ import { useNavigate } from 'react-router';
 import Image from 'src/components/Image';
 import { Page } from 'src/_zswod/components';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
-import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
-import { getArticles } from 'src/_zswod/redux/article/selectors';
 import { useGreeter, newsGreeter } from 'src/_zswod/utils/Greeters/useGreeter';
 import { NewsArticle } from './Article';
 import { Link } from 'react-router-dom';
+import { getArticles } from 'src/_zswod/redux/news/selectors';
 
 const News: FC = () => {
-  const articles = useSelector(getArticles);
+  const articles = useSelector(getArticles)!;
   const greeter = useGreeter(newsGreeter);
   const navigate = useNavigate();
-  const { getArticlePrimaryImage } = useArticlesContext();
 
   return (
     <Page title="Nowości">
@@ -36,7 +34,7 @@ const News: FC = () => {
         <Stack direction="column" spacing={3}>
           <Timeline position="left">
             {articles.map((article) => {
-              const image = getArticlePrimaryImage(article.id);
+              const image = article.images[0];
               return (
                 <TimeOutlinedList key={article.id} date={article.date}>
                   <Paper elevation={2} sx={{ height: 200 }}>

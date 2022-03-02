@@ -4,31 +4,44 @@ import DashboardLayout from 'src/_zswod/layouts/dashboard';
 import Maintenance from 'src/_zswod/pages/Maintenance';
 import { Gallery, GalleryMobile } from 'src/_zswod/pages/Gallery';
 import { News, NewsArticle } from 'src/_zswod/pages/News';
-import { Loadable } from 'src/_zswod/components/Loadable';
+import { LoadNews } from 'src/_zswod/pages/News/LoadNews';
+import { LoadGallery } from 'src/_zswod/pages/Gallery/LoadGallery';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
-  element: (
-    <Loadable>
-      <DashboardLayout />
-    </Loadable>
-  ),
+  element: <DashboardLayout />,
   children: [
     {
       path: PATHS_ABOUT.Galeria,
-      element: <Gallery />,
+      element: (
+        <LoadGallery>
+          <Gallery />,
+        </LoadGallery>
+      ),
     },
     {
       path: `${PATHS_ABOUT.Galeria}/:articleId`,
-      element: <GalleryMobile />,
+      element: (
+        <LoadGallery>
+          <GalleryMobile />,
+        </LoadGallery>
+      ),
     },
     {
       path: `${PATHS_ABOUT.Nowości}`,
-      element: <News />,
+      element: (
+        <LoadNews>
+          <News />
+        </LoadNews>
+      ),
     },
     {
       path: `${PATHS_ABOUT.Nowości}/:articleId`,
-      element: <NewsArticle />,
+      element: (
+        <LoadNews>
+          <NewsArticle />,
+        </LoadNews>
+      ),
     },
     {
       path: '*',

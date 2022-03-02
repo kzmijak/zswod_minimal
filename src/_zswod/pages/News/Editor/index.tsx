@@ -2,10 +2,8 @@ import { FC, useEffect, useState } from 'react';
 import { styled } from '@mui/material/styles';
 import { Container, Typography } from '@mui/material';
 import Page from '../../../components/Page';
-import { useNavigate, useParams } from 'react-router';
+import { useParams } from 'react-router';
 import Page404 from 'src/pages/Page404';
-import { Article } from 'src/_zswod/models/Article/article';
-import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { MotionContainer } from 'src/components/animate';
 import { ArticlePreviewDialog } from './PreviewDialogs/ArticlePreviewDialog';
 import { ContentForm } from './ContentForm';
@@ -18,6 +16,9 @@ import * as yup from 'yup';
 import { Image } from 'src/_zswod/models/Image/image';
 import { GalleryPreviewDialog } from './PreviewDialogs/GalleryPreviewDialog';
 import ForwardIcon from '@mui/icons-material/Forward';
+import { getCurrentArticle, getNewsState } from 'src/_zswod/redux/news/selectors';
+import { useNewsActions } from 'src/_zswod/redux/news/actions';
+import { useDispatch, useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +35,6 @@ type InvalidFields = 'title' | 'short' | 'content' | 'images';
 
 const EditorGuarded: FC = () => {
   const { articleId } = useParams();
-  const { getArticle, loadArticle, isLoading, isLoaded } = useArticlesContext();
 
   if (articleId === undefined) {
     return <EditorView />;
@@ -42,19 +42,7 @@ const EditorGuarded: FC = () => {
 
   if (isNaN(Number(articleId))) return <Page404 />;
 
-  if (!isLoaded()) {
-    loadArticle(Number(articleId));
-  }
-
-  if (isLoading()) {
-    return null;
-  }
-
-  const article = getArticle(Number(articleId));
-
-  if (!Boolean(article)) return <Page404 />;
-
-  return <EditorView article={article!} />;
+  return <EditorView articleId={Number(articleId)} />;
 };
 
 type ContentState = {
@@ -64,7 +52,17 @@ type ContentState = {
   images: Image[];
 };
 
-const EditorView: FC<{ article?: Article }> = ({ article }) => {
+const EditorView: FC<{ articleId?: number }> = ({ articleId }) => {
+  const { asyncGetArticleAction } = useNewsActions();
+  const { isLoaded, currentArticle: article } = useSelector(getNewsState);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (Boolean(articleId) && article?.id !== articleId) {
+      dispatch(asyncGetArticleAction(articleId!));
+    }
+  }, [articleId, article]);
+
   const schema = yup.object().shape({
     title: yup
       .string()
@@ -123,6 +121,8 @@ const EditorView: FC<{ article?: Article }> = ({ article }) => {
     setArticlePreviewOpen(true);
     // reset();
   };
+
+  if (articleId && !isLoaded) return null;
 
   return (
     <MotionContainer>
