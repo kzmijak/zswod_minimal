@@ -25,6 +25,4 @@ const timeSince = (date: Date) => {
   return Math.floor(seconds) + ' sekund';
 };
 
-console.log(timeSince(new Date('2021-12-28')));
-
 export { timeSince };

@@ -4,7 +4,6 @@ import { Box, Link, Container, Typography, Stack } from '@mui/material';
 // components
 //
 import MainHeader from './MainHeader';
-import MainFooter from 'src/layouts/main/MainFooter';
 import { Logo } from 'src/_zswod/components';
 
 // ----------------------------------------------------------------------
@@ -22,9 +21,7 @@ export default function MainLayout() {
 
       <Box sx={{ flexGrow: 1 }} />
 
-      {!isHome ? (
-        <MainFooter />
-      ) : (
+      {isHome && (
         <Box
           sx={{
             py: 5,

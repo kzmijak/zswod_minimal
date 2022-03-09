@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ArticlesContext } from '../contexts/ArticlesContext';
+import { ArticlesContext } from '../contexts/Article/ArticlesContext';
 
 const useArticlesContext = () => useContext(ArticlesContext);
 

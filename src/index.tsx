@@ -8,6 +8,9 @@ import 'react-lazy-load-image-component/src/effects/black-and-white.css';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import 'react-image-lightbox/style.css';
+import './utils/highlight';
+import 'react-quill/dist/quill.snow.css';
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
@@ -19,7 +22,7 @@ import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
 //
 import App from './App';
-import { ArticlesProvider } from './_zswod/contexts/ArticlesContext';
+import { ArticlesProvider } from './_zswod/contexts/Article/ArticlesContext';
 import { store } from './_zswod/redux/store';
 
 // ----------------------------------------------------------------------
