@@ -9,16 +9,16 @@ import { ArticlePreviewDialog } from './PreviewDialogs/ArticlePreviewDialog';
 import { ContentForm } from './ContentForm';
 import { ErrorSnackbar } from './controls/ErrorSnackbar';
 import { SendButton } from './controls/SendButton';
-import { ImageNav } from './ImageNav';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { Image } from 'src/_zswod/models/Image/image';
 import { GalleryPreviewDialog } from './PreviewDialogs/GalleryPreviewDialog';
 import ForwardIcon from '@mui/icons-material/Forward';
-import { getCurrentArticle, getNewsState } from 'src/_zswod/redux/news/selectors';
+import { getNewsState } from 'src/_zswod/redux/news/selectors';
 import { useNewsActions } from 'src/_zswod/redux/news/actions';
 import { useDispatch, useSelector } from 'react-redux';
+import { ImageNav } from './imageNav';
 
 // ----------------------------------------------------------------------
 
@@ -61,6 +61,7 @@ const EditorView: FC<{ articleId?: number }> = ({ articleId }) => {
     if (Boolean(articleId) && article?.id !== articleId) {
       dispatch(asyncGetArticleAction(articleId!));
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [articleId, article]);
 
   const schema = yup.object().shape({

@@ -69,6 +69,7 @@ export default function HomeGallery({ passRef }: HomeGalleryProps) {
         onError(error);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isMountedRef]
   );
 

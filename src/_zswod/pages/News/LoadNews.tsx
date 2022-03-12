@@ -14,6 +14,7 @@ const LoadNews: FC<LoadNewsProps> = ({ children }) => {
     if (!isLoaded) {
       dispatch(asyncGetArticlesAction());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isLoaded]);
 
   if (!isLoaded) {

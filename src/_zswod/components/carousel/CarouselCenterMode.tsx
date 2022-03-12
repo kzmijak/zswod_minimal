@@ -13,6 +13,7 @@ import { useAxiosLoadable } from 'src/_zswod/hooks/useAxiosLoadable';
 import useIsMountedRef from 'use-is-mounted-ref';
 import { Article } from 'src/_zswod/models/Article/article';
 import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
+import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 
 // ----------------------------------------------------------------------
 
@@ -31,11 +32,12 @@ type CarouselItemProps = {
   title: string;
   description: string;
   image: string;
+  href: string;
 };
 
 function CarouselItem({ item }: { item: CarouselItemProps }) {
-  const { image, title } = item;
-
+  const { image, title, href } = item;
+  const linkRef = useRef<HTMLAnchorElement>(null);
   return (
     <Paper
       sx={{
@@ -61,11 +63,17 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
           color: 'common.white',
         }}
       >
-        <Typography variant="h4" paragraph>
+        <Typography
+          onClick={() => linkRef.current!.click()}
+          variant="h4"
+          paragraph
+          sx={{ cursor: 'pointer' }}
+        >
           {title}
         </Typography>
         <Link
-          to="#"
+          ref={linkRef}
+          to={href}
           color="inherit"
           variant="overline"
           component={RouterLink}
@@ -117,6 +125,7 @@ const CarouselCenterMode: FC = () => {
         onError(error);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [isMountedRef]
   );
 
@@ -143,6 +152,7 @@ const CarouselCenterMode: FC = () => {
           ...article,
           description: article.short,
           image: articles![index].images[0]?.uri ?? '',
+          href: `${PATHS_ABOUT.Nowości}/${article.id}`,
         };
         return (
           <MotionInView
