@@ -78,9 +78,7 @@ export default function NavbarVertical({ isOpenSidebar, onCloseSidebar }: Props)
           )}
         </Stack>
       </Stack>
-
       <NavSectionVertical navConfig={navConfig} isCollapse={isCollapse} />
-
       <Box sx={{ flexGrow: 1 }} />
     </Scrollbar>
   );

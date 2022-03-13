@@ -1,10 +1,10 @@
-import { Container, Stack, Typography } from '@mui/material';
+import { Box, Container, Stack, Typography } from '@mui/material';
 import { m } from 'framer-motion';
 import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { MotionContainer } from 'src/components/animate';
 import { Page } from 'src/_zswod/components';
-import { getCurrentGallery, getGalleryState } from 'src/_zswod/redux/gallery/selectors';
+import { getGalleryState } from 'src/_zswod/redux/gallery/selectors';
 import { galleryGreeter, useGreeter } from 'src/_zswod/utils/Greeters/useGreeter';
 import { GalleryMobile } from './Mobile/mobile';
 import { Picker } from './Picker/Picker';
