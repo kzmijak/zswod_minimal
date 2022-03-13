@@ -36,21 +36,20 @@ type PickerProps = {
 const Picker: FC<PickerProps> = ({ sx }) => {
   const articles = useSelector(getArticles);
 
-  console.log(articles);
   const gallery = useSelector(getCurrentGallery);
   const dispatch = useDispatch();
   const isDesktop = useResponsive('up', 'lg');
   const navigate = useNavigate();
   const { setGalleryAction } = useGalleryActions();
 
-  const toggleGallery = (next: Article) => {
+  const toggleGallery = async (next: Article) => {
     const isCurrent = next.id === gallery?.id;
 
     if (!isDesktop) {
       return navigate(next.id.toString());
     }
 
-    dispatch(setGalleryAction(isCurrent ? null : next));
+    await dispatch(setGalleryAction(isCurrent ? null : next));
   };
 
   return (
@@ -61,7 +60,7 @@ const Picker: FC<PickerProps> = ({ sx }) => {
             .filter((a) => a.images !== undefined)
             .map((a) => (
               <TimeOutlinedList key={a.id} date={a.date}>
-                <Accordion expanded={gallery?.id === a.id} onClick={() => toggleGallery(a)}>
+                <Accordion expanded={gallery?.id === a.id} onClick={async () => toggleGallery(a)}>
                   <AccordionSummary>
                     <Typography variant="h6" sx={{ width: '80%', flexShrink: 0 }}>
                       {a.title}

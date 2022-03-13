@@ -6,7 +6,7 @@ import KeyboardArrowRightRoundedIcon from '@mui/icons-material/KeyboardArrowRigh
 import { alpha, useTheme, styled } from '@mui/material/styles';
 import { Typography, Box, BoxProps } from '@mui/material';
 //
-import { MIconButton } from './MIconButton';
+import { MIconButton } from '../../MIconButton';
 
 // ----------------------------------------------------------------------
 

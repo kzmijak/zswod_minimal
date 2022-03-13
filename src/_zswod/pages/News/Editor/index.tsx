@@ -106,17 +106,26 @@ const EditorView: FC<{ articleId?: number }> = ({ articleId }) => {
     setArticlePreviewOpen(false);
   };
 
-  const initialArticle = {
+  const defaultValues = {
     title: article?.title ?? '',
     short: article?.short ?? '',
     content: article?.content ?? '',
     images: article?.images ?? [],
   };
   const { register, watch, setValue, formState, control, handleSubmit } = useForm<ContentState>({
-    defaultValues: initialArticle,
+    defaultValues,
     mode: 'onTouched',
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    if (Boolean(article)) {
+      setValue('content', article!.content);
+      setValue('images', article!.images);
+      setValue('short', article!.short);
+      setValue('title', article!.title);
+    }
+  }, [article]);
 
   const submitClicked = (values: ContentState) => {
     setArticlePreviewOpen(true);

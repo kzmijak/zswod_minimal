@@ -2,17 +2,27 @@ import { slice } from './reducer';
 import { AppDispatch } from 'src/_zswod/redux/store';
 import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
 import { Article } from 'src/_zswod/models/Article/article';
+import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
 
 const useGalleryActions = () => {
   const {
     actions: { getArticle, getArticlesList },
   } = useArticlesContext();
 
-  const setGalleryAction = (gallery: Article | null) => (dispatch: AppDispatch) => {
+  const setGalleryAction = (gallery: Article | null) => async (dispatch: AppDispatch) => {
     dispatch(slice.actions.startTransition());
-    setTimeout(() => {
-      dispatch(slice.actions.endTransition(gallery));
-    }, 100);
+
+    try {
+      let nextArticle: Article | null = null;
+      if (Boolean(gallery)) {
+        const response = await getArticle(gallery!.id);
+        nextArticle = ArticlesMapper.ResponseToModel(response);
+      }
+
+      dispatch(slice.actions.endTransition(nextArticle));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error.response.data));
+    }
   };
 
   const asyncGetArticleAction = (id: number) => async (dispatch: AppDispatch) => {
