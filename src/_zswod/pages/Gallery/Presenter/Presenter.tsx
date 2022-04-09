@@ -1,32 +1,29 @@
-import { Container } from '@mui/material';
-import { m } from 'framer-motion';
-import { FC } from 'react';
+import { Container, Drawer, Stack } from '@mui/material';
+import { FC, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CarouselThumbnail } from 'src/_zswod/components/carousel/CarouselThumbnail';
-import { RootState } from 'src/_zswod/redux/store';
+import { getGalleryState } from 'src/_zswod/redux/gallery/selectors';
 
-const variants = {
-  onInit: { opacity: 1, transition: { delay: 0.5, duration: 0.5 } },
-  onEnd: { opacity: 0 },
-};
+type PresenterProps = {};
 
-const Presenter: FC = () => {
-  const { openedGallery, previousGallery } = useSelector((state: RootState) => state.gallery);
+const Presenter: FC<PresenterProps> = () => {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const { openedGallery } = useSelector(getGalleryState);
 
-  if (!Boolean(openedGallery) && !Boolean(previousGallery)) return null;
+  useEffect(() => {
+    setDrawerOpen(Boolean(openedGallery));
+  }, [setDrawerOpen, openedGallery]);
 
-  const { images } = openedGallery ?? previousGallery!;
+  if (!Boolean(openedGallery)) {
+    return null;
+  }
 
   return (
-    <m.div
-      initial={{ opacity: 0 }}
-      variants={variants}
-      animate={openedGallery !== null ? 'onInit' : 'onEnd'}
-    >
+    <Drawer anchor="right" variant="persistent" open={drawerOpen} sx={{ width: '1000px' }}>
       <Container>
-        <CarouselThumbnail images={images} />
+        <CarouselThumbnail images={openedGallery!.images} />
       </Container>
-    </m.div>
+    </Drawer>
   );
 };
 

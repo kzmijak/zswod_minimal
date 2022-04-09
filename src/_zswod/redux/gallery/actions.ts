@@ -10,8 +10,6 @@ const useGalleryActions = () => {
   } = useArticlesContext();
 
   const setGalleryAction = (gallery: Article | null) => async (dispatch: AppDispatch) => {
-    dispatch(slice.actions.startTransition());
-
     try {
       let nextArticle: Article | null = null;
       if (Boolean(gallery)) {
@@ -19,7 +17,7 @@ const useGalleryActions = () => {
         nextArticle = ArticlesMapper.ResponseToModel(response);
       }
 
-      dispatch(slice.actions.endTransition(nextArticle));
+      dispatch(slice.actions.setGallery(nextArticle));
     } catch (error) {
       dispatch(slice.actions.hasError(error.response.data));
     }

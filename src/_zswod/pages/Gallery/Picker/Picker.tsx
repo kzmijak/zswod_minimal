@@ -49,8 +49,10 @@ const Picker: FC<PickerProps> = ({ sx }) => {
       return navigate(next.id.toString());
     }
 
-    await dispatch(setGalleryAction(isCurrent ? null : next));
+    dispatch(setGalleryAction(isCurrent ? null : next));
   };
+
+  if (!Boolean(articles)) return null;
 
   return (
     <Container sx={sx}>
