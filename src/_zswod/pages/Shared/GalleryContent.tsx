@@ -88,9 +88,9 @@ const EditImageDialog: FC<EditImageDialogProps> = ({
 };
 
 type GalleryContentProps = {
-  articleTitle: string;
+  articleTitle?: string;
   images: Image[];
-  setImages: (images: Image[]) => void;
+  setImages?: (images: Image[]) => void;
   hasNextArticle?: boolean;
   hasPrevArticle?: boolean;
   onGoToArticleClick?: MouseEventHandler<HTMLButtonElement>;
@@ -124,7 +124,8 @@ const GalleryContent: FC<GalleryContentProps> = ({
       }
       return i;
     });
-    setImages(newImages);
+
+    if (Boolean(setImages)) setImages!(newImages);
     setImageOpenForEdit(-1);
   };
 
@@ -133,9 +134,11 @@ const GalleryContent: FC<GalleryContentProps> = ({
       <Stack direction="column" spacing={5}>
         <Typography variant="h1">{articleTitle}</Typography>
         <Stack direction="row" justifyContent="center">
-          <Button onClick={onGoToArticleClick} variant="contained">
-            Zobacz artykuł
-          </Button>
+          {Boolean(onGoToArticleClick) && (
+            <Button onClick={onGoToArticleClick} variant="contained">
+              Zobacz artykuł
+            </Button>
+          )}
         </Stack>
         <ImageList>
           {images.map((img, index) => (

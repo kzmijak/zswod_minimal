@@ -8,8 +8,8 @@ import useCollapseDrawer from 'src/hooks/useCollapseDrawer';
 // config
 import { HEADER, NAVBAR } from 'src/config';
 //
-import DashboardHeader from './header';
 import NavbarVertical from './navbar/NavbarVertical';
+import Scrollbar from 'src/components/Scrollbar';
 
 // ----------------------------------------------------------------------
 
@@ -41,23 +41,25 @@ const MainStyle = styled('main', {
 // ----------------------------------------------------------------------
 
 export default function DashboardLayout() {
-  const { collapseClick, isCollapse } = useCollapseDrawer();
+  const { collapseClick } = useCollapseDrawer();
 
   const [open, setOpen] = useState(false);
 
   return (
-    <Box
-      sx={{
-        display: { lg: 'flex' },
-        minHeight: { lg: 1 },
-      }}
-    >
-      <DashboardHeader isCollapse={isCollapse} onOpenSidebar={() => setOpen(true)} />
-      <NavbarVertical isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+    <Scrollbar>
+      <Box
+        sx={{
+          maxHeight: '100vh',
+          display: { lg: 'flex' },
+          minHeight: { lg: 1 },
+        }}
+      >
+        <NavbarVertical isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
 
-      <MainStyle collapseClick={collapseClick}>
-        <Outlet />
-      </MainStyle>
-    </Box>
+        <MainStyle collapseClick={collapseClick}>
+          <Outlet />
+        </MainStyle>
+      </Box>
+    </Scrollbar>
   );
 }

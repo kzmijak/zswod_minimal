@@ -1,19 +1,12 @@
 import Slider from 'react-slick';
-import { FC, useCallback, useEffect, useRef } from 'react';
+import { FC, MouseEventHandler, useRef } from 'react';
 import { Icon } from '@iconify/react';
-import { Link as RouterLink } from 'react-router-dom';
 // material
 import { styled } from '@mui/material/styles';
-import { Box, Paper, Link, Typography, CardContent } from '@mui/material';
+import { Box, Paper, Typography, CardContent } from '@mui/material';
 // utils
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
-import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
-import { useAxiosLoadable } from 'src/_zswod/hooks/useAxiosLoadable';
-import useIsMountedRef from 'use-is-mounted-ref';
-import { Article } from 'src/_zswod/models/Article/article';
-import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
-import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 
 // ----------------------------------------------------------------------
 
@@ -32,12 +25,11 @@ type CarouselItemProps = {
   title: string;
   description: string;
   image: string;
-  href: string;
+  onClick: MouseEventHandler<HTMLSpanElement>;
 };
 
 function CarouselItem({ item }: { item: CarouselItemProps }) {
-  const { image, title, href } = item;
-  const linkRef = useRef<HTMLAnchorElement>(null);
+  const { image, title, onClick } = item;
   return (
     <Paper
       sx={{
@@ -63,79 +55,39 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
           color: 'common.white',
         }}
       >
-        <Typography
-          onClick={() => linkRef.current!.click()}
-          variant="h4"
-          paragraph
-          sx={{ cursor: 'pointer' }}
-        >
+        <Typography onClick={onClick} variant="h4" paragraph sx={{ cursor: 'pointer' }}>
           {title}
         </Typography>
-        <Link
-          ref={linkRef}
-          to={href}
-          color="inherit"
+        <Typography
+          onClick={onClick}
           variant="overline"
-          component={RouterLink}
           sx={{
             opacity: 0.72,
+            cursor: 'pointer',
             alignItems: 'center',
             display: 'inline-flex',
             transition: (theme) => theme.transitions.create('opacity'),
             '&:hover': { opacity: 1 },
           }}
         >
-          Przeczytaj
+          Zobacz
           <Box
             component={Icon}
             icon="akar-icons:arrow-forward"
             sx={{ width: 16, height: 16, ml: 1 }}
           />
-        </Link>
+        </Typography>
       </CardContent>
     </Paper>
   );
 }
 
-const CarouselCenterMode: FC = () => {
+const CarouselCenterMode: FC<{ items: CarouselItemProps[]; animate?: boolean }> = ({
+  items,
+  animate = true,
+}) => {
   const carouselRef = useRef<Slider | null>(null);
   const isDesktop = useResponsive('up', 'md');
-  const {
-    actions: { getArticlesList },
-  } = useArticlesContext();
-
-  const isMountedRef = useIsMountedRef();
-
-  const {
-    requestState: { isLoaded, data: articles },
-    onError,
-    onSuccess,
-    startLoading,
-  } = useAxiosLoadable<Article[]>();
-
-  const { ListResponseToModel } = ArticlesMapper;
-
-  const getArticles = useCallback(
-    async (count: number) => {
-      startLoading();
-      try {
-        const response = await getArticlesList(count);
-        onSuccess(ListResponseToModel(response));
-      } catch (error) {
-        onError(error);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [isMountedRef]
-  );
-
-  useEffect(() => {
-    getArticles(6);
-  }, [getArticles]);
-
-  if (!isLoaded) {
-    return null;
-  }
 
   const settings = {
     dots: true,
@@ -147,24 +99,17 @@ const CarouselCenterMode: FC = () => {
 
   return (
     <Slider ref={carouselRef} {...settings}>
-      {articles!.map((article, index) => {
-        const item: CarouselItemProps = {
-          ...article,
-          description: article.short,
-          image: articles![index].images[0]?.uri ?? '',
-          href: `${PATHS_ABOUT.Nowości}/${article.id}`,
-        };
-        return (
-          <MotionInView
-            key={article.id}
-            variants={index % 2 === 0 ? varFade().inDown : varFade().inUp}
-          >
-            <CarouselItem item={item} />
-          </MotionInView>
-        );
-      })}
+      {items!.map((item, index) => (
+        <MotionInView
+          key={index}
+          variants={animate ? (index % 2 === 0 ? varFade().inDown : varFade().inUp) : undefined}
+        >
+          <CarouselItem key={index} item={item} />
+        </MotionInView>
+      ))}
     </Slider>
   );
 };
 
 export { CarouselCenterMode };
+export type { CarouselItemProps };

@@ -15,7 +15,7 @@ const DashboardRoutes: RouteObject = {
       path: PATHS_ABOUT.Galeria,
       element: (
         <LoadGallery>
-          <Gallery />,
+          <Gallery />
         </LoadGallery>
       ),
     },

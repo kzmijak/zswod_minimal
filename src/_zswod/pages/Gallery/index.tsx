@@ -1,16 +1,17 @@
 import { Container, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
+import Scrollbar from 'src/components/Scrollbar';
 import { Page } from 'src/_zswod/components';
 import { galleryGreeter, useGreeter } from 'src/_zswod/utils/Greeters/useGreeter';
 import { GalleryMobile } from './Mobile/mobile';
 import { Picker } from './Picker/Picker';
-import { Presenter } from './Presenter/Presenter';
+import { SimplePresenter } from './Presenter/SimplePresenter';
 
 const Gallery: FC = () => {
   const greeter = useGreeter(galleryGreeter);
 
   return (
-    <Page>
+    <Page sx={{ overflowX: 'hidden' }}>
       <Container>
         <Typography component="div" variant="overline" sx={{ color: 'text.disabled' }}>
           {greeter}
@@ -19,10 +20,12 @@ const Gallery: FC = () => {
           Galeria
         </Typography>
       </Container>
-      <Stack direction="row">
-        <Picker />
-        <Presenter />
-      </Stack>
+      <Scrollbar>
+        <Stack direction="row">
+          <Picker />
+          <SimplePresenter />
+        </Stack>
+      </Scrollbar>
     </Page>
   );
 };

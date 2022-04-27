@@ -5,9 +5,16 @@ import { Container, Stack, Typography } from '@mui/material';
 // components
 import { MotionInView, varFade } from 'src/components/animate';
 import { CarouselCenterMode } from 'src/_zswod/components/carousel';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { useArticlesContext } from 'src/_zswod/hooks/useArticlesContext';
+import { useAxiosLoadable } from 'src/_zswod/hooks/useAxiosLoadable';
+import { ArticlesMapper } from 'src/_zswod/mappers/articlesMapper';
+import { Article } from 'src/_zswod/models/Article/article';
+import useIsMountedRef from 'use-is-mounted-ref';
+import { CarouselItemProps } from 'src/_zswod/components/carousel/CarouselCenterMode';
+import { useNavigate } from 'react-router';
 
 // ----------------------------------------------------------------------
 
@@ -24,9 +31,55 @@ type HomeArticlesProps = {
 export default function HomeArticles({ passRef }: HomeArticlesProps) {
   const ref = useRef(null);
 
+  const navigate = useNavigate();
+
   useEffect(() => {
     passRef(ref);
   }, [passRef, ref]);
+
+  const {
+    actions: { getArticlesList },
+  } = useArticlesContext();
+
+  const isMountedRef = useIsMountedRef();
+
+  const {
+    requestState: { isLoaded, data: articles },
+    onError,
+    onSuccess,
+    startLoading,
+  } = useAxiosLoadable<Article[]>();
+
+  const { ListResponseToModel } = ArticlesMapper;
+
+  const getArticles = useCallback(
+    async (count: number) => {
+      startLoading();
+      try {
+        const response = await getArticlesList(count);
+        onSuccess(ListResponseToModel(response));
+      } catch (error) {
+        onError(error);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [isMountedRef]
+  );
+
+  useEffect(() => {
+    getArticles(6);
+  }, [getArticles]);
+
+  if (!Boolean(isLoaded) || !Boolean(articles)) {
+    return null;
+  }
+
+  const carouselItems: CarouselItemProps[] = articles!.map((article, index) => ({
+    title: article.title,
+    description: article.short,
+    image: articles![index].images[0]?.uri ?? '',
+    onClick: () => navigate(`${PATHS_ABOUT.Nowości}/${article.id}`),
+  }));
 
   return (
     <RootStyle ref={ref}>
@@ -43,7 +96,7 @@ export default function HomeArticles({ passRef }: HomeArticlesProps) {
           </Typography>
         </MotionInView>
 
-        <CarouselCenterMode />
+        <CarouselCenterMode animate items={carouselItems!} />
 
         <MotionInView variants={varFade().inLeft}>
           <Stack

@@ -22,6 +22,7 @@ import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Image } from '../../../models/Image/image';
 import { Article } from 'src/_zswod/models/Article/article';
+import { m } from 'framer-motion';
 
 const ImagesDemo: FC<{ image: Image }> = ({ image }) => (
   <Stack direction="row" spacing={1} justifyContent="flex-end">
@@ -42,7 +43,7 @@ const Picker: FC<PickerProps> = ({ sx }) => {
   const navigate = useNavigate();
   const { setGalleryAction } = useGalleryActions();
 
-  const toggleGallery = async (next: Article) => {
+  const toggleGallery = async (next: Article, index: number) => {
     const isCurrent = next.id === gallery?.id;
 
     if (!isDesktop) {
@@ -52,41 +53,68 @@ const Picker: FC<PickerProps> = ({ sx }) => {
     dispatch(setGalleryAction(isCurrent ? null : next));
   };
 
-  if (!Boolean(articles)) return null;
+  const isSquashed = Boolean(gallery);
+
+  const containerVariants = {
+    loose: { x: 0 },
+    squashed: { x: -200 },
+  };
+
+  const accordionItemVariants = {
+    loose: { width: 'inherit' },
+    squashed: { width: 400 },
+  };
 
   return (
-    <Container sx={sx}>
-      <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
-        <Timeline position="left">
-          {articles!
-            .filter((a) => a.images !== undefined)
-            .map((a) => (
-              <TimeOutlinedList key={a.id} date={a.date}>
-                <Accordion expanded={gallery?.id === a.id} onClick={async () => toggleGallery(a)}>
-                  <AccordionSummary>
-                    <Typography variant="h6" sx={{ width: '80%', flexShrink: 0 }}>
-                      {a.title}
-                    </Typography>
-                    <ImagesDemo image={a.images[0]} />
-                  </AccordionSummary>
+    <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
+      <Container sx={sx}>
+        <m.div
+          variants={containerVariants}
+          initial="loose"
+          animate={isSquashed ? 'squashed' : 'loose'}
+          transition={{ ease: 'easeOut' }}
+        >
+          <Timeline position="left">
+            {articles!
+              .filter((a) => a.images !== undefined)
+              .map((a, index) => (
+                <TimeOutlinedList key={a.id} date={a.date}>
+                  <m.div
+                    variants={accordionItemVariants}
+                    initial="loose"
+                    animate={isSquashed ? 'squashed' : 'loose'}
+                    transition={{ ease: 'easeOut' }}
+                  >
+                    <Accordion
+                      expanded={gallery?.id === a.id}
+                      onClick={async () => toggleGallery(a, index)}
+                    >
+                      <AccordionSummary>
+                        <Typography variant="h6" sx={{ width: '80%', flexShrink: 0 }}>
+                          {a.title}
+                        </Typography>
+                        <ImagesDemo image={a.images[0]} />
+                      </AccordionSummary>
 
-                  <AccordionDetails>
-                    <Typography>
-                      <Button
-                        component={Link}
-                        to={`${PATHS_ABOUT.Nowości}/${a.id}`}
-                        startIcon={<ContentPasteGoIcon />}
-                      >
-                        Zobacz artykuł
-                      </Button>
-                    </Typography>
-                  </AccordionDetails>
-                </Accordion>
-              </TimeOutlinedList>
-            ))}
-        </Timeline>
-      </Scrollbar>
-    </Container>
+                      <AccordionDetails>
+                        <Typography>
+                          <Button
+                            component={Link}
+                            to={`${PATHS_ABOUT.Nowości}/${a.id}`}
+                            startIcon={<ContentPasteGoIcon />}
+                          >
+                            Zobacz artykuł
+                          </Button>
+                        </Typography>
+                      </AccordionDetails>
+                    </Accordion>
+                  </m.div>
+                </TimeOutlinedList>
+              ))}
+          </Timeline>
+        </m.div>
+      </Container>
+    </Scrollbar>
   );
 };
 
