@@ -66,15 +66,15 @@ const Picker: FC<PickerProps> = ({ sx }) => {
   };
 
   return (
-    <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
-      <Container sx={sx}>
-        <m.div
-          variants={containerVariants}
-          initial="loose"
-          animate={isSquashed ? 'squashed' : 'loose'}
-          transition={{ ease: 'easeOut' }}
-        >
-          <Timeline position="left">
+    <Container sx={sx}>
+      <m.div
+        variants={containerVariants}
+        initial="loose"
+        animate={isSquashed ? 'squashed' : 'loose'}
+        transition={{ ease: 'easeOut' }}
+      >
+        <Timeline position="left">
+          <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
             {articles!
               .filter((a) => a.images !== undefined)
               .map((a, index) => (
@@ -111,10 +111,10 @@ const Picker: FC<PickerProps> = ({ sx }) => {
                   </m.div>
                 </TimeOutlinedList>
               ))}
-          </Timeline>
-        </m.div>
-      </Container>
-    </Scrollbar>
+          </Scrollbar>
+        </Timeline>
+      </m.div>
+    </Container>
   );
 };
 
