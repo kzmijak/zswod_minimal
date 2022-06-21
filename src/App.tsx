@@ -1,5 +1,5 @@
 // routes
-import { Router } from './_zswod/routes';
+import { Router } from './_old_zswod/routes';
 // theme
 import ThemeProvider from './theme';
 // components
@@ -8,7 +8,7 @@ import ScrollToTop from './components/ScrollToTop';
 import { ProgressBarStyle } from './components/ProgressBar';
 import ThemeColorPresets from './components/ThemeColorPresets';
 import MotionLazyContainer from './components/animate/MotionLazyContainer';
-import Settings from './_zswod/components/settings';
+import Settings from './_old_zswod/components/settings';
 
 // ----------------------------------------------------------------------
 
