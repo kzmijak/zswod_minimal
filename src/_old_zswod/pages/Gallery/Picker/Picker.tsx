@@ -76,8 +76,8 @@ const Picker: FC<PickerProps> = ({ sx }) => {
         <Timeline position="left">
           <Scrollbar sx={{ height: '70vh', overflowX: 'hidden', padding: 0 }}>
             {articles!
-              .filter((a) => a.images !== undefined)
-              .map((a, index) => (
+              .filter((a: any) => a.images !== undefined)
+              .map((a: any, index: any) => (
                 <TimeOutlinedList key={a.id} date={a.date}>
                   <m.div
                     variants={accordionItemVariants}

@@ -13,7 +13,7 @@ const store = configureStore({
     }),
 });
 
-type RootState = ReturnType<typeof store.getState>;
+type RootState = ReturnType<typeof rootReducer>;
 type AppDispatch = typeof store.dispatch;
 
 const persistor = persistStore(store);

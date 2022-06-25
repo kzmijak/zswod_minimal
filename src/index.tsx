@@ -22,8 +22,7 @@ import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
 //
 import App from './App';
-import { ArticlesProvider } from './_old_zswod/contexts/Article/ArticlesContext';
-import { store } from './_old_zswod/redux/store';
+import { store } from './_zswod/redux/store';
 
 // ----------------------------------------------------------------------
 
@@ -31,13 +30,11 @@ ReactDOM.render(
   <HelmetProvider>
     <ReduxProvider store={store}>
       <SettingsProvider>
-        <ArticlesProvider>
-          <CollapseDrawerProvider>
-            <BrowserRouter>
-              <App />
-            </BrowserRouter>
-          </CollapseDrawerProvider>
-        </ArticlesProvider>
+        <CollapseDrawerProvider>
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
+        </CollapseDrawerProvider>
       </SettingsProvider>
     </ReduxProvider>
   </HelmetProvider>,

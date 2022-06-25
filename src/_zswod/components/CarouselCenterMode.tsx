@@ -1,14 +1,10 @@
 import Slider from 'react-slick';
 import { FC, MouseEventHandler, useRef } from 'react';
 import { Icon } from '@iconify/react';
-// material
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Typography, CardContent } from '@mui/material';
-// utils
 import { MotionInView, varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
-
-// ----------------------------------------------------------------------
 
 const CarouselImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -18,8 +14,6 @@ const CarouselImgStyle = styled('img')(({ theme }) => ({
   position: 'absolute',
   transition: theme.transitions.create('all'),
 }));
-
-// ----------------------------------------------------------------------
 
 type CarouselItemProps = {
   title: string;
@@ -82,10 +76,12 @@ function CarouselItem({ item }: { item: CarouselItemProps }) {
   );
 }
 
-const CarouselCenterMode: FC<{ items: CarouselItemProps[]; animate?: boolean }> = ({
-  items,
-  animate = true,
-}) => {
+type CarouselCenterModeProps = {
+  items: CarouselItemProps[];
+  animate?: boolean;
+};
+
+const CarouselCenterMode: FC<CarouselCenterModeProps> = ({ items, animate = true }) => {
   const carouselRef = useRef<Slider | null>(null);
   const isDesktop = useResponsive('up', 'md');
 
