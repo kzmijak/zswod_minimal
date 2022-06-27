@@ -10,9 +10,10 @@ const selectStatus = (state: RootState) => {
 
 const { selectEntities } = entityAdapter.getSelectors();
 
-const selectModels = createSelector(
-  selectEntities,
-  (entities) => Object.values(entities).filter((entity) => !Boolean(entity)) as ArticleHeaderModel[]
-);
+const selectModels = createSelector(selectEntities, (entities) => {
+  if (!Boolean(entities)) return [];
+
+  return Object.values(entities) as ArticleHeaderModel[];
+});
 
 export { selectStatus, selectModels };

@@ -1,1 +1,0 @@
-export { CarouselCenterMode } from './CarouselCenterMode';

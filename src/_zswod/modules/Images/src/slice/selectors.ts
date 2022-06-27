@@ -16,11 +16,9 @@ const selectStatus = (state: RootState) => {
 
 const selectModels = (limit?: number) =>
   createSelector(selectEntities, (entities) => {
-    const values = Object.values(entities).filter((nullableValue) =>
-      Boolean(nullableValue)
-    ) as ImageModel[];
+    if (!Boolean(entities)) return [];
 
-    return values.slice(0, limit);
+    return Object.values(entities).slice(0, limit) as ImageModel[];
   });
 
 export { selectModels, selectStatus };
