@@ -44,7 +44,7 @@
     "@mui/icons-material": "^5.3.1",
     "@mui/lab": "^5.0.0-alpha.66",
     "@mui/material": "^5.2.4",
-    "@reduxjs/toolkit": "^1.7.1",
+    "@reduxjs/toolkit": "^1.8.3",
     "@types/draftjs-to-html": "^0.8.1",
     "@types/express": "^4.17.13",
     "@types/lodash": "^4.14.178",

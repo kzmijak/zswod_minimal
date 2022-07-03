@@ -1,4 +1,4 @@
-import { createEntityAdapter, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { ImageModel } from 'src/_zswod/models/Image';
 import { fetchImages } from './actions';
 
@@ -7,7 +7,9 @@ type InitialState = {
   error: string | null;
 };
 
-const entityAdapter = createEntityAdapter<ImageModel>();
+const entityAdapter = createEntityAdapter<ImageModel>({
+  selectId: (image) => image.imageGuid,
+});
 
 const initialState = entityAdapter.getInitialState<InitialState>({
   error: null,
@@ -23,7 +25,7 @@ const slice = createSlice({
       .addCase(fetchImages.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchImages.fulfilled, (state, action: PayloadAction<ImageModel[]>) => {
+      .addCase(fetchImages.fulfilled, (state, action) => {
         state.status = 'success';
         entityAdapter.setAll(state, action.payload);
       })

@@ -1,9 +1,8 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'src/_zswod/redux/store';
-import { ImageModel } from 'src/_zswod/models/Image';
 import { entityAdapter } from './reducer';
 
-const { selectEntities } = entityAdapter.getSelectors();
+const { selectAll } = entityAdapter.getSelectors((state: RootState) => state.imagesReducer);
 
 const selectStatus = (state: RootState) => {
   const { error, status } = state.imagesReducer;
@@ -15,10 +14,10 @@ const selectStatus = (state: RootState) => {
 };
 
 const selectModels = (limit?: number) =>
-  createSelector(selectEntities, (entities) => {
+  createSelector(selectAll, (entities) => {
     if (!Boolean(entities)) return [];
 
-    return Object.values(entities).slice(0, limit) as ImageModel[];
+    return entities.slice(0, limit);
   });
 
 export { selectModels, selectStatus };

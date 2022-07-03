@@ -7,7 +7,9 @@ type InitialState = {
   error: string | null;
 };
 
-const entityAdapter = createEntityAdapter<ArticleHeaderModel>();
+const entityAdapter = createEntityAdapter<ArticleHeaderModel>({
+  selectId: (article) => article.titleNormalized,
+});
 
 const initialState = entityAdapter.getInitialState<InitialState>({
   error: null,

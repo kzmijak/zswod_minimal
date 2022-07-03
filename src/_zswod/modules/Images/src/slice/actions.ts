@@ -8,7 +8,7 @@ const {
 } = config;
 
 const fetchImages = createAsyncThunk('images/fetch', async () => {
-  const result = await axios.get<ImageDto[]>('images', { baseURL });
+  const result = await axios.get<ImageDto[]>('articles/images', { baseURL });
 
   return arrayMapImageDtoToModel(result.data);
 });
