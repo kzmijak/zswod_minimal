@@ -2,10 +2,10 @@ import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from 'src/_zswod/redux/store';
 import { entityAdapter } from './reducer';
 
-const { selectAll } = entityAdapter.getSelectors((state: RootState) => state.imagesReducer);
+const { selectAll } = entityAdapter.getSelectors((state: RootState) => state.images);
 
 const selectStatus = (state: RootState) => {
-  const { error, status } = state.imagesReducer;
+  const { error, status } = state.images;
 
   return {
     error,

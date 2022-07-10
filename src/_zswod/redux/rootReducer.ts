@@ -12,8 +12,8 @@ const rootPersistConfig = {
 };
 
 const rootReducer = combineReducers({
-  articleHeadersReducer,
-  imagesReducer,
+  articleHeaders: articleHeadersReducer,
+  images: imagesReducer,
 });
 
 export { rootReducer, rootPersistConfig };

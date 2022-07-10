@@ -8,7 +8,7 @@ type InitialState = {
 };
 
 const entityAdapter = createEntityAdapter<ArticleHeaderModel>({
-  selectId: (article) => article.titleNormalized,
+  selectId: (article) => article.articleGuid,
 });
 
 const initialState = entityAdapter.getInitialState<InitialState>({

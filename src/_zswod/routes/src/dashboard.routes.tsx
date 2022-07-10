@@ -2,6 +2,7 @@ import { RouteObject } from 'react-router';
 import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
 import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
 import { Maintenance } from 'src/_zswod/views/Maintenance';
+import { ArticlesListView } from 'src/_zswod/modules/ArticlesList/src/views/ArticlesListView';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
@@ -17,7 +18,7 @@ const DashboardRoutes: RouteObject = {
     },
     {
       path: `${PATHS_ABOUT.nowosci.link}`,
-      element: <Maintenance />,
+      element: <ArticlesListView />,
     },
     {
       path: `${PATHS_ABOUT.nowosci.link}/:articleId`,
