@@ -1,5 +1,5 @@
 type ImageModel = {
-  imageGuid: string;
+  id: string;
   title: string;
   alt: string;
   url: string;

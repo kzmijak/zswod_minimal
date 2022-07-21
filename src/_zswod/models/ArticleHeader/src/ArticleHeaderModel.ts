@@ -1,5 +1,5 @@
 type ArticleHeaderModel = {
-  articleGuid: string;
+  id: string;
   previewImageUrl: string;
   previewImageAlt: string;
   title: string;

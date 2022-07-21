@@ -3,6 +3,7 @@ import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
 import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
 import { Maintenance } from 'src/_zswod/views/Maintenance';
 import { ArticlesListView } from 'src/_zswod/modules/ArticlesList/src/views/ArticlesListView';
+import { ArticleView } from 'src/_zswod/modules/Article';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
@@ -21,8 +22,8 @@ const DashboardRoutes: RouteObject = {
       element: <ArticlesListView />,
     },
     {
-      path: `${PATHS_ABOUT.nowosci.link}/:articleId`,
-      element: <Maintenance />,
+      path: `${PATHS_ABOUT.nowosci.link}/:title`,
+      element: <ArticleView />,
     },
     {
       path: '*',

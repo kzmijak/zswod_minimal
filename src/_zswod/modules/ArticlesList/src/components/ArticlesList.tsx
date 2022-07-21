@@ -31,7 +31,7 @@ const ArticlesList: FC = () => {
         <Timeline position="left">
           {articles.map((article) => {
             const {
-              articleGuid,
+              id,
               previewImageAlt,
               previewImageUrl,
               date: dateISO,
@@ -40,7 +40,7 @@ const ArticlesList: FC = () => {
             } = article;
             const date = new Date(dateISO);
             return (
-              <TimeOutlinedList key={articleGuid} date={date}>
+              <TimeOutlinedList key={id} date={date}>
                 <Paper elevation={2} sx={{ height: 200 }}>
                   <Grid container>
                     <Grid item xs={3}>
@@ -62,7 +62,7 @@ const ArticlesList: FC = () => {
                         <Typography variant="body2">{article.short}</Typography>
                         <Button
                           component={Link}
-                          to={`/edytor/${articleGuid}`}
+                          to={`/edytor/${id}`}
                           sx={{ position: 'absolute', bottom: 10, right: 25 }}
                         >
                           Edytuj

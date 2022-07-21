@@ -1,15 +1,14 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { ArticleHeaderModel } from 'src/_zswod/models/ArticleHeader';
+import { RequestError, RequestStatus } from 'src/_zswod/utils/requestStatus';
 import { fetch } from './actions';
 
 type InitialState = {
-  status: 'idle' | 'loading' | 'success' | 'error';
-  error: string | null;
+  status: RequestStatus;
+  error: RequestError;
 };
 
-const entityAdapter = createEntityAdapter<ArticleHeaderModel>({
-  selectId: (article) => article.articleGuid,
-});
+const entityAdapter = createEntityAdapter<ArticleHeaderModel>();
 
 const initialState = entityAdapter.getInitialState<InitialState>({
   error: null,

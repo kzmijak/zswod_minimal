@@ -7,9 +7,7 @@ type InitialState = {
   error: string | null;
 };
 
-const entityAdapter = createEntityAdapter<ImageModel>({
-  selectId: (image) => image.imageGuid,
-});
+const entityAdapter = createEntityAdapter<ImageModel>();
 
 const initialState = entityAdapter.getInitialState<InitialState>({
   error: null,
