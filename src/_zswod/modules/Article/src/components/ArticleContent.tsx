@@ -11,9 +11,10 @@ import {
   useTheme,
 } from '@mui/material';
 import { FC, MouseEventHandler } from 'react';
-import Markdown from 'src/_zswod/components/Markdown';
+import { Markdown } from 'src/_zswod/components/Markdown';
+import { ArticleModel } from 'src/_zswod/models/Article';
 
-const ImgStyle = styled('img')(({ theme }) => ({
+const ImgStyle = styled('img')(() => ({
   top: 0,
   width: '100%',
   height: '100%',
@@ -28,7 +29,12 @@ type ArticleImageProps = {
   alertTooltipContent?: string;
 };
 
-function ArticleImage({ image, title, onGoToGallery, alertTooltipContent }: ArticleImageProps) {
+const ArticleImage: FC<ArticleImageProps> = ({
+  image,
+  title,
+  onGoToGallery,
+  alertTooltipContent,
+}) => {
   const theme = useTheme();
   return (
     <Paper
@@ -84,47 +90,31 @@ function ArticleImage({ image, title, onGoToGallery, alertTooltipContent }: Arti
       </CardContent>
     </Paper>
   );
-}
-
-type ArticleSkeleton = {
-  id?: number;
-  title: string;
-  short: string;
-  content: string;
-  mainImage?: string | File;
 };
 
 type ArticleContentProps = {
-  articleContent: ArticleSkeleton;
-  mainImage: string | File;
+  articleContent: ArticleModel;
   onGoToGallery: MouseEventHandler<HTMLButtonElement>;
   alertTooltipContent?: string;
 };
 
 const ArticleContent: FC<ArticleContentProps> = ({
   articleContent,
-  mainImage,
   onGoToGallery,
   alertTooltipContent,
-}) => {
-  if (typeof mainImage !== 'string') {
-    mainImage = (mainImage as any).preview as string;
-  }
-
-  return (
-    <Card>
-      <ArticleImage
-        title={articleContent.title}
-        image={mainImage}
-        onGoToGallery={onGoToGallery}
-        alertTooltipContent={alertTooltipContent}
-      />
-      <Box sx={{ margin: 3.5 }}>
-        <Markdown children={articleContent.content} />
-      </Box>
-    </Card>
-  );
-};
+}) => (
+  <Card>
+    <ArticleImage
+      title={articleContent.title}
+      image={articleContent.previewImageUrl}
+      onGoToGallery={onGoToGallery}
+      alertTooltipContent={alertTooltipContent}
+    />
+    <Box sx={{ margin: 3.5 }}>
+      <Markdown children={articleContent.content} />
+      {articleContent.content}
+    </Box>
+  </Card>
+);
 
 export { ArticleContent };
-export type { ArticleSkeleton };

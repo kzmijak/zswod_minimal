@@ -11,7 +11,11 @@ const fetchArticle = createAsyncThunk('article/fetch', async (articleName: strin
     baseURL,
   });
 
+  console.log(response.data);
+
   return mapArticleDtoToModel(response.data[0]);
 });
 
 export { fetchArticle };
+
+// use ky not axios

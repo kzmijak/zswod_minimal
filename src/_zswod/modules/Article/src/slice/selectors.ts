@@ -5,4 +5,6 @@ const selectStatus = (state: RootState) => ({
   error: state.article.error,
 });
 
-export { selectStatus };
+const selectCurrentArticle = (state: RootState) => state.article.article;
+
+export { selectStatus, selectCurrentArticle };
