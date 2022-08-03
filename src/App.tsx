@@ -3,28 +3,23 @@ import { Router } from './_zswod/routes';
 // theme
 import ThemeProvider from './theme';
 // components
-import RtlLayout from './components/RtlLayout';
+import ThemeSettings from './components/settings';
 import ScrollToTop from './components/ScrollToTop';
 import { ProgressBarStyle } from './components/ProgressBar';
-import ThemeColorPresets from './components/ThemeColorPresets';
 import MotionLazyContainer from './components/animate/MotionLazyContainer';
-import { Settings } from './_zswod/modules/Settings';
 
 // ----------------------------------------------------------------------
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <ThemeColorPresets>
-        <RtlLayout>
-          <MotionLazyContainer>
-            <ProgressBarStyle />
-            <Settings />
-            <ScrollToTop />
-            <Router />
-          </MotionLazyContainer>
-        </RtlLayout>
-      </ThemeColorPresets>
-    </ThemeProvider>
+    <MotionLazyContainer>
+      <ThemeProvider>
+        <ThemeSettings>
+          <ProgressBarStyle />
+          <ScrollToTop />
+          <Router />
+        </ThemeSettings>
+      </ThemeProvider>
+    </MotionLazyContainer>
   );
 }

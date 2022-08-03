@@ -11,8 +11,7 @@ import 'react-image-lightbox/style.css';
 import './utils/highlight';
 import 'react-quill/dist/quill.snow.css';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
-
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import { Provider as ReduxProvider } from 'react-redux';
@@ -26,7 +25,9 @@ import { store } from './_zswod/redux/store';
 
 // ----------------------------------------------------------------------
 
-ReactDOM.render(
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
   <HelmetProvider>
     <ReduxProvider store={store}>
       <SettingsProvider>
@@ -37,6 +38,5 @@ ReactDOM.render(
         </CollapseDrawerProvider>
       </SettingsProvider>
     </ReduxProvider>
-  </HelmetProvider>,
-  document.getElementById('root')
+  </HelmetProvider>
 );

@@ -56,7 +56,7 @@ export default function AccountPopover() {
         }}
       >
         <Avatar
-          src="https://minimal-assets-api.vercel.app/assets/images/avatars/avatar_5.jpg"
+          src="https://minimal-assets-api-dev.vercel.app/assets/images/avatars/avatar_5.jpg"
           alt="Rayan Moran"
         />
       </IconButtonAnimate>

@@ -7,12 +7,14 @@ import {
   CardContent,
   CardMedia,
   Container,
+  Stack,
   Typography,
 } from '@mui/material';
 // components
 import Image from 'src/components/Image';
-import { MotionInView, varFade } from 'src/components/animate';
+import { varFade } from 'src/components/animate';
 import { FC } from 'react';
+import { m } from 'framer-motion';
 
 // ----------------------------------------------------------------------
 
@@ -88,7 +90,7 @@ const HomeShortcuts: FC<HomeShortcutsProps> = ({ articlesRef, galleryRef, contac
             mb: { xs: 10, md: 15 },
           }}
         >
-          <MotionInView variants={varFade().inUp} sx={{ alignItems: 'center' }}>
+          <Stack sx={{ alignItems: 'center' }}>
             <Image
               alt="Logo szkoły"
               src="/logo/logo_centered.png"
@@ -103,10 +105,11 @@ const HomeShortcuts: FC<HomeShortcutsProps> = ({ articlesRef, galleryRef, contac
                 borderRadius: 50,
               }}
             />
-          </MotionInView>
-          <MotionInView variants={varFade().inDown}>
+          </Stack>
+
+          <m.div variants={varFade().inDown}>
             <Typography variant="h2">Od czego dzisiaj zaczynamy?</Typography>
-          </MotionInView>
+          </m.div>
         </Box>
 
         <Box
@@ -116,8 +119,8 @@ const HomeShortcuts: FC<HomeShortcutsProps> = ({ articlesRef, galleryRef, contac
             gridTemplateColumns: { xs: 'repeat(1, 1fr)', md: 'repeat(3, 1fr)' },
           }}
         >
-          {CARDS.map((card, index) => (
-            <MotionInView variants={varFade().inUp} key={card.title}>
+          {CARDS.map((card) => (
+            <m.div variants={varFade().inUp} key={card.title}>
               <Card sx={{ maxWidth: 345 }} onClick={() => scrollToRef(card.section)}>
                 <CardActionArea>
                   <CardMedia
@@ -136,7 +139,7 @@ const HomeShortcuts: FC<HomeShortcutsProps> = ({ articlesRef, galleryRef, contac
                   </CardContent>
                 </CardActionArea>
               </Card>
-            </MotionInView>
+            </m.div>
           ))}
         </Box>
       </Container>

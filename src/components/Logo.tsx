@@ -11,9 +11,22 @@ interface Props extends BoxProps {
 
 export default function Logo({ disabledLink = false, sx }: Props) {
   const theme = useTheme();
+
   const PRIMARY_LIGHT = theme.palette.primary.light;
+
   const PRIMARY_MAIN = theme.palette.primary.main;
+
   const PRIMARY_DARK = theme.palette.primary.dark;
+
+  // OR
+  // -------------------------------------------------------
+  // const logo = (
+  //   <Box
+  //     component="img"
+  //     src="/logo/logo_single.svg" => your path
+  //     sx={{ width: 40, height: 40, cursor: 'pointer', ...sx }}
+  //   />
+  // );
 
   const logo = (
     <Box sx={{ width: 40, height: 40, ...sx }}>
@@ -32,6 +45,7 @@ export default function Logo({ disabledLink = false, sx }: Props) {
             <stop offset="100%" stopColor={PRIMARY_MAIN} />
           </linearGradient>
         </defs>
+
         <g fill={PRIMARY_MAIN} fillRule="evenodd" stroke="none" strokeWidth="1">
           <path
             fill="url(#BG1)"

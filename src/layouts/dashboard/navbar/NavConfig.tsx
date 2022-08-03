@@ -4,7 +4,7 @@ import SvgIconStyle from '../../../components/SvgIconStyle';
 // ----------------------------------------------------------------------
 
 const getIcon = (name: string) => (
-  <SvgIconStyle src={`/icons/${name}.svg`} sx={{ width: 1, height: 1 }} />
+  <SvgIconStyle src={`/assets/icons/navbar/${name}.svg`} sx={{ width: 1, height: 1 }} />
 );
 
 const ICONS = {
@@ -18,7 +18,7 @@ const navConfig = [
   // GENERAL
   // ----------------------------------------------------------------------
   {
-    subheader: 'general v3.0.0',
+    subheader: 'general v3.5.0',
     items: [
       { title: 'One', path: '/dashboard/one', icon: ICONS.dashboard },
       { title: 'Two', path: '/dashboard/two', icon: ICONS.ecommerce },

@@ -1,37 +1,7 @@
+// @mui
+import { enUS, frFR, zhCN, viVN, arSD } from '@mui/material/locale';
+// components
 import { SettingsValueProps } from './components/settings/type';
-// routes
-import { PATH_DASHBOARD } from './routes/paths';
-
-// API
-// ----------------------------------------------------------------------
-
-export const HOST_API = process.env.REACT_APP_HOST_API_KEY || '';
-
-export const FIREBASE_API = {
-  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
-  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
-  databaseURL: process.env.REACT_APP_FIREBASE_DATABASE_URL,
-  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
-  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
-  appId: process.env.REACT_APP_FIREBASE_APPID,
-  measurementId: process.env.REACT_APP_FIREBASE_MEASUREMENT_ID,
-};
-
-export const COGNITO_API = {
-  userPoolId: process.env.REACT_APP_AWS_COGNITO_USER_POOL_ID,
-  clientId: process.env.REACT_APP_AWS_COGNITO_CLIENT_ID,
-};
-
-export const AUTH0_API = {
-  clientId: process.env.REACT_APP_AUTH0_CLIENT_ID,
-  domain: process.env.REACT_APP_AUTH0_DOMAIN,
-};
-
-export const MAPBOX_API = process.env.REACT_APP_MAPBOX;
-
-// ROOT PATH AFTER LOGIN SUCCESSFUL
-export const PATH_AFTER_LOGIN = PATH_DASHBOARD.general.app; // as '/dashboard/app'
 
 // LAYOUT
 // ----------------------------------------------------------------------
@@ -59,13 +29,53 @@ export const ICON = {
 };
 
 // SETTINGS
-// Please remove `localStorage` when you set settings.
+// Please remove `localStorage` when you change settings.
 // ----------------------------------------------------------------------
 
 export const defaultSettings: SettingsValueProps = {
   themeMode: 'light',
   themeDirection: 'ltr',
-  themeColorPresets: 'default',
+  themeContrast: 'default',
   themeLayout: 'horizontal',
+  themeColorPresets: 'blue',
   themeStretch: false,
 };
+
+// MULTI LANGUAGES
+// Please remove `localStorage` when you change settings.
+// ----------------------------------------------------------------------
+
+export const allLangs = [
+  {
+    label: 'English',
+    value: 'en',
+    systemValue: enUS,
+    icon: '/assets/icons/flags/ic_flag_en.svg',
+  },
+  {
+    label: 'French',
+    value: 'fr',
+    systemValue: frFR,
+    icon: '/assets/icons/flags/ic_flag_fr.svg',
+  },
+  {
+    label: 'Vietnamese',
+    value: 'vn',
+    systemValue: viVN,
+    icon: '/assets/icons/flags/ic_flag_vn.svg',
+  },
+  {
+    label: 'Chinese',
+    value: 'cn',
+    systemValue: zhCN,
+    icon: '/assets/icons/flags/ic_flag_cn.svg',
+  },
+  {
+    label: 'Arabic (Sudan)',
+    value: 'ar',
+    systemValue: arSD,
+    icon: '/assets/icons/flags/ic_flag_sa.svg',
+  },
+];
+
+export const defaultLang = allLangs[0]; // English

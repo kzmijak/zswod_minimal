@@ -23,20 +23,23 @@ export default function Router() {
   return useRoutes([
     {
       path: '/',
+      element: <Navigate to="/dashboard/one" replace />,
+    },
+    {
+      path: '/dashboard',
       element: <DashboardLayout />,
       children: [
         { element: <Navigate to="/dashboard/one" replace />, index: true },
-        { path: '/dashboard', element: <Navigate to="/dashboard/one" replace />, index: true },
-        { path: '/dashboard/one', element: <PageOne /> },
-        { path: '/dashboard/two', element: <PageTwo /> },
-        { path: '/dashboard/three', element: <PageThree /> },
+        { path: 'one', element: <PageOne /> },
+        { path: 'two', element: <PageTwo /> },
+        { path: 'three', element: <PageThree /> },
         {
-          path: '/dashboard/user',
+          path: 'user',
           children: [
             { element: <Navigate to="/dashboard/user/four" replace />, index: true },
-            { path: '/dashboard/user/four', element: <PageFour /> },
-            { path: '/dashboard/user/five', element: <PageFive /> },
-            { path: '/dashboard/user/six', element: <PageSix /> },
+            { path: 'four', element: <PageFour /> },
+            { path: 'five', element: <PageFive /> },
+            { path: 'six', element: <PageSix /> },
           ],
         },
       ],

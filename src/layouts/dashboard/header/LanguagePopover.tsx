@@ -5,26 +5,8 @@ import { MenuItem, Stack } from '@mui/material';
 import Image from '../../../components/Image';
 import MenuPopover from '../../../components/MenuPopover';
 import { IconButtonAnimate } from '../../../components/animate';
-
-// ----------------------------------------------------------------------
-
-const LANGS = [
-  {
-    label: 'English',
-    value: 'en',
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_flag_en.svg',
-  },
-  {
-    label: 'German',
-    value: 'de',
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_flag_de.svg',
-  },
-  {
-    label: 'French',
-    value: 'fr',
-    icon: 'https://minimal-assets-api.vercel.app/assets/icons/ic_flag_fr.svg',
-  },
-];
+// config
+import { allLangs } from '../../../config';
 
 // ----------------------------------------------------------------------
 
@@ -49,7 +31,7 @@ export default function LanguagePopover() {
           ...(open && { bgcolor: 'action.selected' }),
         }}
       >
-        <Image disabledEffect src={LANGS[0].icon} alt={LANGS[0].label} />
+        <Image disabledEffect src={allLangs[0].icon} alt={allLangs[0].label} />
       </IconButtonAnimate>
 
       <MenuPopover
@@ -64,10 +46,10 @@ export default function LanguagePopover() {
         }}
       >
         <Stack spacing={0.75}>
-          {LANGS.map((option) => (
+          {allLangs.map((option) => (
             <MenuItem
               key={option.value}
-              selected={option.value === LANGS[0].value}
+              selected={option.value === allLangs[0].value}
               onClick={handleClose}
             >
               <Image

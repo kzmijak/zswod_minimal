@@ -2,11 +2,11 @@ import { m } from 'framer-motion';
 import { styled } from '@mui/material/styles';
 import { Box, Link, Container, Typography, Stack, StackProps } from '@mui/material';
 import Image from 'src/components/Image';
-import TextIconLabel from 'src/components/TextIconLabel';
 import { MotionContainer, varFade } from 'src/components/animate';
 import useSettings from 'src/hooks/useSettings';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC } from 'react';
+import { TextIconLabel } from 'src/_zswod/components/TextIconLabel';
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   position: 'relative',

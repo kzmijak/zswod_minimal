@@ -1,6 +1,6 @@
 {
-  "name": "Szkoła Podstawowa im. Jana Pawła II-Papieża w Orłowie Drewnianym",
-  "short_name": "Szkoła Podstawowa Orłów",
+  "name": "React Material Minimal UI",
+  "short_name": "Minimal-UI",
   "display": "standalone",
   "start_url": "/",
   "theme_color": "#000000",
