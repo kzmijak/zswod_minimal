@@ -1,6 +1,6 @@
 import { alpha, styled } from '@mui/material/styles';
 import { Container, Grid, Stack, Typography, useTheme } from '@mui/material';
-import { MotionInView, varFade } from 'src/components/animate';
+import { varFade } from 'src/components/animate';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC, useEffect, useRef, useState } from 'react';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
@@ -9,6 +9,7 @@ import { LightboxModal } from 'src/_zswod/components/LightboxModal';
 import { useSelector } from 'react-redux';
 import { selectImages } from 'src/_zswod/modules/Images';
 import useResponsive from 'src/hooks/useResponsive';
+import { m } from 'framer-motion';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -50,13 +51,13 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
     <RootStyle ref={ref}>
       <Container>
         <ContentStyle>
-          <MotionInView variants={varFade().inUp}>
+          <m.div variants={varFade().inUp}>
             <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
               Galeria
             </Typography>
-          </MotionInView>
+          </m.div>
 
-          <MotionInView variants={varFade().inUp}>
+          <m.div variants={varFade().inUp}>
             <Typography
               variant="h2"
               paragraph
@@ -68,13 +69,13 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
             >
               Zrobiliśmy niedawno również kilka ładnych zdjęć
             </Typography>
-          </MotionInView>
+          </m.div>
         </ContentStyle>
 
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
           {images.map((item, index) => (
             <Grid item xs={2} sm={4} md={3} key={index}>
-              <MotionInView variants={varFade().inUp}>
+              <m.div variants={varFade().inUp}>
                 <Image
                   sx={{
                     opacity: index < 2 ? 0.5 : 0.85,
@@ -87,7 +88,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
                   src={item.url}
                   onClick={() => setImageOpen(index)}
                 />
-              </MotionInView>
+              </m.div>
             </Grid>
           ))}
         </Grid>
@@ -100,7 +101,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
           onClose={() => setImageOpen(-1)}
         />
 
-        <MotionInView variants={varFade().inLeft}>
+        <m.div variants={varFade().inLeft}>
           <Stack
             direction={{ xs: 'column', md: 'row' }}
             justifyContent={{ xd: 'center', md: 'flex-end' }}
@@ -114,7 +115,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
             <Typography>Zobacz całą galerię!</Typography>
             <ButtonEPanel to={PATHS_ABOUT.galeria.link} />
           </Stack>
-        </MotionInView>
+        </m.div>
       </Container>
     </RootStyle>
   );

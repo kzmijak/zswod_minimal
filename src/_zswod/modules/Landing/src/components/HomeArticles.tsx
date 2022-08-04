@@ -1,7 +1,7 @@
 // @mui
 import { styled } from '@mui/material/styles';
 import { Container, Stack, Typography } from '@mui/material';
-import { MotionInView, varFade } from 'src/components/animate';
+import { varFade } from 'src/components/animate';
 import { CarouselCenterMode, CarouselItemProps } from 'src/_zswod/components/CarouselCenterMode';
 import { FC, useEffect, useRef } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
@@ -9,6 +9,7 @@ import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectArticleHeaders } from 'src/_zswod/modules/ArticlesList';
+import { m } from 'framer-motion';
 
 const RootStyle = styled('div')(({ theme }) => ({
   padding: theme.spacing(15, 0),
@@ -38,21 +39,21 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   return (
     <RootStyle ref={ref}>
       <Container sx={{ position: 'relative', textAlign: 'center' }}>
-        <MotionInView variants={varFade().inUp}>
+        <m.div variants={varFade().inUp}>
           <Typography component="div" variant="overline" sx={{ mb: 2, color: 'text.disabled' }}>
             Nowości
           </Typography>
-        </MotionInView>
+        </m.div>
 
-        <MotionInView variants={varFade().inUp}>
+        <m.div variants={varFade().inUp}>
           <Typography variant="h2" sx={{ mb: 10 }}>
             Oto co się ostatnio wydarzyło!
           </Typography>
-        </MotionInView>
+        </m.div>
 
         <CarouselCenterMode animate items={carouselItems} />
 
-        <MotionInView variants={varFade().inLeft}>
+        <m.div variants={varFade().inLeft}>
           <Stack
             direction={{ xs: 'column', md: 'row' }}
             justifyContent={{ xd: 'center', md: 'flex-end' }}
@@ -66,7 +67,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
             <Typography>Jest ich więcej!</Typography>
             <ButtonEPanel to={PATHS_ABOUT.nowosci.link} />
           </Stack>
-        </MotionInView>
+        </m.div>
       </Container>
     </RootStyle>
   );

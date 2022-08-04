@@ -1,5 +1,5 @@
 import { FC, useEffect } from 'react';
-import Lightbox from 'react-image-lightbox';
+import Lightbox from 'react-18-image-lightbox';
 import { alpha, useTheme } from '@mui/material/styles';
 import { Typography, GlobalStyles } from '@mui/material';
 

@@ -6,11 +6,11 @@ import useResponsive from 'src/hooks/useResponsive';
 import cssStyles from 'src/utils/cssStyles';
 import { HEADER } from 'src/config';
 import { MenuDesktop } from './MenuDesktop';
-import MenuMobile from 'src/layouts/main/MenuMobile';
 import { menuConfig } from './MenuConfig';
 import { Logo } from 'src/_zswod/components/Logo';
 import { PATH_DASHBOARD_ROOT } from 'src/_zswod/routes';
 import { FC } from 'react';
+import { MenuMobile } from './MenuMobile';
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: HEADER.MOBILE_HEIGHT,

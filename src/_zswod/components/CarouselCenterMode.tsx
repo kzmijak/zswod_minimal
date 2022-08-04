@@ -3,8 +3,9 @@ import { FC, MouseEventHandler, useRef } from 'react';
 import { Icon } from '@iconify/react';
 import { styled } from '@mui/material/styles';
 import { Box, Paper, Typography, CardContent } from '@mui/material';
-import { MotionInView, varFade } from 'src/components/animate';
+import { varFade } from 'src/components/animate';
 import useResponsive from 'src/hooks/useResponsive';
+import { m } from 'framer-motion';
 
 const CarouselImgStyle = styled('img')(({ theme }) => ({
   top: 0,
@@ -101,9 +102,9 @@ const CarouselCenterMode: FC<CarouselCenterModeProps> = ({ items, animate = true
   return (
     <SliderReact18 ref={carouselRef} {...settings}>
       {items.map((item, index) => (
-        <MotionInView key={index} variants={animate ? getFadingAnimation(index) : undefined}>
+        <m.div key={index} variants={animate ? getFadingAnimation(index) : undefined}>
           <CarouselItem key={index} item={item} />
-        </MotionInView>
+        </m.div>
       ))}
     </SliderReact18>
   );
