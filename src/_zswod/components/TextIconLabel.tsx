@@ -1,12 +1,13 @@
-import { FC } from 'react';
+// @mui
 import { Stack, StackProps, SxProps } from '@mui/material';
+import { FC, ReactElement, ReactNode } from 'react';
 
-type TextIconLabelProps = {
-  icon: React.ReactElement;
-  value: React.ReactNode;
+interface TextIconLabelProps extends StackProps {
+  icon: ReactElement;
+  value: ReactNode;
   endIcon?: boolean;
   sx?: SxProps;
-} & StackProps;
+}
 
 const TextIconLabel: FC<TextIconLabelProps> = ({ icon, value, endIcon = false, sx, ...other }) => (
   <Stack

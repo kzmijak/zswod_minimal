@@ -1,14 +1,16 @@
-import { FC, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { FC, ReactNode, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { selectStatus } from 'src/_zswod/modules/Images/src/slice/selectors';
+import { useAppDispatch } from 'src/_zswod/utils/useAppDispatch';
 import { fetchArticle } from '../slice/actions';
 
 type FetchArticleProps = {
+  children?: ReactNode;
   articleTitle: string;
 };
 
 const FetchArticle: FC<FetchArticleProps> = ({ articleTitle, children }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const { status } = useSelector(selectStatus);
 

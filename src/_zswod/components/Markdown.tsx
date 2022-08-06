@@ -24,7 +24,9 @@ const MarkdownWrapperStyle = styled('div')(({ theme }) => {
       position: 'relative',
       fontFamily: 'Georgia, serif',
       padding: theme.spacing(3, 3, 3, 8),
-      borderRadius: theme.shape.borderRadiusMd,
+      borderRadius: theme.shape.borderRadius,
+      // TODO: Fix me, should be as there
+      // borderRadius: theme.shape.borderRadiusMd,
       backgroundColor: theme.palette.background.neutral,
       color: `${theme.palette.text.secondary} !important`,
       [theme.breakpoints.up('md')]: {

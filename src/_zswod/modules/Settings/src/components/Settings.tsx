@@ -11,7 +11,8 @@ import { IconButtonAnimate, varFade } from 'src/components/animate';
 import { ToggleButton } from './ToggleButton';
 import { SettingFullscreen } from './SettingFullscreen';
 import { SettingColorPresets } from './SettingColorPresets';
-import SettingMode from 'src/components/settings/SettingMode';
+// TODO: FIx me
+// import SettingMode from 'src/components/settings/SettingMode';
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
@@ -115,10 +116,10 @@ const Settings: FC = () => {
 
               <Scrollbar sx={{ flexGrow: 1 }}>
                 <Stack spacing={3} sx={{ p: 3 }}>
-                  <Stack spacing={1.5}>
+                  {/* <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Tryb</Typography>
                     <SettingMode />
-                  </Stack>
+                  </Stack> */}
 
                   <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Kolory</Typography>

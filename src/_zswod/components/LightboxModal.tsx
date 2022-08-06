@@ -1,4 +1,4 @@
-import { FC, useEffect } from 'react';
+import { useEffect, FC } from 'react';
 import Lightbox from 'react-18-image-lightbox';
 import { alpha, useTheme } from '@mui/material/styles';
 import { Typography, GlobalStyles } from '@mui/material';
@@ -64,7 +64,9 @@ const LightboxModalStyles = () => {
           },
           '& .ril__navButtons': {
             padding: theme.spacing(3),
-            borderRadius: theme.shape.borderRadiusSm,
+            borderRadius: theme.shape.borderRadius,
+            // TODO: Fix me
+            // borderRadius: theme.shape.borderRadiusSm,
             '&.ril__navButtonPrev': {
               left: theme.spacing(2),
               right: 'auto',

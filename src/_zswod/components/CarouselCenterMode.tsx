@@ -23,8 +23,6 @@ type CarouselItemProps = {
   onClick: MouseEventHandler<HTMLSpanElement>;
 };
 
-const SliderReact18 = Slider as any;
-
 function CarouselItem({ item }: { item: CarouselItemProps }) {
   const { image, title, onClick } = item;
   return (
@@ -100,13 +98,13 @@ const CarouselCenterMode: FC<CarouselCenterModeProps> = ({ items, animate = true
     index % 2 === 0 ? varFade().inDown : varFade().inUp;
 
   return (
-    <SliderReact18 ref={carouselRef} {...settings}>
+    <Slider ref={carouselRef} {...settings}>
       {items.map((item, index) => (
         <m.div key={index} variants={animate ? getFadingAnimation(index) : undefined}>
           <CarouselItem key={index} item={item} />
         </m.div>
       ))}
-    </SliderReact18>
+    </Slider>
   );
 };
 
