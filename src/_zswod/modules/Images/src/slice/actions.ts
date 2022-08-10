@@ -1,14 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import axios from 'axios';
 import { arrayMapImageDtoToModel, ImageDto } from 'src/_zswod/models/Image';
-import { config } from 'src/_zswod/modules/config';
-
-const {
-  backend: { baseURL },
-} = config;
+import { api } from 'src/_zswod/modules/Axios';
 
 const fetchImages = createAsyncThunk('images/fetch', async () => {
-  const result = await axios.get<ImageDto[]>('articles/images', { baseURL });
+  const result = await api.get<ImageDto[]>('articles/images');
 
   return arrayMapImageDtoToModel(result.data);
 });

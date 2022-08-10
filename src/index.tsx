@@ -18,19 +18,25 @@ import { CollapseDrawerProvider } from './contexts/CollapseDrawerContext';
 
 import App from './App';
 import { store } from './_zswod/redux/store';
+import { ConfigProvider } from './_zswod/modules/Config';
+import { AxiosProvider } from './_zswod/modules/Axios';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
 root.render(
   <HelmetProvider>
     <ReduxProvider store={store}>
-      <SettingsProvider>
-        <CollapseDrawerProvider>
-          <BrowserRouter>
-            <App />
-          </BrowserRouter>
-        </CollapseDrawerProvider>
-      </SettingsProvider>
+      <ConfigProvider>
+        <AxiosProvider store={store}>
+          <SettingsProvider>
+            <CollapseDrawerProvider>
+              <BrowserRouter>
+                <App />
+              </BrowserRouter>
+            </CollapseDrawerProvider>
+          </SettingsProvider>
+        </AxiosProvider>
+      </ConfigProvider>
     </ReduxProvider>
   </HelmetProvider>
 );
