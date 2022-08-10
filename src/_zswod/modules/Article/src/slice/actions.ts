@@ -3,11 +3,9 @@ import { mapArticleDtoToModel, ArticleDto } from 'src/_zswod/models/Article';
 import { api } from 'src/_zswod/modules/Axios';
 
 const fetchArticle = createAsyncThunk('article/fetch', async (articleName: string) => {
-  const response = await api.get<ArticleDto[]>('articles', {
-    params: { articleName },
-  });
+  const response = await api.get<ArticleDto>(`articles/${articleName}`);
 
-  return mapArticleDtoToModel(response.data[0]);
+  return mapArticleDtoToModel(response.data);
 });
 
 export { fetchArticle };
