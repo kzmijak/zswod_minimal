@@ -6,7 +6,7 @@ import { Box } from '@mui/material';
 // hooks
 import useCollapseDrawer from 'src/hooks/useCollapseDrawer';
 // config
-import { HEADER, NAVBAR } from 'src/config';
+import { NAVBAR } from 'src/config';
 //
 import { NavbarVertical } from './NavbarVertical';
 import Scrollbar from 'src/components/Scrollbar';
