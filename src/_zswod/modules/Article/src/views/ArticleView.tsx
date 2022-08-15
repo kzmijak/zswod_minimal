@@ -12,7 +12,7 @@ const ArticleView: FC = () => {
   const navigate = useNavigate();
   const article = useSelector(selectCurrentArticle);
 
-  const handleGoToGalleryClick = () => navigate(`${PATHS_ABOUT.galeria}/${titleNormalized}`);
+  const handleGoToGalleryClick = () => navigate(`${PATHS_ABOUT.galeria.link}/${titleNormalized}`);
 
   if (!Boolean(titleNormalized)) navigate(PATHS_ABOUT.nowosci.link);
 

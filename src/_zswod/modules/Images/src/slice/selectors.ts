@@ -20,4 +20,9 @@ const selectModels = (limit?: number) =>
     return entities.slice(0, limit);
   });
 
-export { selectModels, selectStatus };
+const selectArticleImages = (articleId: string, limit?: number) =>
+  createSelector(selectModels(limit), (images) =>
+    images.filter((image) => image.articleId === articleId)
+  );
+
+export { selectModels, selectStatus, selectArticleImages };

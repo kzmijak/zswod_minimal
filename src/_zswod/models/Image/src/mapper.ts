@@ -2,8 +2,9 @@ import { createArrayMapper } from 'src/_zswod/utils/createArrayMapper';
 import { ImageDto } from './ImageDto';
 import { ImageModel } from './ImageModel';
 
-const mapDtoToModel = ({ imageGuid, ...rest }: ImageDto): ImageModel => ({
+const mapDtoToModel = ({ imageGuid, articleGuid, ...rest }: ImageDto): ImageModel => ({
   id: imageGuid,
+  articleId: articleGuid,
   ...rest,
 });
 

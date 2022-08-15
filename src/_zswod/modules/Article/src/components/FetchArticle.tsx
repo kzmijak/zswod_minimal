@@ -1,8 +1,8 @@
 import { FC, ReactNode, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { selectStatus } from 'src/_zswod/modules/Images/src/slice/selectors';
 import { useAppDispatch } from 'src/_zswod/utils/useAppDispatch';
 import { fetchArticle } from '../slice/actions';
+import { selectStatus } from '../slice/selectors';
 
 type FetchArticleProps = {
   children?: ReactNode;

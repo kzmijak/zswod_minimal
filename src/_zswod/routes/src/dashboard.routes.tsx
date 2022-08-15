@@ -4,6 +4,7 @@ import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
 import { Maintenance } from 'src/_zswod/views/Maintenance';
 import { ArticlesListView } from 'src/_zswod/modules/ArticlesList/src/views/ArticlesListView';
 import { ArticleView } from 'src/_zswod/modules/Article';
+import { GalleriesListView, GalleryView } from 'src/_zswod/modules/Gallery';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
@@ -11,11 +12,11 @@ const DashboardRoutes: RouteObject = {
   children: [
     {
       path: PATHS_ABOUT.galeria.link,
-      element: <Maintenance />,
+      element: <GalleriesListView />,
     },
     {
-      path: `${PATHS_ABOUT.galeria.link}/:articleId`,
-      element: <Maintenance />,
+      path: `${PATHS_ABOUT.galeria.link}/:articleTitle`,
+      element: <GalleryView />,
     },
     {
       path: `${PATHS_ABOUT.nowosci.link}`,
@@ -24,14 +25,6 @@ const DashboardRoutes: RouteObject = {
     {
       path: `${PATHS_ABOUT.nowosci.link}/:title`,
       element: <ArticleView />,
-    },
-    {
-      path: '*',
-      element: <Maintenance />,
-    },
-    {
-      path: '',
-      element: <Maintenance />,
     },
   ],
 };

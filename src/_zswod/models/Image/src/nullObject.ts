@@ -5,6 +5,7 @@ const { GUID, STRING } = nullObjectConsts;
 
 const nullObject: ImageModel = {
   alt: STRING,
+  articleId: GUID,
   id: GUID,
   title: STRING,
   url: STRING,
