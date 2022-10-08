@@ -7,12 +7,9 @@ export type MenuItemProps = {
   path: string;
   icon?: ReactElement;
   to?: string;
-  children?: {
-    subheader: string;
-    items: {
-      title: string;
-      path: string;
-    }[];
+  items?: {
+    title: string;
+    path: string;
   }[];
 };
 

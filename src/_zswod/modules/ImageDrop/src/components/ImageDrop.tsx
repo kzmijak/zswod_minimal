@@ -17,7 +17,6 @@ const DropZoneStyle = styled('div')(({ theme }) => ({
 type ImageDropProps = DropzoneOptions & {
   images: File[];
   error?: boolean;
-  showPreview?: boolean;
   sx?: SxProps<Theme>;
   helperText?: ReactNode;
   onUpload?: VoidFunction;
@@ -27,7 +26,6 @@ type ImageDropProps = DropzoneOptions & {
 
 const ImageDrop: FC<ImageDropProps> = ({
   error,
-  showPreview = false,
   images,
   onUpload,
   onRemove,
@@ -60,7 +58,7 @@ const ImageDrop: FC<ImageDropProps> = ({
 
       {fileRejections.length > 0 && <RejectionFiles fileRejections={fileRejections} />}
 
-      <ImagePreview images={images} showPreview={showPreview} onRemove={onRemove} />
+      <ImagePreview images={images} onRemove={onRemove} />
 
       {images.length > 0 && (
         <Stack direction="row" justifyContent="flex-end" spacing={1.5}>

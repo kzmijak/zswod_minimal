@@ -1,7 +1,6 @@
 import { RouteObject } from 'react-router';
 import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
 import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
-import { Maintenance } from 'src/_zswod/views/Maintenance';
 import { ArticlesListView } from 'src/_zswod/modules/ArticlesList/src/views/ArticlesListView';
 import { ArticleView } from 'src/_zswod/modules/Article';
 import { GalleriesListView, GalleryView } from 'src/_zswod/modules/Gallery';

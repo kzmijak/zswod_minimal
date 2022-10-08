@@ -1,26 +1,10 @@
-import { m } from 'framer-motion';
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect, FC, useRef } from 'react';
 import { NavLink as RouterLink, useLocation, NavLinkProps } from 'react-router-dom';
 // @mui
 import { styled } from '@mui/material/styles';
-import {
-  Box,
-  Link,
-  Grid,
-  List,
-  Stack,
-  Popover,
-  ListItem,
-  LinkProps,
-  ListSubheader,
-  CardActionArea,
-} from '@mui/material';
-// components
+import { Box, Link, List, Stack, Popover, ListItem, LinkProps, ListSubheader } from '@mui/material';
 import Iconify from 'src/components/Iconify';
-//
 import { MenuProps, MenuItemProps } from './type';
-
-// ----------------------------------------------------------------------
 
 interface LinkStyleProps extends LinkProps {
   component?: React.ForwardRefExoticComponent<
@@ -66,7 +50,7 @@ const SubLinkStyle = styled((props: LinkProps) => (
 const MenuDesktop: FC<MenuProps> = ({ isOffset, isHome, navConfig }) => {
   const { pathname } = useLocation();
 
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(-1);
 
   useEffect(() => {
     if (open) {
@@ -75,22 +59,22 @@ const MenuDesktop: FC<MenuProps> = ({ isOffset, isHome, navConfig }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [pathname]);
 
-  const handleOpen = () => {
-    setOpen(true);
+  const handleOpen = (index: number) => {
+    setOpen(index);
   };
 
   const handleClose = () => {
-    setOpen(false);
+    setOpen(-1);
   };
 
   return (
     <Stack direction="row">
-      {navConfig.map((link) => (
+      {navConfig.map((link, index) => (
         <MenuDesktopItem
           key={link.title}
           item={link}
-          isOpen={open}
-          onOpen={handleOpen}
+          isOpen={open === index}
+          onOpen={() => handleOpen(index)}
           onClose={handleClose}
           isOffset={isOffset}
           isHome={isHome}
@@ -118,16 +102,18 @@ const MenuDesktopItem: FC<MenuDesktopItemProps> = ({
   onClose,
 }) => {
   const { pathname } = useLocation();
+  const headerEl = useRef<HTMLAnchorElement | null>(null);
 
-  const { title, path, children } = item;
+  const { title, path, items } = item;
 
   const isActive = (currentPath: string) => pathname === currentPath;
 
-  if (children) {
+  if (Boolean(items)) {
     return (
       <>
         <LinkStyle
           onClick={onOpen}
+          ref={headerEl}
           sx={{
             display: 'flex',
             cursor: 'pointer',
@@ -146,108 +132,53 @@ const MenuDesktopItem: FC<MenuDesktopItemProps> = ({
 
         <Popover
           open={isOpen}
-          anchorReference="anchorPosition"
-          anchorPosition={{ top: 80, left: 0 }}
+          anchorEl={headerEl.current}
           anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
           transformOrigin={{ vertical: 'top', horizontal: 'center' }}
           onClose={onClose}
           PaperProps={{
             sx: {
+              mt: 2,
               px: 3,
               pt: 5,
               pb: 3,
-              right: 16,
-              m: 'auto',
-              borderRadius: 2,
-              maxWidth: (theme) => theme.breakpoints.values.lg,
               boxShadow: (theme) => theme.customShadows.z24,
             },
           }}
         >
-          <Grid container spacing={3}>
-            {children.map((list) => {
-              const { subheader, items } = list;
+          <List component={Stack} disablePadding>
+            <ListSubheader
+              disableSticky
+              disableGutters
+              sx={{
+                display: 'flex',
+                lineHeight: 'unset',
+                alignItems: 'center',
+                color: 'text.primary',
+                typography: 'overline',
+              }}
+            >
+              <IconBullet type="subheader" /> {title}
+            </ListSubheader>
 
-              return (
-                <Grid key={subheader} item xs={12} md={subheader === 'Dashboard' ? 6 : 2}>
-                  <List disablePadding>
-                    <ListSubheader
-                      disableSticky
-                      disableGutters
-                      sx={{
-                        display: 'flex',
-                        lineHeight: 'unset',
-                        alignItems: 'center',
-                        color: 'text.primary',
-                        typography: 'overline',
-                      }}
-                    >
-                      <IconBullet type="subheader" /> {subheader}
-                    </ListSubheader>
-
-                    {items.map(({ title, path }) => (
-                      <SubLinkStyle
-                        key={title}
-                        href={path}
-                        sx={{
-                          ...(isActive(path) && {
-                            color: 'text.primary',
-                            typography: 'subtitle2',
-                          }),
-                        }}
-                      >
-                        {title === 'Dashboard' ? (
-                          <CardActionArea
-                            sx={{
-                              py: 5,
-                              px: 10,
-                              borderRadius: 2,
-                              color: 'primary.main',
-                              bgcolor: 'background.neutral',
-                            }}
-                          >
-                            <Box
-                              component={m.img}
-                              whileTap="tap"
-                              whileHover="hover"
-                              variants={{
-                                hover: { scale: 1.02 },
-                                tap: { scale: 0.98 },
-                              }}
-                              src="/assets/illustrations/illustration_dashboard.png"
-                            />
-                          </CardActionArea>
-                        ) : (
-                          <>
-                            <IconBullet />
-                            {item.title}
-                          </>
-                        )}
-                      </SubLinkStyle>
-                    ))}
-                  </List>
-                </Grid>
-              );
-            })}
-          </Grid>
+            {items!.map(({ title, path }) => (
+              <SubLinkStyle
+                key={title}
+                href={path}
+                sx={{
+                  ...(isActive(path) && {
+                    color: 'text.primary',
+                    typography: 'subtitle2',
+                  }),
+                }}
+              >
+                <IconBullet />
+                {title}
+              </SubLinkStyle>
+            ))}
+          </List>
         </Popover>
       </>
-    );
-  }
-
-  if (title === 'Documentation') {
-    return (
-      <LinkStyle
-        href={path}
-        target="_blank"
-        rel="noopener"
-        sx={{
-          ...(isHome && { color: 'common.white' }),
-          ...(isOffset && { color: 'text.primary' }),
-        }}
-      >
-        {title}
-      </LinkStyle>
     );
   }
 

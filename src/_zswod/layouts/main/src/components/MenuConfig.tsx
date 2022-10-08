@@ -1,30 +1,24 @@
 // components
 import Iconify from 'src/components/Iconify';
 import { menuContents } from 'src/_zswod/routes/src/menu.paths';
-
-// ----------------------------------------------------------------------
+import { MenuItemProps } from './type';
 
 const ICON_SIZE = {
   width: 22,
   height: 22,
 };
 
-const mappedMenus = menuContents.map((menuItem) => ({
+const mappedMenus: MenuItemProps[] = menuContents.map((menuItem) => ({
   title: menuItem.label,
   icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
   path: menuItem.link,
-  children: [
-    {
-      subheader: menuItem.label,
-      items: menuItem.children.map((child) => ({
-        title: child.label,
-        path: child.link,
-      })),
-    },
-  ],
+  items: menuItem.children.map((child) => ({
+    title: child.label,
+    path: child.link,
+  })),
 }));
 
-const menuConfig = [
+const menuConfig: MenuItemProps[] = [
   ...mappedMenus,
   {
     title: 'Strona główna',

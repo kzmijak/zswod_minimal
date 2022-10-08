@@ -100,9 +100,9 @@ type MenuMobileItemProps = {
 };
 
 function MenuMobileItem({ item, isOpen, onOpen }: MenuMobileItemProps) {
-  const { title, path, icon, children } = item;
+  const { title, path, icon, items } = item;
 
-  if (children) {
+  if (Boolean(items)) {
     return (
       <>
         <ListItemStyle onClick={onOpen}>
@@ -116,8 +116,8 @@ function MenuMobileItem({ item, isOpen, onOpen }: MenuMobileItemProps) {
 
         <Collapse in={isOpen} unmountOnExit>
           <Box sx={{ display: 'flex', flexDirection: 'column-reverse' }}>
-            <NavSectionVertical
-              navConfig={children}
+            {/* <NavSectionVertical
+              navConfig={items}
               sx={{
                 '& .MuiList-root:last-of-type .MuiListItemButton-root': {
                   height: 200,
@@ -129,7 +129,7 @@ function MenuMobileItem({ item, isOpen, onOpen }: MenuMobileItemProps) {
                   '& > *:not(.MuiTouchRipple-root)': { display: 'none' },
                 },
               }}
-            />
+            /> */}
           </Box>
         </Collapse>
       </>
