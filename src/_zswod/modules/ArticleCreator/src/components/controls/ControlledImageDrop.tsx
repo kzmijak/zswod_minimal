@@ -12,13 +12,21 @@ const ControlledImageDrop: FC<ControlledImageDropProps> = ({ control }) => (
   <Controller
     name="imageGuids"
     control={control}
-    render={({ field: { value: images, onChange } }) => (
-      <ImageDrop
-        images={images}
-        onDrop={(result) => onChange([...images, ...(isArray(result) ? result : [result])])}
-        onRemove={(result) => onChange(images.slice(images.indexOf(result), 1))}
-      />
-    )}
+    render={({ field: { value: images, onChange } }) => {
+      const handleRemove = (index: number) => {
+        const imagesCopy = images.slice();
+        imagesCopy.splice(index, 1);
+        onChange(imagesCopy);
+      };
+
+      return (
+        <ImageDrop
+          images={images}
+          onDrop={(result) => onChange([...images, ...(isArray(result) ? result : [result])])}
+          onRemove={handleRemove}
+        />
+      );
+    }}
   />
 );
 

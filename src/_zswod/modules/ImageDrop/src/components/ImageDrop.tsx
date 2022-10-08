@@ -26,7 +26,7 @@ type ImageDropProps = {
   error?: boolean;
   helperText?: ReactNode;
   onDrop: (image: File | File[]) => void;
-  onRemove?: (file: File) => void;
+  onRemove?: (index: number) => void;
 };
 
 const ImageDrop: FC<ImageDropProps> = ({ error, images, onDrop, onRemove, helperText }) => {

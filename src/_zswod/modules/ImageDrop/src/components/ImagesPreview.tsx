@@ -1,6 +1,6 @@
 import { alpha, IconButton, List, ListItem } from '@mui/material';
 import { AnimatePresence, m } from 'framer-motion';
-import { FC, useCallback, useEffect, useState } from 'react';
+import { FC, useCallback, useEffect, useReducer } from 'react';
 import { varFade } from 'src/components/animate';
 import Iconify from 'src/components/Iconify';
 import { toBase64 } from '../utils/toBase64';
@@ -13,37 +13,48 @@ type Image64 = {
 
 type ImagesPreviewProps = {
   images: File[];
-  onRemove?: (file: File) => void;
+  onRemove?: (index: number) => void;
 };
 
 const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => {
-  const [images64, setImages64] = useState<Image64[]>([]);
-
-  const convertAndAppend = useCallback(
-    async (image: File) => {
-      const newImageString = await toBase64(image);
-      const newImage64 = {
-        name: image.name,
-        base64: newImageString ?? '',
-      };
-      setImages64([...images64, newImage64]);
+  const [images64, dispatch] = useReducer(
+    (
+      images64: Image64[],
+      action: { type: 'append' | 'reset'; payload?: Image64; index?: number }
+    ) => {
+      switch (action.type) {
+        case 'append':
+          return [...images64, action.payload!];
+        case 'reset':
+          return [];
+        default:
+          return images64;
+      }
     },
-    [images64]
+    []
   );
 
-  useEffect(() => {
-    const hasAppended = images.length > images64.length;
-    if (hasAppended) {
-      convertAndAppend(images[images.length - 1]);
-    }
-  }, [images]);
+  const convertAndAppend = useCallback(async (image: File) => {
+    const newImageString = await toBase64(image);
+    const newImage64 = {
+      name: image.name,
+      base64: newImageString ?? '',
+    };
+    dispatch({
+      type: 'append',
+      payload: newImage64,
+    });
+  }, []);
 
-  const handleRemove = (index: number) => {
-    const newImages64 = images64.slice();
-    newImages64.splice(index, 1);
-    onRemove?.(images[index]);
-    setImages64(newImages64);
-  };
+  useEffect(() => {
+    dispatch({
+      type: 'reset',
+    });
+
+    images.forEach((image) => {
+      convertAndAppend(image);
+    });
+  }, [convertAndAppend, images]);
 
   return (
     <List disablePadding sx={{ my: 3 }}>
@@ -73,7 +84,7 @@ const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => {
               {onRemove && (
                 <IconButton
                   size="small"
-                  onClick={() => handleRemove(index)}
+                  onClick={() => onRemove(index)}
                   sx={{
                     top: 6,
                     p: '2px',
