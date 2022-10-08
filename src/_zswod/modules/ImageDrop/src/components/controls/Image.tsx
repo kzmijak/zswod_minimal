@@ -1,59 +1,21 @@
-import { Box, BoxProps, styled, SxProps, Theme } from '@mui/material';
-import { FC } from 'react';
 import { LazyLoadImage, LazyLoadImageProps } from 'react-lazy-load-image-component';
+import { Theme } from '@mui/material/styles';
+import { Box, BoxProps, SxProps, styled } from '@mui/material';
+import { FC } from 'react';
 
 type ImageRatio = '4/3' | '3/4' | '6/4' | '4/6' | '16/9' | '9/16' | '21/9' | '9/21' | '1/1';
 
-function getRatio(ratio: ImageRatio = '1/1') {
-  return {
-    '4/3': 'calc(100% / 4 * 3)',
-    '3/4': 'calc(100% / 3 * 4)',
-    '6/4': 'calc(100% / 6 * 4)',
-    '4/6': 'calc(100% / 4 * 6)',
-    '16/9': 'calc(100% / 16 * 9)',
-    '9/16': 'calc(100% / 9 * 16)',
-    '21/9': 'calc(100% / 21 * 9)',
-    '9/21': 'calc(100% / 9 * 21)',
-    '1/1': '100%',
-  }[ratio];
-}
-
-const BoxStyled = styled(Box, {
-  shouldForwardProp: (prop) => prop !== 'ratio',
-})<{ ratio?: ImageRatio }>(({ ratio }) => {
-  const hasRatio = Boolean(ratio);
-
-  return {
-    display: 'block',
-    overflow: 'hidden',
-    '& wrapper': {
-      backgroundSize: 'cover !important',
-      ...(hasRatio
-        ? {
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            lineHeight: 0,
-            position: 'absolute',
-          }
-        : {
-            width: 1,
-            height: 1,
-          }),
-    },
-    ...(hasRatio
-      ? {
-          width: 1,
-          lineHeight: 0,
-          position: 'relative',
-          pt: getRatio(ratio),
-        }
-      : {
-          lineHeight: 1,
-        }),
-  };
-});
+const paddingByRatio: Record<ImageRatio, string> = {
+  '4/3': 'calc(100% / 4 * 3)',
+  '3/4': 'calc(100% / 3 * 4)',
+  '6/4': 'calc(100% / 6 * 4)',
+  '4/6': 'calc(100% / 4 * 6)',
+  '16/9': 'calc(100% / 16 * 9)',
+  '9/16': 'calc(100% / 9 * 16)',
+  '21/9': 'calc(100% / 21 * 9)',
+  '9/21': 'calc(100% / 9 * 21)',
+  '1/1': '100%',
+};
 
 type ImageProps = BoxProps &
   LazyLoadImageProps & {
@@ -62,6 +24,14 @@ type ImageProps = BoxProps &
     disabledEffect?: boolean;
   };
 
+const SpanStyled = styled('span')({
+  display: 'block',
+  overflow: 'hidden',
+  '& .wrapper': {
+    backgroundSize: 'cover !important',
+  },
+});
+
 const Image: FC<ImageProps> = ({
   ratio,
   disabledEffect = false,
@@ -69,7 +39,33 @@ const Image: FC<ImageProps> = ({
   sx,
   ...other
 }) => (
-  <BoxStyled component="span" ratio={ratio} sx={sx}>
+  <Box
+    component={SpanStyled}
+    sx={{
+      lineHeight: Boolean(ratio) ? 0 : 1,
+      ...(Boolean(ratio)
+        ? {
+            width: 1,
+            position: 'relative',
+            pt: paddingByRatio[ratio!],
+            '& .wrapper': {
+              top: 0,
+              left: 0,
+              right: 0,
+              bottom: 0,
+              lineHeight: 0,
+              position: 'absolute',
+            },
+          }
+        : {
+            '& .wrapper': {
+              width: 1,
+              height: 1,
+            },
+          }),
+      ...sx,
+    }}
+  >
     <Box
       component={LazyLoadImage}
       wrapperClassName="wrapper"
@@ -78,7 +74,7 @@ const Image: FC<ImageProps> = ({
       sx={{ width: 1, height: 1, objectFit: 'cover' }}
       {...other}
     />
-  </BoxStyled>
+  </Box>
 );
 
 export { Image };

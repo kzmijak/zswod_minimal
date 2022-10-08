@@ -3,7 +3,6 @@ import { AnimatePresence, m } from 'framer-motion';
 import { FC, useCallback, useEffect, useState } from 'react';
 import { varFade } from 'src/components/animate';
 import Iconify from 'src/components/Iconify';
-import { ImageFile } from '../models/ImageFile';
 import { toBase64 } from '../utils/toBase64';
 import { Image } from './controls/Image';
 
@@ -13,20 +12,19 @@ type Image64 = {
 };
 
 type ImagesPreviewProps = {
-  images: ImageFile[];
-  onRemove?: (file: ImageFile) => void;
+  images: File[];
+  onRemove?: (file: File) => void;
 };
 
 const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => {
-  const hasFile = images.length > 0;
   const [images64, setImages64] = useState<Image64[]>([]);
 
   const convertAndAppend = useCallback(
-    async (image: ImageFile) => {
+    async (image: File) => {
       const newImageString = await toBase64(image);
       const newImage64 = {
         name: image.name,
-        base64: newImageString,
+        base64: newImageString ?? '',
       };
       setImages64([...images64, newImage64]);
     },
@@ -34,12 +32,13 @@ const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => {
   );
 
   useEffect(() => {
-    if (images.length > images64.length) {
+    const hasAppended = images.length > images64.length;
+    if (hasAppended) {
       convertAndAppend(images[images.length - 1]);
     }
   }, [images]);
 
-  const handleRemove = (index: number) => () => {
+  const handleRemove = (index: number) => {
     const newImages64 = images64.slice();
     newImages64.splice(index, 1);
     onRemove?.(images[index]);
@@ -47,7 +46,7 @@ const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => {
   };
 
   return (
-    <List disablePadding sx={{ ...(hasFile && { my: 3 }) }}>
+    <List disablePadding sx={{ my: 3 }}>
       <AnimatePresence>
         {images64.map((image, index) => {
           const { name, base64 } = image;
@@ -74,7 +73,7 @@ const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => {
               {onRemove && (
                 <IconButton
                   size="small"
-                  onClick={handleRemove(index)}
+                  onClick={() => handleRemove(index)}
                   sx={{
                     top: 6,
                     p: '2px',
