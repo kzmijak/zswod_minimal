@@ -1,7 +1,7 @@
-import { LazyLoadImage, LazyLoadImageProps } from 'react-lazy-load-image-component';
-import { Theme } from '@mui/material/styles';
-import { Box, BoxProps, SxProps, styled } from '@mui/material';
-import { FC } from 'react';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import { Box, styled } from '@mui/material';
+import { FC, useCallback, useEffect, useState } from 'react';
+import { toBase64 } from '../../utils/toBase64';
 
 type ImageRatio = '4/3' | '3/4' | '6/4' | '4/6' | '16/9' | '9/16' | '21/9' | '9/21' | '1/1';
 
@@ -17,13 +17,6 @@ const paddingByRatio: Record<ImageRatio, string> = {
   '1/1': '100%',
 };
 
-type ImageProps = BoxProps &
-  LazyLoadImageProps & {
-    sx?: SxProps<Theme>;
-    ratio?: ImageRatio;
-    disabledEffect?: boolean;
-  };
-
 const SpanStyled = styled('span')({
   display: 'block',
   overflow: 'hidden',
@@ -32,49 +25,60 @@ const SpanStyled = styled('span')({
   },
 });
 
-const Image: FC<ImageProps> = ({
-  ratio,
-  disabledEffect = false,
-  effect = 'blur',
-  sx,
-  ...other
-}) => (
-  <Box
-    component={SpanStyled}
-    sx={{
-      lineHeight: Boolean(ratio) ? 0 : 1,
-      ...(Boolean(ratio)
-        ? {
-            width: 1,
-            position: 'relative',
-            pt: paddingByRatio[ratio!],
-            '& .wrapper': {
-              top: 0,
-              left: 0,
-              right: 0,
-              bottom: 0,
-              lineHeight: 0,
-              position: 'absolute',
-            },
-          }
-        : {
-            '& .wrapper': {
-              width: 1,
-              height: 1,
-            },
-          }),
-      ...sx,
-    }}
-  >
+type ImageProps = {
+  src: File;
+  alt?: string;
+  ratio?: ImageRatio;
+};
+
+const Image: FC<ImageProps> = ({ ratio, src, alt }) => {
+  const [image64, setImage64] = useState<string>('');
+
+  const convertToBase64 = useCallback(async (file: File) => {
+    const string64 = await toBase64(file);
+    setImage64(string64);
+  }, []);
+
+  useEffect(() => {
+    convertToBase64(src);
+  }, [convertToBase64, src]);
+
+  return (
     <Box
-      component={LazyLoadImage}
-      wrapperClassName="wrapper"
-      effect={disabledEffect ? undefined : effect}
-      placeholderSrc="/assets/placeholder.svg"
-      sx={{ width: 1, height: 1, objectFit: 'cover' }}
-      {...other}
-    />
-  </Box>
-);
+      component={SpanStyled}
+      sx={{
+        lineHeight: Boolean(ratio) ? 0 : 1,
+        ...(Boolean(ratio)
+          ? {
+              width: 1,
+              position: 'relative',
+              pt: paddingByRatio[ratio!],
+              '& .wrapper': {
+                top: 0,
+                left: 0,
+                right: 0,
+                bottom: 0,
+                lineHeight: 0,
+                position: 'absolute',
+              },
+            }
+          : {
+              '& .wrapper': {
+                width: 1,
+                height: 1,
+              },
+            }),
+      }}
+    >
+      <Box
+        component={LazyLoadImage}
+        wrapperClassName="wrapper"
+        placeholderSrc="/assets/placeholder.svg"
+        src={image64}
+        sx={{ width: 1, height: 1, objectFit: 'cover' }}
+      />
+    </Box>
+  );
+};
 
 export { Image };
