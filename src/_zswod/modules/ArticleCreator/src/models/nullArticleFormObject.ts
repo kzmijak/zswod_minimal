@@ -7,7 +7,7 @@ const nullArticleFormObject: ArticleFormModel = {
   content: STRING,
   short: STRING,
   title: STRING,
-  imageGuids: ARRAY,
+  images: ARRAY,
 };
 
 export { nullArticleFormObject };

@@ -1,15 +1,17 @@
 import { TextField } from '@mui/material';
-import { FC } from 'react';
-import { Control, Controller } from 'react-hook-form';
-import { ArticleFormModel } from '../../models/ArticleFormModel';
+import { Control, Controller, FieldValues, Path } from 'react-hook-form';
 
-type ControlledTextFieldProps = {
-  name: keyof ArticleFormModel;
-  control: Control<ArticleFormModel, string>;
+type ControlledTextFieldProps<TFormModel extends FieldValues> = {
+  name: Path<TFormModel>;
+  control: Control<TFormModel, string>;
   label: string;
 };
 
-const ControlledTextField: FC<ControlledTextFieldProps> = ({ control, name, label }) => (
+const ControlledTextField = <TFormModel extends FieldValues>({
+  control,
+  name,
+  label,
+}: ControlledTextFieldProps<TFormModel>) => (
   <Controller
     control={control}
     name={name}

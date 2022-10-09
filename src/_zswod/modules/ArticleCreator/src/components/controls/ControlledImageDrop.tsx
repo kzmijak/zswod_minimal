@@ -17,7 +17,7 @@ const ControlledImageDrop: FC<ControlledImageDropProps> = ({ control }) => {
 
   return (
     <Controller
-      name="imageGuids"
+      name="images"
       control={control}
       render={({ field: { value: images, onChange } }) => {
         const handleRemove = (index: number) => {

@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import { CreatorForm } from '../components/ArticleForm';
+import { Creator } from '../components/Creator';
 
-const ArticleCreatorView: FC = () => <CreatorForm />;
+const ArticleCreatorView: FC = () => <Creator />;
 
 export { ArticleCreatorView };
