@@ -14,9 +14,13 @@ const schema = yup.object().shape({
   isPreview: yup.bool().required(),
 });
 
-const ImageForm: FC = () => {
+type ImageFormProps = {
+  initialState?: ImageFormModel;
+};
+
+const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject }) => {
   const { control, handleSubmit } = useForm<ImageFormModel>({
-    defaultValues: nullImageFormObject,
+    defaultValues: initialState,
     resolver: yupResolver(schema),
     mode: 'all',
   });
@@ -27,7 +31,7 @@ const ImageForm: FC = () => {
 
   return (
     <Stack component="form" onSubmit={handleSubmit(submitHandler)}>
-      <ControlledTextField control={control} label="Nazwa" name="name" />
+      <ControlledTextField control={control} label="Nazwa" name="title" />
       <ControlledTextField control={control} label="Tekst alternatywny" name="alt" />
       <ControlledCheckBox control={control} />
       <Button type="submit">Zatwierdź</Button>

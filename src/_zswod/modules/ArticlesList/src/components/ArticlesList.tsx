@@ -62,7 +62,7 @@ const ArticlesList: FC = () => {
                         <Typography variant="body2">{article.short}</Typography>
                         <Button
                           component={Link}
-                          to={`/edytor/${id}`}
+                          to={`/edytor/${titleNormalized}`}
                           sx={{ position: 'absolute', bottom: 10, right: 25 }}
                         >
                           Edytuj

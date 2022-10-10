@@ -4,6 +4,7 @@ type ImageModel = {
   title: string;
   alt: string;
   url: string;
+  isPreview: boolean;
 };
 
 export type { ImageModel };

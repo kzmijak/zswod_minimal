@@ -6,7 +6,7 @@ import Iconify from 'src/components/Iconify';
 import { Image } from './controls/Image';
 
 type ImagesPreviewProps = {
-  images: File[];
+  images: (File | string)[];
   onRemove?: (index: number) => void;
 };
 
@@ -15,7 +15,7 @@ const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => (
     <AnimatePresence>
       {images.map((image, index) => (
         <ListItem
-          key={image.name}
+          key={index}
           component={m.div}
           {...varFade().inRight}
           sx={{

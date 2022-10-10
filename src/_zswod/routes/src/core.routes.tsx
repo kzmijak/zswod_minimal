@@ -10,8 +10,8 @@ const CoreRoutes: RouteObject = {
       element: <ArticleCreatorView />,
     },
     {
-      path: 'edytor/:articleId',
-      element: <Maintenance />,
+      path: 'edytor/:articleTitle',
+      element: <ArticleCreatorView />,
     },
     {
       path: '*',

@@ -4,6 +4,7 @@ type ImageDto = {
   title: string;
   alt: string;
   url: string;
+  isPreview: boolean;
 };
 
 export type { ImageDto };

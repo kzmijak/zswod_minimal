@@ -22,7 +22,7 @@ const DropZoneStyle = styled('div', {
 }));
 
 type ImageDropProps = {
-  images: File[];
+  images: (File | string)[];
   error?: boolean;
   helperText?: ReactNode;
   onDrop: (image: File | File[]) => void;

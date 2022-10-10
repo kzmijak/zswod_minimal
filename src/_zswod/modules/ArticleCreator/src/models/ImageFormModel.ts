@@ -1,7 +1,8 @@
 type ImageFormModel = {
-  name: string;
+  title: string;
   alt: string;
   isPreview: boolean;
+  url: string;
 };
 
 export type { ImageFormModel };

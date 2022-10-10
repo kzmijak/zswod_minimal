@@ -26,7 +26,7 @@ const SpanStyled = styled('span')({
 });
 
 type ImageProps = {
-  src: File;
+  src: File | string;
   alt?: string;
   ratio?: ImageRatio;
 };
@@ -40,7 +40,11 @@ const Image: FC<ImageProps> = ({ ratio, src, alt }) => {
   }, []);
 
   useEffect(() => {
-    convertToBase64(src);
+    if (typeof src === 'string') {
+      setImage64(src);
+    } else {
+      convertToBase64(src);
+    }
   }, [convertToBase64, src]);
 
   return (

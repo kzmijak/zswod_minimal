@@ -6,7 +6,8 @@ const { BOOLEAN, STRING } = nullObjectConsts;
 const nullImageFormObject: ImageFormModel = {
   alt: STRING,
   isPreview: BOOLEAN,
-  name: STRING,
+  title: STRING,
+  url: STRING,
 };
 
 export { nullImageFormObject };
