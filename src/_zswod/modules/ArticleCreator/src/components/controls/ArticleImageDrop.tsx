@@ -3,14 +3,19 @@ import { ImageDrop } from 'src/_zswod/modules/ImageDrop';
 import { isArray } from 'lodash';
 import { ImageFormModel } from '../../models/ImageFormModel';
 import { nullImageFormObject } from '../../models/nullImageFormObject';
-import { createArrayMapper } from 'src/_zswod/utils/createArrayMapper';
+import { toBase64 } from 'src/_zswod/modules/ImageDrop/src/utils/toBase64';
 
-const convertFileToImage = (file: File): ImageFormModel => ({
-  ...nullImageFormObject,
-  title: file.name,
-});
+const convertFileToImage = async (file: File): Promise<ImageFormModel> => {
+  const url = await toBase64(file);
 
-const arrayConvertFileToImage = createArrayMapper(convertFileToImage);
+  return {
+    ...nullImageFormObject,
+    title: file.name,
+    url,
+  };
+};
+
+const arrayConvertFileToImage = async (files: File[]) => Promise.all(files.map(convertFileToImage));
 
 type ArticleImageDropProps = {
   images: ImageFormModel[];
@@ -30,9 +35,9 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
     onChange(imagesCopy);
   };
 
-  const handleDrop = (result: File[] | File) => {
+  const handleDrop = async (result: File[] | File) => {
     const dropAsArray = isArray(result) ? result : [result];
-    const imagesFromFiles = arrayConvertFileToImage(dropAsArray);
+    const imagesFromFiles = await arrayConvertFileToImage(dropAsArray);
     const cleanDrop = removeDuplicates(imagesFromFiles, images);
     onChange([...images, ...cleanDrop]);
   };

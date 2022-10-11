@@ -31,7 +31,6 @@ const ImagePreview: FC<ImagesPreviewProps> = ({ images, onRemove }) => (
           }}
         >
           <Image alt="preview" src={image} ratio="1/1" />
-
           {onRemove && (
             <IconButton
               size="small"
