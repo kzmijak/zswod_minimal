@@ -9,28 +9,25 @@ import { ControlledCheckBox } from './controls/ControlledCheckBox';
 import { ControlledTextField } from './controls/ControlledTextField';
 
 const schema = yup.object().shape({
-  name: yup.string().required(),
+  title: yup.string().required(),
   alt: yup.string().required(),
   isPreview: yup.bool().required(),
 });
 
 type ImageFormProps = {
   initialState?: ImageFormModel;
+  onSubmit: SubmitHandler<ImageFormModel>;
 };
 
-const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject }) => {
+const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject, onSubmit }) => {
   const { control, handleSubmit } = useForm<ImageFormModel>({
     defaultValues: initialState,
     resolver: yupResolver(schema),
     mode: 'all',
   });
 
-  const submitHandler: SubmitHandler<ImageFormModel> = (data) => {
-    console.log({ data });
-  };
-
   return (
-    <Stack component="form" onSubmit={handleSubmit(submitHandler)}>
+    <Stack component="form" onSubmit={handleSubmit(onSubmit)}>
       <ControlledTextField control={control} label="Nazwa" name="title" />
       <ControlledTextField control={control} label="Tekst alternatywny" name="alt" />
       <ControlledCheckBox control={control} />

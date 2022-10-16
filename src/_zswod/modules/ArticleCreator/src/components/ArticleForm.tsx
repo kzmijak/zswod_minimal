@@ -13,7 +13,7 @@ const schema = yup.object().shape({
 });
 
 type ArticleFormProps = {
-  onSubmit?: SubmitHandler<ArticleFormModel>;
+  onSubmit: SubmitHandler<ArticleFormModel>;
   defaultValues: ArticleFormModel;
 };
 
@@ -25,7 +25,7 @@ const ArticleForm: FC<ArticleFormProps> = ({ onSubmit, defaultValues }) => {
   });
 
   return (
-    <Paper component="form" onSubmit={Boolean(onSubmit) ? handleSubmit(onSubmit!) : undefined}>
+    <Paper component="form" onSubmit={handleSubmit(onSubmit!)}>
       <ControlledTextField label="Tytuł" control={control} name="title" />
       <ControlledTextField label="Skrót" control={control} name="short" />
       <ControlledTextField label="Zawartość" control={control} name="content" />
