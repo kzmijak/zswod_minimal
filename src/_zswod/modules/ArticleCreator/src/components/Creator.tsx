@@ -40,7 +40,14 @@ const Creator: FC<CreatorProps> = ({
 
   return (
     <Stack direction="column">
-      <ArticleForm defaultValues={articleFormContent} onSubmit={setArticleFormContent} />
+      <ArticleForm
+        defaultValues={articleFormContent}
+        onSubmit={(data) => {
+          console.log({ data });
+          setArticleFormContent(data);
+        }}
+        renderSubmit={<Button type="submit">Zatwierdź</Button>}
+      />
       <ArticleImageDrop
         images={imageFormModels}
         onChange={(images) => setImageFormModels(images)}

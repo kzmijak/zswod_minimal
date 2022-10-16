@@ -1,10 +1,11 @@
-import { Button, Paper } from '@mui/material';
-import { FC } from 'react';
+import { Grid } from '@mui/material';
+import { FC, ReactNode } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { ArticleFormModel } from '../models/ArticleFormModel';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { ControlledTextField } from './controls/ControlledTextField';
+import { ControlledTextbox } from './controls/ControlledTextbox';
 
 const schema = yup.object().shape({
   title: yup.string().required(),
@@ -15,9 +16,10 @@ const schema = yup.object().shape({
 type ArticleFormProps = {
   onSubmit: SubmitHandler<ArticleFormModel>;
   defaultValues: ArticleFormModel;
+  renderSubmit: ReactNode;
 };
 
-const ArticleForm: FC<ArticleFormProps> = ({ onSubmit, defaultValues }) => {
+const ArticleForm: FC<ArticleFormProps> = ({ onSubmit, defaultValues, renderSubmit }) => {
   const { control, handleSubmit } = useForm<ArticleFormModel>({
     mode: 'all',
     defaultValues,
@@ -25,12 +27,18 @@ const ArticleForm: FC<ArticleFormProps> = ({ onSubmit, defaultValues }) => {
   });
 
   return (
-    <Paper component="form" onSubmit={handleSubmit(onSubmit!)}>
-      <ControlledTextField label="Tytuł" control={control} name="title" />
-      <ControlledTextField label="Skrót" control={control} name="short" />
-      <ControlledTextField label="Zawartość" control={control} name="content" />
-      <Button type="submit">Zatwierdź</Button>
-    </Paper>
+    <Grid container component="form" onSubmit={handleSubmit(onSubmit)} maxWidth="100%">
+      <Grid item xs={6}>
+        <ControlledTextField fullWidth label="Tytuł" control={control} name="title" />
+      </Grid>
+      <Grid item xs={6}>
+        <ControlledTextField fullWidth label="Skrót" control={control} name="short" />
+      </Grid>
+      <Grid item xs={12}>
+        <ControlledTextbox control={control} name="content" />
+      </Grid>
+      {renderSubmit}
+    </Grid>
   );
 };
 
