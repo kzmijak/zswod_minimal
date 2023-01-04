@@ -1,19 +1,8 @@
 import { FC } from 'react';
 import { Quill } from 'react-quill';
 import { ToolbarStyle } from './ToolbarStyle';
-import UndoIcon from '@mui/icons-material/Undo';
-import RedoIcon from '@mui/icons-material/Redo';
 import { fontSizeConsts } from '../models/FontSize';
 import { headingConsts } from '../models/Heading';
-
-export function undoChange() {
-  // @ts-ignore
-  this.quill.history.undo();
-}
-export function redoChange() {
-  // @ts-ignore
-  this.quill.history.redo();
-}
 
 const Size = Quill.import('attributors/style/size');
 Size.whitelist = fontSizeConsts;
@@ -113,17 +102,6 @@ const Toolbar: FC<ToolbarProps> = ({ id, isSimple }) => (
         {!isSimple && <button type="button" className="ql-formula" />}
         <button type="button" className="ql-clean" />
       </div>
-
-      {!isSimple && (
-        <div className="ql-formats">
-          <button type="button" className="ql-undo">
-            <UndoIcon width={18} height={18} />
-          </button>
-          <button type="button" className="ql-redo">
-            <RedoIcon width={18} height={18} />
-          </button>
-        </div>
-      )}
     </div>
   </ToolbarStyle>
 );

@@ -39,7 +39,7 @@ const Creator: FC<CreatorProps> = ({
   };
 
   return (
-    <Stack direction="column">
+    <Stack direction="column" height="100vh">
       <ArticleForm
         defaultValues={articleFormContent}
         onSubmit={(data) => {
@@ -48,7 +48,7 @@ const Creator: FC<CreatorProps> = ({
         }}
         renderSubmit={<Button type="submit">Zatwierdź</Button>}
       />
-      <ArticleImageDrop
+      {/* <ArticleImageDrop
         images={imageFormModels}
         onChange={(images) => setImageFormModels(images)}
       />
@@ -63,7 +63,7 @@ const Creator: FC<CreatorProps> = ({
           }}
         />
       ))}
-      <Button onClick={handlePost}>Zatwierdź i wyślij</Button>
+      <Button onClick={handlePost}>Zatwierdź i wyślij</Button> */}
     </Stack>
   );
 };

@@ -1,4 +1,4 @@
-import { ReactNode } from 'react';
+import { FC, ReactNode } from 'react';
 import ReactQuill, { ReactQuillProps } from 'react-quill';
 import { styled } from '@mui/material/styles';
 import { Box, BoxProps } from '@mui/material';
@@ -29,15 +29,17 @@ const EditorStyle = styled(Box)(({ theme }) => ({
   },
 }));
 
-export interface Props extends ReactQuillProps {
+type EditorProps = ReactQuillProps & {
   id?: string;
   error?: boolean;
   simple?: boolean;
   helperText?: ReactNode;
+  label?: string;
   sx?: BoxProps;
-}
+  height?: string | number;
+};
 
-export default function Editor({
+const Editor: FC<EditorProps> = ({
   id = 'minimal-quill',
   error,
   value,
@@ -45,15 +47,13 @@ export default function Editor({
   simple = false,
   helperText,
   sx,
+  label,
+  height,
   ...other
-}: Props) {
+}) => {
   const modules = {
     toolbar: {
       container: `#${id}`,
-      // handlers: {
-      //   undo: undoChange,
-      //   redo: redoChange,
-      // },
     },
     history: {
       delay: 500,
@@ -67,12 +67,13 @@ export default function Editor({
   };
 
   return (
-    <div>
+    <>
       <EditorStyle
         sx={{
           ...(error && {
             border: (theme) => `solid 1px ${theme.palette.error.main}`,
           }),
+          height,
           ...sx,
         }}
       >
@@ -82,12 +83,14 @@ export default function Editor({
           onChange={onChange}
           modules={modules}
           formats={[...formatConsts]}
-          placeholder="Write something awesome..."
+          placeholder={label}
           {...other}
         />
       </EditorStyle>
 
       {helperText}
-    </div>
+    </>
   );
-}
+};
+
+export { Editor };
