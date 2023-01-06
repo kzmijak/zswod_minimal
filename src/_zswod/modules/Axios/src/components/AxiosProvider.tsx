@@ -1,5 +1,6 @@
 import { Store } from '@reduxjs/toolkit';
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
+import { useJwt } from 'src/_zswod/modules/Auth';
 import { setUpInterceptors } from '../setUpInterceptors';
 
 type AxiosProviderProps = {
@@ -8,7 +9,12 @@ type AxiosProviderProps = {
 };
 
 const AxiosProvider: FC<AxiosProviderProps> = ({ children, store }) => {
-  setUpInterceptors(store);
+  const { token } = useJwt();
+
+  setUpInterceptors(store, token);
+  useEffect(() => {
+    console.log(token);
+  }, [token]);
 
   return <>{children}</>;
 };

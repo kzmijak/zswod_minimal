@@ -2,6 +2,8 @@ type PathReduced = {
   [key: string]: string;
 };
 
+const PATH_ACCOUNT = `/konto`;
+
 const PATH_DASHBOARD_ROOT = `/etablica`;
 const PATH_DASHBOARD: PathReduced = {
   about: `${PATH_DASHBOARD_ROOT}/oszkole`,
@@ -139,4 +141,5 @@ export {
   PATHS_STUDENTS,
   PATH_DASHBOARD,
   PATH_DASHBOARD_ROOT,
+  PATH_ACCOUNT,
 };

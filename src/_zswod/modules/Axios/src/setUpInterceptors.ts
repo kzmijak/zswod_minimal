@@ -3,12 +3,16 @@ import { AxiosError } from 'axios';
 import { selectBackendUrl } from '../../Config/src/slice/selectors';
 import { api } from './instance';
 
-const setUpInterceptors = (store: Store) => {
+const setUpInterceptors = (store: Store, jwt: string) => {
   const state = store.getState();
   const backendUrl = selectBackendUrl(state);
 
   api.interceptors.request.use((config) => {
     config.baseURL = backendUrl;
+    config.headers = {
+      ...config.headers,
+      Authorization: Boolean(jwt) ? `Bearer ${jwt}` : '',
+    };
     return config;
   });
 
