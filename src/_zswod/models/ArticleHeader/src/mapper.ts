@@ -2,10 +2,22 @@ import { createArrayMapper } from 'src/_zswod/utils/mapperCreators';
 import { ArticleHeaderDto } from './ArticleHeaderDto';
 import { ArticleHeaderModel } from './ArticleHeaderModel';
 
-const mapDtoToModel = ({ articleGuid, date, ...rest }: ArticleHeaderDto): ArticleHeaderModel => ({
-  id: articleGuid,
-  date: new Date(date).toISOString(),
-  ...rest,
+const mapDtoToModel = ({
+  id,
+  previewImageAlt,
+  previewImageUrl,
+  short,
+  title,
+  titleNormalized,
+  uploadDate,
+}: ArticleHeaderDto): ArticleHeaderModel => ({
+  uploadDate: new Date(uploadDate).toISOString(),
+  id,
+  previewImageAlt,
+  previewImageUrl,
+  short,
+  title,
+  titleNormalized,
 });
 
 const arrayMapDtoToModel = createArrayMapper(mapDtoToModel);

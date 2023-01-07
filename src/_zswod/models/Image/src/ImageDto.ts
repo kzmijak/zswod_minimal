@@ -1,10 +1,10 @@
 type ImageDto = {
-  imageGuid: string;
-  articleGuid: string;
+  id: string;
   title: string;
   alt: string;
   url: string;
-  isPreview: boolean;
+  uploadDate: string;
+  order: number;
 };
 
 export type { ImageDto };

@@ -5,6 +5,7 @@ import {
   selectModels as selectArticleHeaders,
 } from './src/slice/selectors';
 import { FetchArticleHeaders } from './src/components/FetchArticleHeaders';
+import { ArticlesListView } from './src/views/ArticlesListView';
 
 export {
   articleHeadersReducer,
@@ -12,4 +13,5 @@ export {
   selectArticleHeadersStatus,
   selectArticleHeaders,
   FetchArticleHeaders,
+  ArticlesListView,
 };

@@ -1,11 +1,11 @@
 type ArticleHeaderModel = {
   id: string;
+  title: string;
+  short: string;
+  uploadDate: string;
+  titleNormalized: string;
   previewImageUrl: string;
   previewImageAlt: string;
-  title: string;
-  titleNormalized: string;
-  short: string;
-  date: string;
 };
 
 export type { ArticleHeaderModel };

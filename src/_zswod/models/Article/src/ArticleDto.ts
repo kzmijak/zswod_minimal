@@ -1,11 +1,9 @@
 type ArticleDto = {
-  articleGuid: string;
+  id: string;
   title: string;
-  titleNormalized: string;
   short: string;
   content: string;
-  date: string;
-  previewImageUrl: string;
+  uploadDate: string;
 };
 
 export type { ArticleDto };
