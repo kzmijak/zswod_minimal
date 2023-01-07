@@ -1,4 +1,4 @@
-import { createArrayMapper } from 'src/_zswod/utils/createArrayMapper';
+import { createArrayMapper } from 'src/_zswod/utils/mapperCreators';
 import { ArticleDto } from './ArticleDto';
 import { ArticleModel } from './ArticleModel';
 

@@ -1,5 +1,6 @@
 import { Outlet, RouteObject } from 'react-router';
 import { ArticleCreatorView } from 'src/_zswod/modules/ArticleCreator';
+import { RequireAuth } from 'src/_zswod/modules/Auth';
 import { Maintenance } from 'src/_zswod/views/Maintenance';
 
 const CoreRoutes: RouteObject = {
@@ -7,11 +8,19 @@ const CoreRoutes: RouteObject = {
   children: [
     {
       path: 'edytor',
-      element: <ArticleCreatorView />,
+      element: (
+        <RequireAuth>
+          <ArticleCreatorView />
+        </RequireAuth>
+      ),
     },
     {
       path: 'edytor/:articleTitle',
-      element: <ArticleCreatorView />,
+      element: (
+        <RequireAuth>
+          <ArticleCreatorView />
+        </RequireAuth>
+      ),
     },
     {
       path: '*',

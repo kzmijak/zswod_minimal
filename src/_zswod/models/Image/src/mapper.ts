@@ -1,4 +1,4 @@
-import { createArrayMapper } from 'src/_zswod/utils/createArrayMapper';
+import { createArrayMapper } from 'src/_zswod/utils/mapperCreators';
 import { ImageDto } from './ImageDto';
 import { ImageModel } from './ImageModel';
 

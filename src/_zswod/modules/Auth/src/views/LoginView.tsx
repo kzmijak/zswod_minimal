@@ -1,8 +1,8 @@
 import { FC } from 'react';
 import { api } from 'src/_zswod/modules/Axios';
+import { useJwt } from 'src/_zswod/modules/User';
 import { LoginForm } from '../components/LoginForm';
 import { LoginFormContent } from '../models/LoginFormContent';
-import { useJwt } from '../utils/useJwt';
 
 const executeSignIn = async (body: LoginFormContent) => {
   const response = await api.post<string>('auth/sign-in', body);
@@ -10,12 +10,12 @@ const executeSignIn = async (body: LoginFormContent) => {
 };
 
 const LoginView: FC = () => {
-  const { storeToken } = useJwt();
+  const { setToken } = useJwt();
 
   const handleSubmit = async (body: LoginFormContent) => {
     try {
       const token = await executeSignIn(body);
-      storeToken(token);
+      setToken(token);
       alert('wszystko git, odśwież');
     } catch {
       alert('coś poszło nie tak');

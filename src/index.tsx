@@ -20,6 +20,7 @@ import App from './App';
 import { store } from './_zswod/redux/store';
 import { ConfigProvider } from './_zswod/modules/Config';
 import { AxiosProvider } from './_zswod/modules/Axios';
+import { JwtProvider } from './_zswod/modules/User';
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 
@@ -27,15 +28,17 @@ root.render(
   <HelmetProvider>
     <ReduxProvider store={store}>
       <ConfigProvider>
-        <AxiosProvider store={store}>
-          <SettingsProvider>
-            <CollapseDrawerProvider>
-              <BrowserRouter>
-                <App />
-              </BrowserRouter>
-            </CollapseDrawerProvider>
-          </SettingsProvider>
-        </AxiosProvider>
+        <JwtProvider>
+          <AxiosProvider store={store}>
+            <SettingsProvider>
+              <CollapseDrawerProvider>
+                <BrowserRouter>
+                  <App />
+                </BrowserRouter>
+              </CollapseDrawerProvider>
+            </SettingsProvider>
+          </AxiosProvider>
+        </JwtProvider>
       </ConfigProvider>
     </ReduxProvider>
   </HelmetProvider>
