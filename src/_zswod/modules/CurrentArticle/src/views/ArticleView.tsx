@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router';
 import { Page } from 'src/_zswod/components/Page';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { ArticleContent } from '../components/ArticleContent';
-import { FetchArticle } from '../components/FetchArticle';
+import { CurrentArticleProvider } from '../components/CurrentArticleProvider';
 import { selectCurrentArticle } from '../slice/selectors';
 
 const ArticleView: FC = () => {
@@ -18,9 +18,10 @@ const ArticleView: FC = () => {
 
   return (
     <>
-      <FetchArticle articleTitle={titleNormalized!} />
       <Page title="Nowości">
-        <ArticleContent articleContent={article} onGoToGallery={handleGoToGalleryClick} />
+        <CurrentArticleProvider titleNormalized={titleNormalized!}>
+          <ArticleContent articleContent={article} onGoToGallery={handleGoToGalleryClick} />
+        </CurrentArticleProvider>
       </Page>
     </>
   );

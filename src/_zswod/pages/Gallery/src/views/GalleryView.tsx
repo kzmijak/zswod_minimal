@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router';
 import { Page } from 'src/_zswod/components/Page';
-import { FetchArticle } from 'src/_zswod/modules/Article/src/components/FetchArticle';
+import { FetchArticle } from 'src/_zswod/modules/Article/src/components/CurrentArticleProvider';
 import { selectCurrentArticle } from 'src/_zswod/modules/Article/src/slice/selectors';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { Gallery } from '../components/Gallery';
