@@ -5,7 +5,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { ImageFormModel } from '../models/ImageFormModel';
 import { nullImageFormObject } from '../models/nullImageFormObject';
-import { ControlledCheckBox } from './controls/ControlledCheckBox';
 import { ControlledTextField } from './controls/ControlledTextField';
 
 const schema = yup.object().shape({
@@ -30,7 +29,6 @@ const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject, onS
     <Stack component="form" onSubmit={handleSubmit(onSubmit)}>
       <ControlledTextField control={control} label="Nazwa" name="title" />
       <ControlledTextField control={control} label="Tekst alternatywny" name="alt" />
-      <ControlledCheckBox control={control} />
       <Button type="submit">Zatwierdź</Button>
     </Stack>
   );

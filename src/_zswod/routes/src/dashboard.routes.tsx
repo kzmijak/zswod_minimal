@@ -1,9 +1,9 @@
 import { RouteObject } from 'react-router';
 import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
 import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
-import { ArticlesListView } from 'src/_zswod/modules/ArticlesList';
-import { ArticleView } from 'src/_zswod/modules/Article';
-import { GalleriesListView, GalleryView } from 'src/_zswod/modules/Gallery';
+import { ArticlesListView } from 'src/_zswod/pages/ArticlesList';
+import { ArticleView } from 'src/_zswod/pages/Article';
+import { GalleriesListView, GalleryView } from 'src/_zswod/pages/Gallery';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,

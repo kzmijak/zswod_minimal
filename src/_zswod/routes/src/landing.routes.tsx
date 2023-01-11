@@ -1,6 +1,6 @@
 import { RouteObject } from 'react-router';
 import { MainLayout } from 'src/_zswod/layouts/main';
-import { LandingView } from 'src/_zswod/modules/Landing';
+import { LandingView } from 'src/_zswod/pages/Landing';
 
 const LandingRoutes: RouteObject = {
   path: '/',

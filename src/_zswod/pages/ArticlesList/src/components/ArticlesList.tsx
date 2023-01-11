@@ -3,16 +3,19 @@ import { Timeline } from '@mui/lab';
 import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { selectArticleHeaders } from '../..';
-import { selectStatus } from '../slice/selectors';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
 import Image from 'src/components/Image';
+import {
+  getArticleHeaderPreviewImage,
+  selectAllArticleHeaders,
+  selectArticleHeadersStatus,
+} from 'src/_zswod/modules/ArticleHeaders';
 
 const ArticlesList: FC = () => {
   const navigate = useNavigate();
 
-  const articles = useSelector(selectArticleHeaders);
-  const { status } = useSelector(selectStatus);
+  const articleHeaders = useSelector(selectAllArticleHeaders);
+  const { status } = useSelector(selectArticleHeadersStatus);
 
   if (status !== 'success') return null;
 
@@ -29,24 +32,18 @@ const ArticlesList: FC = () => {
 
       <Stack direction="column" spacing={3}>
         <Timeline position="left">
-          {articles.map((article) => {
-            const {
-              id,
-              previewImageAlt,
-              previewImageUrl,
-              date: dateISO,
-              titleNormalized,
-              title,
-            } = article;
-            const date = new Date(dateISO);
+          {articleHeaders.map((article) => {
+            const { id, short, uploadDate: uploadDateISO, titleNormalized, title } = article;
+            const previewImage = getArticleHeaderPreviewImage(article)!;
+            const uploadDate = new Date(uploadDateISO);
             return (
-              <TimeOutlinedList key={id} date={date}>
+              <TimeOutlinedList key={id} date={uploadDate}>
                 <Paper elevation={2} sx={{ height: 200 }}>
                   <Grid container>
                     <Grid item xs={3}>
                       <Image
-                        src={previewImageUrl}
-                        alt={previewImageAlt}
+                        src={previewImage.url}
+                        alt={previewImage.alt}
                         maxHeight={190}
                         minHeight={190}
                         sx={{ borderRadius: 0.8, margin: 0.5 }}
@@ -59,7 +56,7 @@ const ArticlesList: FC = () => {
                             {title}
                           </Typography>
                         </Button>
-                        <Typography variant="body2">{article.short}</Typography>
+                        <Typography variant="body2">{short}</Typography>
                         <Button
                           component={Link}
                           to={`/edytor/${titleNormalized}`}

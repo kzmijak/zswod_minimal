@@ -10,7 +10,8 @@ import {
   Typography,
   useTheme,
 } from '@mui/material';
-import { FC, MouseEventHandler } from 'react';
+import { FC } from 'react';
+import { Link } from 'react-router-dom';
 import { Markdown } from 'src/_zswod/components/Markdown';
 import { ArticleModel } from 'src/_zswod/models/Article';
 
@@ -25,16 +26,11 @@ const ImgStyle = styled('img')(() => ({
 type ArticleImageProps = {
   title: string;
   image: string;
-  onGoToGallery: MouseEventHandler<HTMLButtonElement>;
+  galleryUrl: string;
   alertTooltipContent?: string;
 };
 
-const ArticleImage: FC<ArticleImageProps> = ({
-  image,
-  title,
-  onGoToGallery,
-  alertTooltipContent,
-}) => {
+const ArticleImage: FC<ArticleImageProps> = ({ image, title, galleryUrl, alertTooltipContent }) => {
   const theme = useTheme();
   return (
     <Paper
@@ -80,8 +76,9 @@ const ArticleImage: FC<ArticleImageProps> = ({
           }}
         >
           <Button
+            component={Link}
             variant="contained"
-            onClick={onGoToGallery}
+            to={galleryUrl}
             sx={{ position: 'relative', left: 0 }}
           >
             Zobacz galerię
@@ -94,20 +91,22 @@ const ArticleImage: FC<ArticleImageProps> = ({
 
 type ArticleContentProps = {
   articleContent: ArticleModel;
-  onGoToGallery: MouseEventHandler<HTMLButtonElement>;
+  galleryUrl: string;
   alertTooltipContent?: string;
+  previewImageUrl: string;
 };
 
 const ArticleContent: FC<ArticleContentProps> = ({
   articleContent,
-  onGoToGallery,
+  galleryUrl,
   alertTooltipContent,
+  previewImageUrl,
 }) => (
   <Card>
     <ArticleImage
       title={articleContent.title}
-      image={articleContent.previewImageUrl}
-      onGoToGallery={onGoToGallery}
+      image={previewImageUrl}
+      galleryUrl={galleryUrl}
       alertTooltipContent={alertTooltipContent}
     />
     <Box sx={{ margin: 3.5 }}>

@@ -28,7 +28,8 @@ const slice = createSlice({
         state.status = 'success';
         entityAdapter.setAll(state, action.payload);
       })
-      .addCase(fetch.rejected, (state) => {
+      .addCase(fetch.rejected, (state, error) => {
+        console.log(error);
         state.status = 'error';
       }),
 });

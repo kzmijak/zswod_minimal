@@ -1,5 +1,4 @@
-import { FetchArticle } from './src/components/CurrentArticleProvider';
-import { reducer as articleReducer } from './src/slice/reducer';
-import { ArticleView } from './src/views/ArticleView';
+import { CurrentArticleProvider } from './src/components/CurrentArticleProvider';
+import { useCurrentArticle } from './src/utils/useCurrentArticle';
 
-export { articleReducer, ArticleView, FetchArticle };
+export { CurrentArticleProvider, useCurrentArticle };

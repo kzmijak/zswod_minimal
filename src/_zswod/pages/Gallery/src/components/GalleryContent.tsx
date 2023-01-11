@@ -11,12 +11,12 @@ import {
   Typography,
 } from '@mui/material';
 import { FC, MouseEventHandler, ReactNode } from 'react';
-import { useSelector } from 'react-redux';
 import { ArticleModel } from 'src/_zswod/models/Article';
-import { selectArticleImages } from 'src/_zswod/modules/Images';
 import ReportRoundedIcon from '@mui/icons-material/ReportRounded';
 import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
+import { ImageModel } from 'src/_zswod/models/Image';
+import { Link } from 'react-router-dom';
 
 type ImageListItemOverrideProps = {
   tooltip: string;
@@ -44,33 +44,32 @@ const EditActionButton: FC = () => (
   <ImageListItemOverride tooltip="Kliknij aby edytować" icon={<PendingRoundedIcon />} />
 );
 
-type GalleryProps = {
-  articleMeta: Pick<ArticleModel, 'id' | 'title' | 'date'>;
-  onOpenArticleClick?: () => void;
-  onOpenNextGalleryClick?: () => void;
-  onOpenPrevGalleryClick?: () => void;
+type GalleryContentProps = Pick<ArticleModel, 'id' | 'title' | 'uploadDate'> & {
+  images: ImageModel[];
+  articleUrl?: string;
+  nextGalleryUrl?: string;
+  prevGalleryUrl?: string;
 };
 
-const Gallery: FC<GalleryProps> = ({
-  articleMeta,
-  onOpenArticleClick,
-  onOpenNextGalleryClick,
-  onOpenPrevGalleryClick,
+const GalleryContent: FC<GalleryContentProps> = ({
+  title,
+  uploadDate,
+  articleUrl,
+  nextGalleryUrl,
+  prevGalleryUrl,
+  images,
 }) => {
-  const { id, title: articleTitle, date } = articleMeta;
-  const images = useSelector(selectArticleImages(id));
-
-  const hasArticle = Boolean(onOpenArticleClick);
-  const hasNextGallery = Boolean(onOpenNextGalleryClick);
-  const hasPrevGallery = Boolean(onOpenPrevGalleryClick);
+  const hasArticle = Boolean(articleUrl);
+  const hasNextGallery = Boolean(nextGalleryUrl);
+  const hasPrevGallery = Boolean(prevGalleryUrl);
 
   return (
     <Box>
       <Stack direction="column" spacing={5}>
-        <Typography variant="h1">{articleTitle}</Typography>
+        <Typography variant="h1">{title}</Typography>
         <Stack direction="row" justifyContent="center">
           {hasArticle && (
-            <Button onClick={onOpenArticleClick} variant="contained">
+            <Button component={Link} to={articleUrl!} variant="contained">
               Zobacz artykuł
             </Button>
           )}
@@ -104,13 +103,13 @@ const Gallery: FC<GalleryProps> = ({
 
         <Stack direction={'row'} justifyContent={'space-between'}>
           {hasNextGallery && (
-            <Button variant="outlined" onClick={onOpenNextGalleryClick}>
+            <Button variant="outlined" component={Link} to={nextGalleryUrl!}>
               Nowsza galeria
             </Button>
           )}
 
           {hasPrevGallery && (
-            <Button variant="outlined" onClick={onOpenPrevGalleryClick}>
+            <Button variant="outlined" component={Link} to={prevGalleryUrl!}>
               Wcześniejsza galeria
             </Button>
           )}
@@ -120,4 +119,4 @@ const Gallery: FC<GalleryProps> = ({
   );
 };
 
-export { Gallery };
+export { GalleryContent };

@@ -5,11 +5,9 @@ const { GUID, STRING, DATE_STRING } = nullObjectConsts;
 
 const nullObject: ArticleModel = {
   id: GUID,
-  titleNormalized: STRING,
+  uploadDate: DATE_STRING,
   short: STRING,
   content: STRING,
-  date: DATE_STRING,
-  previewImageUrl: STRING,
   title: STRING,
 };
 

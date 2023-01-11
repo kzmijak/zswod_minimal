@@ -7,9 +7,9 @@ import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import Image from 'src/components/Image';
 import { LightboxModal } from 'src/_zswod/components/LightboxModal';
 import { useSelector } from 'react-redux';
-import { selectImages } from 'src/_zswod/modules/Images';
 import useResponsive from 'src/hooks/useResponsive';
 import { m } from 'framer-motion';
+import { selectArticleHeadersImages } from 'src/_zswod/modules/ArticleHeaders';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -38,7 +38,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const [imageOpen, setImageOpen] = useState<number>(-1);
   const isDesktop = useResponsive('up', 'md');
 
-  const images = useSelector(selectImages(isDesktop ? 12 : 6));
+  const images = useSelector(selectArticleHeadersImages(isDesktop ? 12 : 6));
 
   const isLight = theme.palette.mode === 'light';
   const imageUrls = images.map((image) => image.url);

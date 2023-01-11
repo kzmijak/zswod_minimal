@@ -7,7 +7,7 @@ const setUpInterceptors = (store: Store, jwt: string) => {
   const state = store.getState();
   const backendUrl = selectBackendUrl(state);
 
-  api.interceptors.request.use((config) => {
+  api.interceptors.request.use(async (config) => {
     config.baseURL = backendUrl;
     config.headers = {
       ...config.headers,

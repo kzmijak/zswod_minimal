@@ -8,7 +8,7 @@ import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
-import { selectArticleHeaders } from 'src/_zswod/modules/ArticlesList';
+import { selectAllArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 import { m } from 'framer-motion';
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -23,7 +23,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const ref = useRef(null);
   const navigate = useNavigate();
 
-  const articleHeaders = useSelector(selectArticleHeaders);
+  const articleHeaders = useSelector(selectAllArticleHeaders);
 
   useEffect(() => {
     passRef(ref);
@@ -32,7 +32,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const carouselItems: CarouselItemProps[] = articleHeaders.map((header) => ({
     title: header.title,
     description: header.short,
-    image: header.previewImageUrl,
+    image: header.images[0].url,
     onClick: () => navigate(`${PATHS_ABOUT.nowosci.link}/${header.titleNormalized}`),
   }));
 

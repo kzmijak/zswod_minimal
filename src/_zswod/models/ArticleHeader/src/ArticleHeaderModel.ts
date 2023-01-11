@@ -1,11 +1,12 @@
+import { ImageModel } from '../../Image';
+
 type ArticleHeaderModel = {
   id: string;
   title: string;
   short: string;
   uploadDate: string;
   titleNormalized: string;
-  previewImageUrl: string;
-  previewImageAlt: string;
+  images: ImageModel[];
 };
 
 export type { ArticleHeaderModel };

@@ -1,12 +1,11 @@
 import { Button, Stack } from '@mui/material';
 import { FC, useState } from 'react';
 import { api } from 'src/_zswod/modules/Axios';
+import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
 import { ArticleFormModel } from '../models/ArticleFormModel';
 import { ImageFormModel } from '../models/ImageFormModel';
-import { nullArticleFormObject } from '../models/nullArticleFormObject';
 import { ArticleForm } from './ArticleForm';
-import { ArticleImageDrop } from './controls/ArticleImageDrop';
-import { ImageForm } from './ImageForm';
+import { arrayPick, pick } from 'src/_zswod/utils/lodash';
 
 type PostArticleBody = {
   article: ArticleFormModel;
@@ -18,18 +17,13 @@ const postArticle = async (data: PostArticleBody) => {
   return response.data;
 };
 
-type CreatorProps = {
-  articleInitialState?: ArticleFormModel;
-  imageInitialStates?: ImageFormModel[];
-};
+const Creator: FC = () => {
+  const { article, images } = useCurrentArticle();
+  const initialArticle = pick<ArticleFormModel>(article, 'content', 'short', 'title');
+  const initialImages = arrayPick<ImageFormModel>(images, 'title', 'alt', 'url');
 
-const Creator: FC<CreatorProps> = ({
-  articleInitialState = nullArticleFormObject,
-  imageInitialStates = [],
-}) => {
-  const [articleFormContent, setArticleFormContent] =
-    useState<ArticleFormModel>(articleInitialState);
-  const [imageFormModels, setImageFormModels] = useState<ImageFormModel[]>(imageInitialStates);
+  const [articleFormContent, setArticleFormContent] = useState<ArticleFormModel>(initialArticle);
+  const [imageFormModels, setImageFormModels] = useState<ImageFormModel[]>(initialImages);
 
   const handlePost = () => {
     postArticle({

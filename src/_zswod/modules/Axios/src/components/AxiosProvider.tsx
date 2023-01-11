@@ -11,9 +11,9 @@ type AxiosProviderProps = {
 const AxiosProvider: FC<AxiosProviderProps> = ({ children, store }) => {
   const { token } = useJwt();
 
-  useEffect(() => {
-    setUpInterceptors(store, token);
-  }, [store, token]);
+  // useEffect(() => {
+  // }, [store, token]);
+  setUpInterceptors(store, token);
 
   return <>{children}</>;
 };

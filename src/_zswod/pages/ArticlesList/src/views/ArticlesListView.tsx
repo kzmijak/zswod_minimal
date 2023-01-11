@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { Page } from 'src/_zswod/components/Page';
+import { FetchArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 import { ArticlesList } from '../components/ArticlesList';
-import { FetchArticleHeaders } from '../components/FetchArticleHeaders';
 
 const ArticlesListView: FC = () => (
   <>

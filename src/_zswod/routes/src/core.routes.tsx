@@ -1,5 +1,5 @@
 import { Outlet, RouteObject } from 'react-router';
-import { ArticleCreatorView } from 'src/_zswod/modules/ArticleCreator';
+import { ArticleCreatorView } from 'src/_zswod/pages/ArticleCreator';
 import { RequireAuth } from 'src/_zswod/modules/Auth';
 import { Maintenance } from 'src/_zswod/views/Maintenance';
 

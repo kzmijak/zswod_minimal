@@ -24,33 +24,44 @@ const executeFetchArticle = async (titleNormalized: string): Promise<ArticleResp
 };
 
 type CurrentArticleProviderProps = {
-  titleNormalized: string;
+  titleNormalized?: string;
   children: ReactNode;
 };
 
+const defaultArticle = nullArticleObject;
+const defaultImages: ImageModel[] = [];
+
 const CurrentArticleProvider: FC<CurrentArticleProviderProps> = ({ titleNormalized, children }) => {
   const [requestStatus, setRequestStatus] = useState<RequestStatus>('idle');
-  const [article, setArticle] = useState<ArticleModel>(nullArticleObject);
-  const [images, setImages] = useState<ImageModel[]>([]);
+  const [article, setArticle] = useState<ArticleModel>(defaultArticle);
+  const [images, setImages] = useState<ImageModel[]>(defaultImages);
 
-  const fetchArticle = useCallback(async () => {
+  const reset = () => {
+    setArticle(defaultArticle);
+    setImages(defaultImages);
+  };
+
+  const fetchArticle = useCallback(async (title: string) => {
     setRequestStatus('loading');
-    setArticle(nullArticleObject);
-    setImages([]);
+
     try {
-      const { article, images } = await executeFetchArticle(titleNormalized);
+      const { article, images } = await executeFetchArticle(title);
       setRequestStatus('success');
       setArticle(article);
       setImages(images);
     } catch {
       setRequestStatus('error');
     }
-  }, [titleNormalized]);
+  }, []);
 
   useEffect(() => {
     if (requestStatus === 'idle') {
-      fetchArticle();
+      if (Boolean(titleNormalized)) fetchArticle(titleNormalized!);
+    } else {
+      reset();
     }
+
+    return reset;
   }, [fetchArticle, requestStatus, titleNormalized]);
 
   return (
