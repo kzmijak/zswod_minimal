@@ -27,11 +27,13 @@ const AuthLayout: FC<AuthLayoutProps> = ({
   const { isDesktop } = useRwd();
 
   return (
-    <Grid container direction={isDesktop ? 'row' : 'column'} minHeight="100%">
+    <Grid container direction={isDesktop ? 'row' : 'column'}>
       <Grid item xs={isDesktop ? 6 : 3}>
         <Stack minHeight={1} justifyContent="center">
           <Grow in>
-            <Box sx={{ width: isDesktop ? 430 : '100%', padding: 5 }}>{illustration}</Box>
+            <Box sx={{ width: isDesktop ? 430 : '100%', minHeight: 350, padding: 5 }}>
+              {illustration}
+            </Box>
           </Grow>
         </Stack>
       </Grid>

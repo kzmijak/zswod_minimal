@@ -4,7 +4,7 @@ import { Outlet } from 'react-router';
 
 const AuthLayout: FC = () => (
   <Container>
-    <Stack height="100vh" justifyContent="center">
+    <Stack minHeight="100vh" justifyContent="center">
       <Outlet />
     </Stack>
   </Container>
