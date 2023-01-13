@@ -44,14 +44,12 @@ const RegisterForm: FC<RegisterFormProps> = ({ onSubmit }) => {
         </Typography>
         <IllustrationCard
           onClick={() => setValue('role', 'Student')}
-          // selected={getValues('role') === 'Student'}
           selected={role === 'Student'}
           label="Uczniem"
           illustration={<SoccerIllustration sx={{ width: 100 }} />}
         />
         <IllustrationCard
           onClick={() => setValue('role', 'Teacher')}
-          // selected={getValues('role') === 'Teacher'}
           selected={role === 'Teacher'}
           label="Rodzicem"
           illustration={<SuperWomanIllustration sx={{ width: 100 }} />}
