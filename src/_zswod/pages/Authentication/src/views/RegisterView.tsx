@@ -1,8 +1,7 @@
 import { LoadingButton } from '@mui/lab';
+import { Stack } from '@mui/material';
 import { FC } from 'react';
-import { FlyIllustration } from 'src/_zswod/assets/illustration_fly';
 import { JoinIllustration } from 'src/_zswod/assets/illustration_join';
-import { SuperWomanIllustration } from 'src/_zswod/assets/illustration_super_woman';
 import { api } from 'src/_zswod/modules/Axios';
 import { AuthLayout } from '../components/AuthLayout';
 import { RegisterForm } from '../components/RegisterForm';
@@ -30,8 +29,10 @@ const RegisterView: FC = () => {
       linkLogin
       linkResetPassword
     >
-      <RegisterForm onSubmit={handleSubmit} />
-      <LoadingButton variant="contained">Zarejestruj się</LoadingButton>
+      <Stack spacing={2}>
+        <RegisterForm onSubmit={handleSubmit} />
+        <LoadingButton variant="contained">Zarejestruj się</LoadingButton>
+      </Stack>
     </AuthLayout>
   );
 };

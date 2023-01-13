@@ -45,6 +45,7 @@ const AuthLayout: FC<AuthLayoutProps> = ({
         direction="column"
         justifyContent="center"
         alignItems="center"
+        pb={3}
       >
         <Stack spacing={3} minWidth={1}>
           <Stack>
