@@ -2,7 +2,7 @@ import { Box, SxProps, useTheme } from '@mui/material';
 import { FC } from 'react';
 
 type LogicIllustrationProps = {
-  sx: SxProps;
+  sx?: SxProps;
 };
 const LogicIllustration: FC<LogicIllustrationProps> = ({ sx }) => {
   const theme = useTheme();

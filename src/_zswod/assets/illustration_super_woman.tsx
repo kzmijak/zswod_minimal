@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { Box, SxProps, useTheme } from '@mui/material';
 
 type SuperWomanIllustrationProps = {
-  sx: SxProps;
+  sx?: SxProps;
 };
 
 const SuperWomanIllustration: FC<SuperWomanIllustrationProps> = ({ sx }) => {
