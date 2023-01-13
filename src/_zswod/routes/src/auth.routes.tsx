@@ -1,6 +1,7 @@
 import { Navigate, RouteObject } from 'react-router';
 import { AuthLayout } from 'src/_zswod/layouts/auth';
-import { LoginView, RegisterView, RequireAnonymous } from 'src/_zswod/modules/Auth';
+import { RequireAnonymous } from 'src/_zswod/modules/User';
+import { LoginView, RegisterView } from 'src/_zswod/pages/Authentication';
 import { PATH_ACCOUNT } from './menu.paths';
 
 const AuthRoutes: RouteObject = {

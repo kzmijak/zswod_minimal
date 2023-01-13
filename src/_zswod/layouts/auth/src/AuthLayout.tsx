@@ -1,13 +1,11 @@
-import { Container, Paper, Stack } from '@mui/material';
+import { Container, Stack } from '@mui/material';
 import { FC } from 'react';
 import { Outlet } from 'react-router';
 
 const AuthLayout: FC = () => (
-  <Container maxWidth="sm">
+  <Container>
     <Stack height="100vh" justifyContent="center">
-      <Paper elevation={16} sx={{ p: 3 }}>
-        <Outlet />
-      </Paper>
+      <Outlet />
     </Stack>
   </Container>
 );
