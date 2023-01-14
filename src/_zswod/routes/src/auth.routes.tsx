@@ -1,7 +1,12 @@
 import { Navigate, RouteObject } from 'react-router';
 import { AuthLayout } from 'src/_zswod/layouts/auth';
 import { RequireAnonymous } from 'src/_zswod/modules/User';
-import { LoginView, RegisterView } from 'src/_zswod/pages/Authentication';
+import {
+  LoginView,
+  RegisterView,
+  ResetPasswordView,
+  SetNewPasswordView,
+} from 'src/_zswod/pages/Authentication';
 import { PATH_ACCOUNT } from './menu.paths';
 
 const AuthRoutes: RouteObject = {
@@ -23,6 +28,14 @@ const AuthRoutes: RouteObject = {
     {
       path: 'logowanie',
       element: <LoginView />,
+    },
+    {
+      path: 'resetowanie-hasla',
+      element: <ResetPasswordView />,
+    },
+    {
+      path: 'nadawanie-hasla',
+      element: <SetNewPasswordView />,
     },
   ],
 };

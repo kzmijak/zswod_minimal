@@ -23,8 +23,8 @@ const LoginForm: FC<LoginFormProps> = ({ onSubmit, formId }) => {
 
   return (
     <Stack id={formId} component="form" minWidth={1} onSubmit={handleSubmit(onSubmit)} spacing={1}>
-      <TextField fullWidth {...register('email')} placeholder="Email" />
-      <TextField fullWidth {...register('password')} type="password" placeholder="Hasło" />
+      <TextField fullWidth {...register('email')} label="Email" />
+      <TextField fullWidth {...register('password')} type="password" label="Hasło" />
     </Stack>
   );
 };
