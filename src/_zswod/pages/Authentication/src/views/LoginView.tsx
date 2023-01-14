@@ -5,7 +5,7 @@ import { LogicIllustration } from 'src/_zswod/assets/illustration_logic';
 import { api } from 'src/_zswod/modules/Axios';
 import { useJwt } from 'src/_zswod/modules/User';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
-import { AuthLayout } from '../components/AuthLayout';
+import { AuthTemplate } from '../components/AuthTemplate';
 import { LoginForm } from '../components/LoginForm';
 import { LoginFormContent } from '../models/LoginFormContent';
 
@@ -31,7 +31,7 @@ const LoginView: FC = () => {
   };
 
   return (
-    <AuthLayout
+    <AuthTemplate
       title="Zaloguj się"
       subtitle="Ponieważ fajnie jest być sobą! 🤠"
       illustration={<LogicIllustration />}
@@ -57,7 +57,7 @@ const LoginView: FC = () => {
           </Grow>
         )}
       </Stack>
-    </AuthLayout>
+    </AuthTemplate>
   );
 };
 

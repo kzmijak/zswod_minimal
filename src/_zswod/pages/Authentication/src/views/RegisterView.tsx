@@ -3,7 +3,7 @@ import { Stack } from '@mui/material';
 import { FC } from 'react';
 import { JoinIllustration } from 'src/_zswod/assets/illustration_join';
 import { api } from 'src/_zswod/modules/Axios';
-import { AuthLayout } from '../components/AuthLayout';
+import { AuthTemplate } from '../components/AuthTemplate';
 import { RegisterForm } from '../components/RegisterForm';
 import { RegisterFormContent } from '../models/RegisterFormContent';
 
@@ -22,7 +22,7 @@ const RegisterView: FC = () => {
   };
 
   return (
-    <AuthLayout
+    <AuthTemplate
       title="Zarejestruj się"
       subtitle="Wszyscy już na Ciebie czekamy!"
       illustration={<JoinIllustration />}
@@ -33,7 +33,7 @@ const RegisterView: FC = () => {
         <RegisterForm onSubmit={handleSubmit} />
         <LoadingButton variant="contained">Zarejestruj się</LoadingButton>
       </Stack>
-    </AuthLayout>
+    </AuthTemplate>
   );
 };
 
