@@ -38,22 +38,22 @@ const AuthTemplate: FC<AuthTemplateProps> = ({
   linkResetPassword,
   subtitle,
 }) => {
-  const { isDesktop } = useRwd();
+  const { isMobile } = useRwd();
 
   return (
     <Page title={title}>
-      <Grid container direction={isDesktop ? 'row' : 'column'}>
-        <Grid item xs={isDesktop ? 6 : 3}>
+      <Grid container direction={isMobile ? 'column' : 'row'}>
+        <Grid item xs={isMobile ? 3 : 6}>
           <Stack minHeight={1} justifyContent="center">
             <Grow in>
-              <Box sx={{ width: isDesktop ? 430 : '100%', minHeight: 350, padding: 5 }}>
+              <Box sx={{ width: isMobile ? '100%' : 430, minHeight: 350, padding: 5 }}>
                 {illustration}
               </Box>
             </Grow>
           </Stack>
         </Grid>
         <Grid
-          xs={isDesktop ? 6 : 9}
+          xs={isMobile ? 9 : 6}
           item
           container
           component={Stack}

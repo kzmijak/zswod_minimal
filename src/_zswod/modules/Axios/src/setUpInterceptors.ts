@@ -18,7 +18,11 @@ const setUpInterceptors = (store: Store, jwt: string) => {
 
   api.interceptors.response.use(
     (response) => response,
-    (error: AxiosError) => Promise.reject(error.response?.data ?? error.message)
+    (error: AxiosError) => {
+      const message = (error.response?.data ?? error.message) as string;
+      const enumOnly = message.slice(0, message.indexOf(':'));
+      return Promise.reject(enumOnly);
+    }
   );
 };
 
