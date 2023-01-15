@@ -4,10 +4,14 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { SetNewPasswordFormContent } from '../models/SetNewPasswordFormContent';
+import { yupStringSchemas } from '../utils/yupStringSchemas';
+import { ErrorSocket } from './utils/ErrorSocket';
+
+const { password, passwordConfirm } = yupStringSchemas;
 
 const schema = yup.object().shape({
-  password: yup.string().required(),
-  confirmPassword: yup.string().required(),
+  password,
+  passwordConfirm,
 });
 
 type SetNewPasswordFormProps = {
@@ -16,15 +20,35 @@ type SetNewPasswordFormProps = {
 };
 
 const SetNewPasswordForm: FC<SetNewPasswordFormProps> = ({ onSubmit, formId }) => {
-  const { register, handleSubmit } = useForm<SetNewPasswordFormContent>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SetNewPasswordFormContent>({
     resolver: yupResolver(schema),
-    mode: 'all',
+    mode: 'onBlur',
   });
 
   return (
     <Stack spacing={2} component="form" id={formId} onSubmit={handleSubmit(onSubmit)}>
-      <TextField {...register('password')} label="Hasło" type="password" />
-      <TextField {...register('confirmPassword')} label="Powtórz hasło" type="password" />
+      <ErrorSocket message={errors.password?.message}>
+        <TextField
+          {...register('password')}
+          fullWidth
+          label="Hasło"
+          type="password"
+          error={Boolean(errors.password)}
+        />
+      </ErrorSocket>
+      <ErrorSocket message={errors.passwordConfirm?.message}>
+        <TextField
+          {...register('passwordConfirm')}
+          fullWidth
+          label="Powtórz hasło"
+          type="password"
+          error={Boolean(errors.passwordConfirm)}
+        />
+      </ErrorSocket>
     </Stack>
   );
 };

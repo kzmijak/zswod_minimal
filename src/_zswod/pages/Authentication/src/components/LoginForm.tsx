@@ -4,10 +4,14 @@ import { FC } from 'react';
 import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoginFormContent } from '../models/LoginFormContent';
+import { yupStringSchemas } from '../utils/yupStringSchemas';
+import { ErrorSocket } from './utils/ErrorSocket';
+
+const { email, password } = yupStringSchemas;
 
 const schema = yup.object().shape({
-  email: yup.string().email().required(),
-  password: yup.string().required(),
+  email,
+  password,
 });
 
 type LoginFormProps = {
@@ -16,15 +20,29 @@ type LoginFormProps = {
 };
 
 const LoginForm: FC<LoginFormProps> = ({ onSubmit, formId }) => {
-  const { register, handleSubmit } = useForm<LoginFormContent>({
-    mode: 'all',
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginFormContent>({
+    mode: 'onBlur',
     resolver: yupResolver(schema),
   });
 
   return (
     <Stack id={formId} component="form" minWidth={1} onSubmit={handleSubmit(onSubmit)} spacing={1}>
-      <TextField fullWidth {...register('email')} label="Email" />
-      <TextField fullWidth {...register('password')} type="password" label="Hasło" />
+      <ErrorSocket message={errors.email?.message}>
+        <TextField fullWidth {...register('email')} label="Email" error={Boolean(errors.email)} />
+      </ErrorSocket>
+      <ErrorSocket message={errors.password?.message}>
+        <TextField
+          fullWidth
+          {...register('password')}
+          type="password"
+          label="Hasło"
+          error={Boolean(errors.password)}
+        />
+      </ErrorSocket>
     </Stack>
   );
 };

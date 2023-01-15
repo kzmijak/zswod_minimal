@@ -12,6 +12,8 @@ const executeCreateUser = async (request: RegisterFormContent) => {
 };
 
 const RegisterView: FC = () => {
+  const formId = 'register';
+
   const handleSubmit = async (body: RegisterFormContent) => {
     try {
       await executeCreateUser(body);
@@ -29,9 +31,11 @@ const RegisterView: FC = () => {
       linkLogin
       linkResetPassword
     >
-      <Stack spacing={2}>
-        <RegisterForm onSubmit={handleSubmit} />
-        <LoadingButton variant="contained">Zarejestruj się</LoadingButton>
+      <Stack spacing={3}>
+        <RegisterForm formId={formId} onSubmit={handleSubmit} />
+        <LoadingButton form={formId} type="submit" variant="contained">
+          Zarejestruj się
+        </LoadingButton>
       </Stack>
     </AuthTemplate>
   );

@@ -10,7 +10,7 @@ const SetNewPasswordView: FC = () => {
 
   const altContent = (
     <Grow in>
-      <Alert>
+      <Alert variant="outlined">
         <AlertTitle>Udało się!</AlertTitle>
         Masz już nowe hasło, spróbuj się nim teraz zalogować!
       </Alert>
@@ -27,7 +27,7 @@ const SetNewPasswordView: FC = () => {
       {showAlt ? (
         altContent
       ) : (
-        <Stack spacing={2}>
+        <Stack spacing={3}>
           <SetNewPasswordForm
             formId={formId}
             onSubmit={() => {

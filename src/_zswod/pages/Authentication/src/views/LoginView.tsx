@@ -38,7 +38,7 @@ const LoginView: FC = () => {
       linkRegister
       linkResetPassword
     >
-      <Stack spacing={2}>
+      <Stack spacing={3}>
         <LoginForm formId={formId} onSubmit={handleSubmit} />
         <LoadingButton
           loading={status === 'loading'}

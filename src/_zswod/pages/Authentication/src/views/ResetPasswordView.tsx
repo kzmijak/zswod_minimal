@@ -1,9 +1,11 @@
-import { Alert, AlertTitle, Button, Grow, Stack, TextField, Typography } from '@mui/material';
+import { Alert, AlertTitle, Button, Grow, Stack, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import { WonderIllustration } from 'src/_zswod/assets/illustration_wonder';
 import { AuthTemplate } from '../components/AuthTemplate';
+import { ResetPasswordForm } from '../components/ResetPasswordForm';
 
 const ResetPasswordView: FC = () => {
+  const formId = 'reset-password';
   const [showAlt, setShowAlt] = useState(false);
 
   const altContent = (
@@ -28,12 +30,14 @@ const ResetPasswordView: FC = () => {
       {showAlt ? (
         altContent
       ) : (
-        <Stack spacing={2}>
-          <TextField
-            label="E-Mail"
-            helperText="Na ten adres dostaniesz wiadomość z linkiem do zresetowania hasła"
+        <Stack spacing={3}>
+          <ResetPasswordForm
+            formId={formId}
+            onSubmit={() => {
+              setShowAlt(true);
+            }}
           />
-          <Button variant="contained" onClick={() => setShowAlt(true)}>
+          <Button variant="contained" type="submit" form={formId}>
             Wyślij E-Mail
           </Button>
         </Stack>

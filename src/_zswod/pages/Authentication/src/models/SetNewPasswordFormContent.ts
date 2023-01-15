@@ -1,6 +1,6 @@
 type SetNewPasswordFormContent = {
   password: string;
-  confirmPassword: string;
+  passwordConfirm: string;
 };
 
 export type { SetNewPasswordFormContent };
