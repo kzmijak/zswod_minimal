@@ -1,31 +1,29 @@
 import { LoadingButton } from '@mui/lab';
-import { Alert, Grow, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { FC, useState } from 'react';
 import { LogicIllustration } from 'src/_zswod/assets/illustration_logic';
-import { api } from 'src/_zswod/modules/Axios';
 import { useJwt } from 'src/_zswod/modules/User';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
+import { getSignInError, signIn } from '../api/signIn';
 import { AuthTemplate } from '../components/AuthTemplate';
 import { LoginForm } from '../components/LoginForm';
+import { Warning } from '../components/utils/Warning';
 import { LoginFormContent } from '../models/LoginFormContent';
-
-const executeSignIn = async (body: LoginFormContent) => {
-  const response = await api.post<string>('auth/sign-in', body);
-  return response.data;
-};
 
 const LoginView: FC = () => {
   const { setToken } = useJwt();
   const [status, setStatus] = useState<RequestStatus>('idle');
+  const [error, setError] = useState('');
   const formId = 'login-form';
 
   const handleSubmit = async (body: LoginFormContent) => {
     setStatus('loading');
     try {
-      const token = await executeSignIn(body);
+      const token = await signIn(body);
       setToken(token);
       setStatus('success');
-    } catch {
+    } catch (err) {
+      setError(getSignInError(err));
       setStatus('error');
     }
   };
@@ -49,13 +47,7 @@ const LoginView: FC = () => {
           Zaloguj
         </LoadingButton>
 
-        {status === 'error' && (
-          <Grow in>
-            <Alert variant="standard" severity="error">
-              Coś poszło nie tak
-            </Alert>
-          </Grow>
-        )}
+        {status === 'error' && <Warning content={error} />}
       </Stack>
     </AuthTemplate>
   );

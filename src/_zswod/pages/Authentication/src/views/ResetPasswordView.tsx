@@ -1,11 +1,12 @@
 import { LoadingButton } from '@mui/lab';
-import { Alert, AlertTitle, Grow, Stack, Typography } from '@mui/material';
+import { Alert, Stack } from '@mui/material';
 import { FC, useState } from 'react';
 import { WonderIllustration } from 'src/_zswod/assets/illustration_wonder';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
 import { requestPasswordReset, getRequestPasswordResetError } from '../api/requestPasswordReset';
 import { AuthTemplate } from '../components/AuthTemplate';
 import { ResetPasswordForm } from '../components/ResetPasswordForm';
+import { Warning } from '../components/utils/Warning';
 import { ResetPasswordFromContent } from '../models/ResetPasswordFromContent';
 
 const ResetPasswordView: FC = () => {
@@ -25,14 +26,10 @@ const ResetPasswordView: FC = () => {
   };
 
   const altContent = (
-    <Grow in>
-      <Alert severity="success" variant="outlined">
-        <AlertTitle>Poszło!</AlertTitle>
-        <Typography>
-          Na twoim koncie wkrótce powinna się znaleźć wiadomość z linkiem do nadania nowego hasła
-        </Typography>
-      </Alert>
-    </Grow>
+    <Warning
+      content="Na twoim koncie wkrótce powinna się znaleźć wiadomość z linkiem do nadania nowego hasła"
+      error={false}
+    />
   );
 
   return (
