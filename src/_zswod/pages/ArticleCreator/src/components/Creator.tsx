@@ -2,14 +2,15 @@ import { Button, Stack } from '@mui/material';
 import { FC, useState } from 'react';
 import { api } from 'src/_zswod/modules/Axios';
 import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
-import { ArticleFormModel } from '../models/ArticleFormModel';
-import { ImageFormModel } from '../models/ImageFormModel';
+import { ArticleFormContent } from '../models/ArticleFormContent';
+import { ImageFormContent } from '../models/ImageFormContent';
 import { ArticleForm } from './ArticleForm';
 import { arrayPick, pick } from 'src/_zswod/utils/lodash';
+import { ArticlePreview } from './ArticlePreview';
 
 type PostArticleBody = {
-  article: ArticleFormModel;
-  images: ImageFormModel[];
+  article: ArticleFormContent;
+  images: ImageFormContent[];
 };
 
 const postArticle = async (data: PostArticleBody) => {
@@ -18,47 +19,35 @@ const postArticle = async (data: PostArticleBody) => {
 };
 
 const Creator: FC = () => {
-  const { article, images } = useCurrentArticle();
-  const initialArticle = pick<ArticleFormModel>(article, 'content', 'short', 'title');
-  const initialImages = arrayPick<ImageFormModel>(images, 'title', 'alt', 'url');
+  const { article } = useCurrentArticle();
+  const formId = 'article-form';
+  const initialArticle = pick<ArticleFormContent>(article, 'content', 'short', 'title');
 
-  const [articleFormContent, setArticleFormContent] = useState<ArticleFormModel>(initialArticle);
-  const [imageFormModels, setImageFormModels] = useState<ImageFormModel[]>(initialImages);
+  const [articlePreviewOpen, setArticlePreviewOpen] = useState(false);
+  const [articleFormContent, setArticleFormContent] = useState<ArticleFormContent>(initialArticle);
 
-  const handlePost = () => {
-    postArticle({
-      article: articleFormContent,
-      images: imageFormModels,
-    });
+  const handleContinue = (form: ArticleFormContent) => {
+    setArticleFormContent(form);
+    setArticlePreviewOpen(true);
   };
 
   return (
-    <Stack direction="column" height="100vh">
-      <ArticleForm
-        defaultValues={articleFormContent}
-        onSubmit={(data) => {
-          console.log({ data });
-          setArticleFormContent(data);
-        }}
-        renderSubmit={<Button type="submit">Zatwierdź</Button>}
+    <>
+      <Stack direction="column" height="100vh">
+        <ArticleForm formId={formId} defaultValues={articleFormContent} onSubmit={handleContinue} />
+        <Stack direction="row" justifyContent="space-between" margin={2}>
+          <Button variant="contained">Powrót do Panelu</Button>
+          <Button variant="contained" type="submit" form={formId}>
+            Kontynuuj
+          </Button>
+        </Stack>
+      </Stack>
+      <ArticlePreview
+        open={articlePreviewOpen}
+        onClose={() => setArticlePreviewOpen(false)}
+        article={articleFormContent}
       />
-      {/* <ArticleImageDrop
-        images={imageFormModels}
-        onChange={(images) => setImageFormModels(images)}
-      />
-      {imageFormModels.map((imageFormModel, index) => (
-        <ImageForm
-          initialState={imageFormModel}
-          key={index}
-          onSubmit={(form) => {
-            const copy = imageFormModels.slice();
-            copy.splice(index, 1, form);
-            setImageFormModels(copy);
-          }}
-        />
-      ))}
-      <Button onClick={handlePost}>Zatwierdź i wyślij</Button> */}
-    </Stack>
+    </>
   );
 };
 

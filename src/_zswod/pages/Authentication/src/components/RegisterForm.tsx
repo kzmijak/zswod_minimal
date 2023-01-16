@@ -9,7 +9,7 @@ import { UserRole } from 'src/_zswod/models/User';
 import * as yup from 'yup';
 import { RegisterFormContent } from '../models/RegisterFormContent';
 import { yupStringSchemas } from '../utils/yupStringSchemas';
-import { ErrorSocket } from './utils/ErrorSocket';
+import { ErrorSocket } from '../../../../components/ErrorSocket';
 
 const { email, password, passwordConfirm, role } = yupStringSchemas;
 

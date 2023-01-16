@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { LoginFormContent } from '../models/LoginFormContent';
 import { yupStringSchemas } from '../utils/yupStringSchemas';
-import { ErrorSocket } from './utils/ErrorSocket';
+import { ErrorSocket } from '../../../../components/ErrorSocket';
 
 const { email, password } = yupStringSchemas;
 

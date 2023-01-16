@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 import { SetNewPasswordFormContent } from '../models/SetNewPasswordFormContent';
 import { yupStringSchemas } from '../utils/yupStringSchemas';
-import { ErrorSocket } from './utils/ErrorSocket';
+import { ErrorSocket } from '../../../../components/ErrorSocket';
 
 const { password, passwordConfirm } = yupStringSchemas;
 

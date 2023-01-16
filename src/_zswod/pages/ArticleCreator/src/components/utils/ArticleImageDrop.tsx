@@ -1,11 +1,11 @@
 import { FC } from 'react';
 import { ImageDrop } from 'src/_zswod/modules/ImageDrop';
 import { isArray } from 'lodash';
-import { ImageFormModel } from '../../models/ImageFormModel';
+import { ImageFormContent } from '../../models/ImageFormContent';
 import { nullImageFormObject } from '../../models/nullImageFormObject';
 import { toBase64 } from 'src/_zswod/modules/ImageDrop/src/utils/toBase64';
 
-const convertFileToImage = async (file: File): Promise<ImageFormModel> => {
+const convertFileToImage = async (file: File): Promise<ImageFormContent> => {
   const url = await toBase64(file);
 
   return {
@@ -18,12 +18,12 @@ const convertFileToImage = async (file: File): Promise<ImageFormModel> => {
 const arrayConvertFileToImage = async (files: File[]) => Promise.all(files.map(convertFileToImage));
 
 type ArticleImageDropProps = {
-  images: ImageFormModel[];
-  onChange: (newArray: ImageFormModel[]) => void;
+  images: ImageFormContent[];
+  onChange: (newArray: ImageFormContent[]) => void;
 };
 
 const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
-  const removeDuplicates = (drop: ImageFormModel[], existingArray: ImageFormModel[]) =>
+  const removeDuplicates = (drop: ImageFormContent[], existingArray: ImageFormContent[]) =>
     drop.filter((image) => {
       const duplicates = existingArray.find((img) => img.title === image.title);
       return !Boolean(duplicates);

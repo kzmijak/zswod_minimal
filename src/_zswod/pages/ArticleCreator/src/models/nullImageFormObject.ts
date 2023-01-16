@@ -1,9 +1,9 @@
 import { nullObjectConsts } from 'src/_zswod/utils/nullObjectConsts';
-import { ImageFormModel } from './ImageFormModel';
+import { ImageFormContent } from './ImageFormContent';
 
 const { STRING } = nullObjectConsts;
 
-const nullImageFormObject: ImageFormModel = {
+const nullImageFormObject: ImageFormContent = {
   alt: STRING,
   title: STRING,
   url: STRING,

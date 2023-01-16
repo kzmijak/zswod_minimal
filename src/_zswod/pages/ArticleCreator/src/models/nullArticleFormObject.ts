@@ -1,9 +1,9 @@
 import { nullObjectConsts } from 'src/_zswod/utils/nullObjectConsts';
-import { ArticleFormModel } from './ArticleFormModel';
+import { ArticleFormContent } from './ArticleFormContent';
 
 const { STRING } = nullObjectConsts;
 
-const nullArticleFormObject: ArticleFormModel = {
+const nullArticleFormObject: ArticleFormContent = {
   content: STRING,
   short: STRING,
   title: STRING,

@@ -14,8 +14,7 @@ const EditorStyle = styled(Box)(({ theme }) => ({
     fontFamily: theme.typography.fontFamily,
   },
   '& .ql-editor': {
-    minHeight: 200,
-    maxHeight: 640,
+    height: 200,
     '&.ql-blank::before': {
       fontStyle: 'normal',
       color: theme.palette.text.disabled,
@@ -73,7 +72,9 @@ const Editor: FC<EditorProps> = ({
           ...(error && {
             border: (theme) => `solid 1px ${theme.palette.error.main}`,
           }),
-          height,
+          '& .ql-editor': {
+            height,
+          },
           ...sx,
         }}
       >

@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 import { ResetPasswordFromContent } from '../models/ResetPasswordFromContent';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { Stack, TextField } from '@mui/material';
-import { ErrorSocket } from './utils/ErrorSocket';
+import { ErrorSocket } from '../../../../components/ErrorSocket';
 
 const { email } = yupStringSchemas;
 

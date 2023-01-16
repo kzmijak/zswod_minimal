@@ -1,45 +1,79 @@
-import { Grid, Stack } from '@mui/material';
-import { FC, ReactNode } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Grid, Stack, TextField } from '@mui/material';
+import { FC } from 'react';
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form';
 import * as yup from 'yup';
-import { ArticleFormModel } from '../models/ArticleFormModel';
+import { ArticleFormContent } from '../models/ArticleFormContent';
 import { yupResolver } from '@hookform/resolvers/yup';
-import { ControlledTextField } from './controls/ControlledTextField';
-import { ControlledTextbox } from './controls/ControlledTextbox';
+import { ErrorSocket } from 'src/_zswod/components/ErrorSocket';
+import { Editor } from 'src/_zswod/modules/Quill';
 
 const schema = yup.object().shape({
-  title: yup.string().required(),
-  short: yup.string().required(),
-  content: yup.string().required(),
+  title: yup.string().required('Artykuł musi mieć tytuł'),
+  short: yup.string().required('Skrót artykułu jest wymagany, służy on za zapowiedź'),
+  content: yup.string().required('Artykuł nie może być pusty'),
 });
 
 type ArticleFormProps = {
-  onSubmit: SubmitHandler<ArticleFormModel>;
-  defaultValues: ArticleFormModel;
-  renderSubmit: ReactNode;
+  formId?: string;
+  onSubmit: SubmitHandler<ArticleFormContent>;
+  defaultValues: ArticleFormContent;
 };
 
-const ArticleForm: FC<ArticleFormProps> = ({ onSubmit, defaultValues, renderSubmit }) => {
-  const { control, handleSubmit } = useForm<ArticleFormModel>({
+const ArticleForm: FC<ArticleFormProps> = ({ formId, onSubmit, defaultValues }) => {
+  const {
+    handleSubmit,
+    register,
+    control,
+    setValue,
+    formState: { errors },
+  } = useForm<ArticleFormContent>({
     mode: 'all',
     defaultValues,
     resolver: yupResolver(schema),
   });
 
+  const { content } = useWatch({ control });
+
   return (
-    <Stack component="form" onSubmit={handleSubmit(onSubmit)} height="100%" spacing={1} margin={1}>
+    <Stack component="form" id={formId} onSubmit={handleSubmit(onSubmit)} spacing={1} margin={1}>
       <Grid container spacing={1}>
         <Grid item xs={3}>
-          <ControlledTextField fullWidth label="Tytuł" control={control} name="title" />
+          <ErrorSocket message={errors.title?.message}>
+            <TextField
+              {...register('title')}
+              fullWidth
+              label="Tytuł"
+              name="title"
+              error={Boolean(errors.title)}
+            />
+          </ErrorSocket>
         </Grid>
         <Grid item xs={9}>
-          <ControlledTextField fullWidth label="Skrót" control={control} name="short" />
+          <ErrorSocket message={errors.short?.message}>
+            <TextField
+              {...register('short')}
+              fullWidth
+              label="Skrót"
+              name="short"
+              error={Boolean(errors.short)}
+            />
+          </ErrorSocket>
         </Grid>
       </Grid>
       <Stack height="100%">
-        <ControlledTextbox control={control} name="content" label="Treść artykułu" height="100%" />
+        <ErrorSocket message={errors.content?.message}>
+          <Editor
+            value={content}
+            onChange={(value, _delta, _source, editor) => {
+              const valueToSet = editor.getLength() > 1 ? value : '';
+              setValue('content', valueToSet, { shouldValidate: true });
+            }}
+            label="Treść artykułu"
+            height={'75vh'}
+            error={Boolean(errors.content)}
+          />
+        </ErrorSocket>
       </Stack>
-      {renderSubmit}
     </Stack>
   );
 };
