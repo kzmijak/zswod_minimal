@@ -1,4 +1,4 @@
-import { Button, Stack } from '@mui/material';
+import { Alert, Button, Grow, Stack } from '@mui/material';
 import { FC, useState } from 'react';
 import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
 import { ArticleFormContent } from '../models/ArticleFormContent';
@@ -6,6 +6,9 @@ import { ImageFormContent } from '../models/ImageFormContent';
 import { ArticleForm } from './ArticleForm';
 import { arrayPick, pick } from 'src/_zswod/utils/lodash';
 import { ArticlePreview } from './ArticlePreview';
+import { RequestStatus } from 'src/_zswod/utils/requestStatus';
+import { LoadingButton } from '@mui/lab';
+import { createArticle, getCreateArticleError } from '../api/createArticle';
 
 const Creator: FC = () => {
   const { article } = useCurrentArticle();
@@ -14,6 +17,9 @@ const Creator: FC = () => {
   const initialArticle = pick<ArticleFormContent>(article, 'content', 'short', 'title');
   const initialImages = arrayPick<ImageFormContent>(images, 'title', 'alt', 'url');
 
+  const [status, setStatus] = useState<RequestStatus>('idle');
+  const [error, setError] = useState('');
+
   const [articlePreviewOpen, setArticlePreviewOpen] = useState(false);
   const [articleFormContent, setArticleFormContent] = useState<ArticleFormContent>(initialArticle);
   const [imageFormContents, setImageFormContents] = useState<ImageFormContent[]>(initialImages);
@@ -21,6 +27,17 @@ const Creator: FC = () => {
   const handleContinue = (form: ArticleFormContent) => {
     setArticleFormContent(form);
     setArticlePreviewOpen(true);
+  };
+
+  const handlePublish = async () => {
+    setStatus('loading');
+    try {
+      await createArticle(articleFormContent, imageFormContents);
+      setStatus('success');
+    } catch (err) {
+      setError(getCreateArticleError(err));
+      setStatus('error');
+    }
   };
 
   return (
@@ -40,7 +57,16 @@ const Creator: FC = () => {
         open={articlePreviewOpen}
         onClose={() => setArticlePreviewOpen(false)}
         article={articleFormContent}
-      />
+      >
+        <LoadingButton loading={status === 'loading'} variant="contained" onClick={handlePublish}>
+          Opublikuj
+        </LoadingButton>
+        {status === 'error' && (
+          <Grow in>
+            <Alert severity="error">{error}</Alert>
+          </Grow>
+        )}
+      </ArticlePreview>
     </>
   );
 };
