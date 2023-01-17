@@ -3,10 +3,10 @@ import { ImageDrop } from 'src/_zswod/modules/ImageDrop';
 import { isArray } from 'lodash';
 import { ImageFormContent } from '../../models/ImageFormContent';
 import { nullImageFormObject } from '../../models/nullImageFormObject';
-import { toBase64 } from 'src/_zswod/modules/ImageDrop/src/utils/toBase64';
+import { uploadBlob } from '../../api/uploadBlob';
 
 const convertFileToImage = async (file: File): Promise<ImageFormContent> => {
-  const url = await toBase64(file);
+  const url = await uploadBlob(file);
 
   return {
     ...nullImageFormObject,
