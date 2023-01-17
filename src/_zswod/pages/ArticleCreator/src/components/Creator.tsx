@@ -1,6 +1,5 @@
 import { Button, Stack } from '@mui/material';
 import { FC, useState } from 'react';
-import { api } from 'src/_zswod/modules/Axios';
 import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
 import { ArticleFormContent } from '../models/ArticleFormContent';
 import { ImageFormContent } from '../models/ImageFormContent';
@@ -8,23 +7,16 @@ import { ArticleForm } from './ArticleForm';
 import { arrayPick, pick } from 'src/_zswod/utils/lodash';
 import { ArticlePreview } from './ArticlePreview';
 
-type PostArticleBody = {
-  article: ArticleFormContent;
-  images: ImageFormContent[];
-};
-
-const postArticle = async (data: PostArticleBody) => {
-  const response = await api.post('/articles', data);
-  return response.data;
-};
-
 const Creator: FC = () => {
   const { article } = useCurrentArticle();
+  const { images } = useCurrentArticle();
   const formId = 'article-form';
   const initialArticle = pick<ArticleFormContent>(article, 'content', 'short', 'title');
+  const initialImages = arrayPick<ImageFormContent>(images, 'title', 'alt', 'url');
 
   const [articlePreviewOpen, setArticlePreviewOpen] = useState(false);
   const [articleFormContent, setArticleFormContent] = useState<ArticleFormContent>(initialArticle);
+  const [imageFormContents, setImageFormContents] = useState<ImageFormContent[]>(initialImages);
 
   const handleContinue = (form: ArticleFormContent) => {
     setArticleFormContent(form);
@@ -43,6 +35,8 @@ const Creator: FC = () => {
         </Stack>
       </Stack>
       <ArticlePreview
+        images={imageFormContents}
+        onImagesChange={setImageFormContents}
         open={articlePreviewOpen}
         onClose={() => setArticlePreviewOpen(false)}
         article={articleFormContent}

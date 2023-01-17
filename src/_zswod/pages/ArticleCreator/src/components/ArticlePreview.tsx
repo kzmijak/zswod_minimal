@@ -1,8 +1,6 @@
-import { Box, Dialog, DialogProps, Typography } from '@mui/material';
+import { Alert, Box, Dialog, DialogProps, Typography } from '@mui/material';
 import { FC, useState } from 'react';
-import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
 import { ArticleContent } from 'src/_zswod/pages/Article';
-import { arrayPick } from 'src/_zswod/utils/lodash';
 import { ArticleFormContent } from '../models/ArticleFormContent';
 import { ImageFormContent } from '../models/ImageFormContent';
 import { ArticleImageDrop } from './utils/ArticleImageDrop';
@@ -10,24 +8,30 @@ import { ImageForm } from './ImageForm';
 import { FloatingBox } from './utils/FloatingBox';
 import { createArticle, getCreateArticleError } from '../api/createArticle';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
-import { useNavigate } from 'react-router';
 import { LoadingButton } from '@mui/lab';
 
-type ArticlePreviewProps = Pick<DialogProps, 'open' | 'onClose'> & { article: ArticleFormContent };
+type ArticlePreviewProps = Pick<DialogProps, 'open' | 'onClose'> & {
+  article: ArticleFormContent;
+  images: ImageFormContent[];
+  onImagesChange: (images: ImageFormContent[]) => void;
+};
 
-const ArticlePreview: FC<ArticlePreviewProps> = ({ open, onClose, article }) => {
+const ArticlePreview: FC<ArticlePreviewProps> = ({
+  open,
+  onClose,
+  article,
+  images,
+  onImagesChange,
+}) => {
   const { content, title } = article;
-  const { images } = useCurrentArticle();
-  const initialImages = arrayPick<ImageFormContent>(images, 'title', 'alt', 'url');
 
   const [status, setStatus] = useState<RequestStatus>('idle');
   const [error, setError] = useState('');
-  const [imageFormModels, setImageFormModels] = useState<ImageFormContent[]>(initialImages);
 
   const handlePublish = async () => {
     setStatus('loading');
     try {
-      const id = await createArticle(article, imageFormModels);
+      const id = await createArticle(article, images);
       setStatus('success');
       alert(id);
     } catch (err) {
@@ -39,20 +43,19 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({ open, onClose, article }) => 
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth scroll="body" maxWidth="md">
-      <ArticleContent content={content} previewImageUrl="" title={title} />
+      <Box sx={{ minHeight: 1200 }}>
+        <ArticleContent content={content} previewImageUrl="" title={title} />
+      </Box>
       <FloatingBox anchor="right" open width={400}>
-        <ArticleImageDrop
-          images={imageFormModels}
-          onChange={(images) => setImageFormModels(images)}
-        />
-        {imageFormModels.map((imageFormModel, index) => (
+        <ArticleImageDrop images={images} onChange={onImagesChange} />
+        {images.map((image, index) => (
           <ImageForm
-            initialState={imageFormModel}
+            initialState={image}
             key={index}
             onSubmit={(form) => {
-              const copy = imageFormModels.slice();
+              const copy = images.slice();
               copy.splice(index, 1, form);
-              setImageFormModels(copy);
+              onImagesChange(copy);
             }}
           />
         ))}
@@ -68,6 +71,7 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({ open, onClose, article }) => 
           <LoadingButton loading={status === 'loading'} variant="contained" onClick={handlePublish}>
             Zatwierdź i wyślij
           </LoadingButton>
+          {status === 'error' && <Alert severity="error">{error}</Alert>}
         </Box>
       </FloatingBox>
     </Dialog>
