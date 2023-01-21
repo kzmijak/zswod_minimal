@@ -19,15 +19,18 @@ const DropZoneStyle = styled('div', {
 
 type ImageDropProps = {
   error?: boolean;
-  onDrop: (image: File | File[]) => void;
+  onDrop?: (image: File | File[]) => void;
+  onClick?: () => void;
   onRemove?: (index: number) => void;
   illustration: ReactNode;
+  subtitle?: string;
 };
 
-const ImageDrop: FC<ImageDropProps> = ({ error, onDrop, onRemove, illustration }) => {
+const ImageDrop: FC<ImageDropProps> = ({ error, onDrop, onClick, illustration, subtitle }) => {
   const { getRootProps, getInputProps, isDragActive, isDragReject } = useDropzone({
     multiple: true,
     onDrop,
+    disabled: !Boolean(onDrop),
   });
 
   return (
@@ -37,10 +40,16 @@ const ImageDrop: FC<ImageDropProps> = ({ error, onDrop, onRemove, illustration }
       isDragActive={isDragActive}
     >
       <input {...getInputProps()} />
-      <Stack minHeight={1} justifyContent="center" alignItems="center">
+      <Stack
+        onClick={onClick}
+        minHeight={1}
+        justifyContent="center"
+        alignItems="center"
+        padding={2}
+      >
         {illustration}
-        <Typography variant="h6" color={(theme) => theme.palette.primary.dark}>
-          Wybierz z dysku
+        <Typography align="center" variant="h6" color={(theme) => theme.palette.primary.dark}>
+          {subtitle}
         </Typography>
       </Stack>
     </DropZoneStyle>

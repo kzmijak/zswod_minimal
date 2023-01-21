@@ -7,10 +7,11 @@ import { ArticleImageDrop } from './utils/ArticleImageDrop';
 import { FloatingBox } from './utils/FloatingBox';
 import { TodoList } from './TodoList';
 
-type ArticlePreviewProps = Pick<DialogProps, 'open' | 'onClose'> & {
+type ArticlePreviewProps = Pick<DialogProps, 'open'> & {
   article: ArticleFormContent;
   images: ImageFormContent[];
   onImagesChange: (images: ImageFormContent[]) => void;
+  onClose: () => void;
   children: ReactNode;
 };
 
@@ -29,10 +30,10 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({
       <Box sx={{ minHeight: 1200 }}>
         <ArticleContent content={content} previewImageUrl={images[0]?.url} title={title} />
       </Box>
-      <FloatingBox anchor="right" open width={400}>
+      <FloatingBox onBackgroundClick={onClose} anchor="right" open width={400}>
         <ArticleImageDrop images={images} onChange={onImagesChange} />
       </FloatingBox>
-      <FloatingBox open anchor="left" width={400}>
+      <FloatingBox open onBackgroundClick={onClose} anchor="left" width={400}>
         <Stack padding={2} spacing={2}>
           <TodoList />
           {children}

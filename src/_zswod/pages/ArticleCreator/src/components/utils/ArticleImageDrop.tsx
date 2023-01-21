@@ -16,6 +16,8 @@ import { ImageForm } from '../ImageForm';
 import { UploadIllustration } from '../../assets/illustration_upload';
 import Image from 'src/components/Image';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import { GalleryIllustration } from '../../assets/illustration_gallery';
+import { SavedImages } from '../SavedImages';
 
 const convertFileToImage = async (file: File, order: number): Promise<ImageFormContent> => {
   const url = await uploadBlob(file);
@@ -37,6 +39,7 @@ type ArticleImageDropProps = {
 };
 
 const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
+  const [savedImagesOpen, setSavedImagesOpen] = useState(false);
   const [imageFormOpen, setImageFormOpen] = useState(false);
   const [editedImage, setEditedImage] = useState<ImageFormContent | null>(null);
 
@@ -77,6 +80,12 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
             illustration={<UploadIllustration sx={{ width: 100, height: 100 }} />}
             onDrop={handleDrop}
             onRemove={handleRemove}
+            subtitle="Wybierz z&nbsp;dysku"
+          />
+          <ImageDrop
+            illustration={<GalleryIllustration sx={{ width: 100, height: 100 }} />}
+            onClick={() => setSavedImagesOpen(true)}
+            subtitle="Wybierz z&nbsp;zapisanych"
           />
           {images
             .sort((a, b) => a.order - b.order)
@@ -90,6 +99,9 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
                     src={url}
                     sx={{
                       borderRadius: 2,
+                      objectFit: 'cover',
+                      height: '100%',
+                      width: '100%',
                     }}
                   />
                   <ImageListItemBar
@@ -126,6 +138,9 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
             onChange(imagesCopy);
           }}
         />
+      </Dialog>
+      <Dialog open={savedImagesOpen} onClose={() => setSavedImagesOpen(false)}>
+        <SavedImages />
       </Dialog>
     </>
   );

@@ -15,8 +15,8 @@ const UploadIllustration: FC<UploadIllustrationProps> = ({ sx }) => {
   return (
     <Box sx={sx}>
       <svg viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" fill="#000000">
-        <g id="SVGRepo_bgCarrier" stroke-width="0" />
-        <g id="SVGRepo_tracerCarrier" stroke-linecap="round" strokeLinejoin="round" />
+        <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+        <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
         <g id="SVGRepo_iconCarrier">
           <path
             d="M853.333333 874.666667H170.666667c-46.933333 0-85.333333-38.4-85.333334-85.333334V234.666667c0-46.933333 38.4-85.333333 85.333334-85.333334h682.666666c46.933333 0 85.333333 38.4 85.333334 85.333334v554.666666c0 46.933333-38.4 85.333333-85.333334 85.333334z"
