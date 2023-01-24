@@ -4,12 +4,12 @@ import { varFade } from 'src/components/animate';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC, useEffect, useRef, useState } from 'react';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
-import Image from 'src/components/Image';
 import { LightboxModal } from 'src/_zswod/components/LightboxModal';
 import { useSelector } from 'react-redux';
 import useResponsive from 'src/hooks/useResponsive';
 import { m } from 'framer-motion';
 import { selectArticleHeadersImages } from 'src/_zswod/modules/ArticleHeaders';
+import { Blob } from 'src/_zswod/modules/Blob';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -41,7 +41,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const images = useSelector(selectArticleHeadersImages(isDesktop ? 12 : 6));
 
   const isLight = theme.palette.mode === 'light';
-  const imageUrls = images.map((image) => image.url);
+  const imageBlobIds = images.map((image) => image.blobId);
 
   useEffect(() => {
     passRef(ref);
@@ -76,7 +76,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
           {images.map((item, index) => (
             <Grid item xs={2} sm={4} md={3} key={index}>
               <m.div variants={varFade().inUp}>
-                <Image
+                <Blob
                   sx={{
                     opacity: index < 2 ? 0.5 : 0.85,
                     height: { ...{ xs: 180, md: 400 } },
@@ -85,7 +85,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
                     cursor: 'pointer',
                   }}
                   alt={item.alt}
-                  src={item.url}
+                  id={item.blobId}
                   onClick={() => setImageOpen(index)}
                 />
               </m.div>
@@ -94,7 +94,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
         </Grid>
 
         <LightboxModal
-          images={imageUrls}
+          images={imageBlobIds}
           photoIndex={imageOpen}
           setPhotoIndex={setImageOpen}
           isOpen={imageOpen !== -1}

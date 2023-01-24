@@ -29,7 +29,6 @@ const slice = createSlice({
         entityAdapter.setAll(state, action.payload);
       })
       .addCase(fetch.rejected, (state, error) => {
-        console.log(error);
         state.status = 'error';
       }),
 });

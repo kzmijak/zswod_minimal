@@ -1,5 +1,7 @@
 import { api } from 'src/_zswod/modules/Axios';
 import { mapRequestError } from 'src/_zswod/utils/handleRequestError';
+import { BlobDto } from '../models/BlobDto';
+import { arrayMapBlobDtoToModel } from '../models/mapper';
 
 const uploadBlobErrorConsts = [
   'ErrInvalidFile',
@@ -19,13 +21,16 @@ const uploadBlobErrorDisplayValueDict: Record<UploadBlobError, string> = {
   Unknown: 'Coś poszło nie tak',
 };
 
-const uploadBlob = async (file: File) => {
+const uploadBlobs = async (file: File[], dropId: string) => {
   const formData = new FormData();
-  formData.append('file', file);
 
-  const response = await api.post<string>('blob', formData);
+  file.forEach((file) => {
+    formData.append('files[]', file);
+  });
 
-  return response.data;
+  const response = await api.post<BlobDto[]>('blob', formData);
+
+  return arrayMapBlobDtoToModel(response.data, dropId);
 };
 
 const getUploadBlobError = (err: any) => {
@@ -34,4 +39,4 @@ const getUploadBlobError = (err: any) => {
   return uploadBlobErrorDisplayValueDict[error];
 };
 
-export { uploadBlob, getUploadBlobError };
+export { uploadBlobs, getUploadBlobError };

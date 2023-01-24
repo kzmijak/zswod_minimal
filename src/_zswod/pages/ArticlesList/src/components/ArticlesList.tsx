@@ -4,12 +4,12 @@ import { FC } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
-import Image from 'src/components/Image';
 import {
   getArticleHeaderPreviewImage,
   selectAllArticleHeaders,
   selectArticleHeadersStatus,
 } from 'src/_zswod/modules/ArticleHeaders';
+import { Blob } from 'src/_zswod/modules/Blob';
 
 const ArticlesList: FC = () => {
   const navigate = useNavigate();
@@ -41,8 +41,8 @@ const ArticlesList: FC = () => {
                 <Paper elevation={2} sx={{ height: 200 }}>
                   <Grid container>
                     <Grid item xs={3}>
-                      <Image
-                        src={previewImage.url}
+                      <Blob
+                        id={previewImage.blobId}
                         alt={previewImage.alt}
                         maxHeight={190}
                         minHeight={190}

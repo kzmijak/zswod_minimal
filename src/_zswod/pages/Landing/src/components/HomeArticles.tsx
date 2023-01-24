@@ -32,7 +32,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const carouselItems: CarouselItemProps[] = articleHeaders.map((header) => ({
     title: header.title,
     description: header.short,
-    image: header.images[0].url,
+    image: header.images[0].blobId,
     onClick: () => navigate(`${PATHS_ABOUT.nowosci.link}/${header.titleNormalized}`),
   }));
 

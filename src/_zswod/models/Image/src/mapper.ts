@@ -2,13 +2,12 @@ import { createArrayMapper } from 'src/_zswod/utils/mapperCreators';
 import { ImageDto } from './ImageDto';
 import { ImageModel } from './ImageModel';
 
-const mapDtoToModel = ({ alt, id, order, title, uploadDate, url }: ImageDto): ImageModel => ({
+const mapDtoToModel = ({ alt, id, isPreview, title, blobId }: ImageDto): ImageModel => ({
   alt,
   id,
-  order,
+  isPreview,
   title,
-  uploadDate: new Date(uploadDate).toISOString(),
-  url,
+  blobId,
 });
 
 const arrayMapDtoToModel = createArrayMapper(mapDtoToModel);

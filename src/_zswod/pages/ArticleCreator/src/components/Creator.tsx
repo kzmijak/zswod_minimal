@@ -11,9 +11,11 @@ import { LoadingButton } from '@mui/lab';
 import { createArticle, getCreateArticleError } from '../api/createArticle';
 
 const Creator: FC = () => {
+  const formId = 'article-form';
+
   const { article } = useCurrentArticle();
   const { images } = useCurrentArticle();
-  const formId = 'article-form';
+
   const initialArticle = pick<ArticleFormContent>(article, 'content', 'short', 'title');
   const initialImages = arrayPick<ImageFormContent>(images, 'title', 'alt', 'url');
 

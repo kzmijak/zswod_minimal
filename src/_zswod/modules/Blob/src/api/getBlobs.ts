@@ -1,10 +1,7 @@
 import { api } from 'src/_zswod/modules/Axios';
 import { mapRequestError } from 'src/_zswod/utils/handleRequestError';
-
-type GetBlobsResponse = {
-  url: string;
-  name: string;
-};
+import { BlobDto } from '../models/BlobDto';
+import { arrayMapBlobDtoToModel } from '../models/mapper';
 
 const getBlobsErrorConsts = ['ErrCouldNotQuery', 'Unknown'] as const;
 type GetBlobsError = typeof getBlobsErrorConsts[number];
@@ -14,9 +11,15 @@ const getBlobsErrorDisplayValueDict: Record<GetBlobsError, string> = {
 };
 
 const getBlobs = async (amount?: number, offset?: number) => {
-  const response = await api.get<GetBlobsResponse[]>('blob', { params: { amount, offset } });
+  const response = await api.get<{ blobs: BlobDto[]; eof: boolean }>('blob', {
+    params: { amount, offset },
+  });
+  const { blobs, eof } = response.data;
 
-  return response.data;
+  return {
+    blobs: arrayMapBlobDtoToModel(blobs),
+    eof,
+  };
 };
 
 const getGetBlobsError = (err: any) => {
@@ -26,4 +29,3 @@ const getGetBlobsError = (err: any) => {
 };
 
 export { getBlobs, getGetBlobsError };
-export type { GetBlobsResponse };

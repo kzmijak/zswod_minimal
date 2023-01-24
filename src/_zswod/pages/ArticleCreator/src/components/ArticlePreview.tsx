@@ -3,7 +3,7 @@ import { FC, ReactNode } from 'react';
 import { ArticleContent } from 'src/_zswod/pages/Article';
 import { ArticleFormContent } from '../models/ArticleFormContent';
 import { ImageFormContent } from '../models/ImageFormContent';
-import { ArticleImageDrop } from './utils/ArticleImageDrop';
+import { ArticleImageDrop } from './ArticleImageDrop';
 import { FloatingBox } from './utils/FloatingBox';
 import { TodoList } from './TodoList';
 
@@ -28,7 +28,7 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({
   return (
     <Dialog open={open} onClose={onClose} fullWidth scroll="body" maxWidth="md">
       <Box sx={{ minHeight: 1200 }}>
-        <ArticleContent content={content} previewImageUrl={images[0]?.url} title={title} />
+        <ArticleContent content={content} previewImageUrl={images[0]?.blobId} title={title} />
       </Box>
       <FloatingBox onBackgroundClick={onClose} anchor="right" open width={400}>
         <ArticleImageDrop images={images} onChange={onImagesChange} />

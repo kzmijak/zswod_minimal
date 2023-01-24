@@ -1,8 +1,8 @@
 type ImageFormContent = {
   title: string;
   alt: string;
-  url: string;
-  order: number;
+  blobId: string;
+  isPreview: boolean;
 };
 
 export type { ImageFormContent };

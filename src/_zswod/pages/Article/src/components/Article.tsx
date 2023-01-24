@@ -11,7 +11,7 @@ const Article: FC = () => {
 
   return (
     <Container>
-      <ArticleContent content={content} title={title} previewImageUrl={images[0].url} />
+      <ArticleContent content={content} title={title} previewImageUrl={images[0].blobId} />
     </Container>
   );
 };

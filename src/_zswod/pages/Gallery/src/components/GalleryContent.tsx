@@ -1,4 +1,3 @@
-import { Image } from '@mui/icons-material';
 import {
   Box,
   Button,
@@ -17,6 +16,7 @@ import PendingRoundedIcon from '@mui/icons-material/PendingRounded';
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
 import { ImageModel } from 'src/_zswod/models/Image';
 import { Link } from 'react-router-dom';
+import { Blob } from 'src/_zswod/modules/Blob';
 
 type ImageListItemOverrideProps = {
   tooltip: string;
@@ -76,7 +76,7 @@ const GalleryContent: FC<GalleryContentProps> = ({
         </Stack>
         <ImageList>
           {images.map((img, index) => {
-            const { alt, title, url } = img;
+            const { alt, title, blobId } = img;
             const isTitleFilled = Boolean(title);
             const isAltFilled = Boolean(alt);
             const isImageFilled = isTitleFilled && isAltFilled;
@@ -91,7 +91,7 @@ const GalleryContent: FC<GalleryContentProps> = ({
 
             return (
               <ImageListItem key={index}>
-                <Image component={'img'} src={url} alt={alt} sx={{ cursor: 'pointer' }} />
+                <Blob id={blobId} alt={alt} sx={{ cursor: 'pointer' }} />
                 <ImageListItemBar
                   title={isTitleFilled ? title : 'Ten obraz nie został jeszcze opisany'}
                   actionIcon={actions}

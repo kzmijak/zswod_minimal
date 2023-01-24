@@ -3,7 +3,7 @@ import { Button, Stack, TextField, Typography } from '@mui/material';
 
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import Image from 'src/components/Image';
+import { Blob } from 'src/_zswod/modules/Blob';
 import * as yup from 'yup';
 import { ImageFormContent } from '../models/ImageFormContent';
 import { nullImageFormObject } from '../models/nullImageFormObject';
@@ -33,7 +33,7 @@ const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject, onS
       onSubmit={handleSubmit(onSubmit)}
       sx={{ backgroundColor: 'transparent' }}
     >
-      <Image src={initialState.url} />
+      <Blob id={initialState.blobId} />
       <Stack
         spacing={3}
         minWidth={300}
