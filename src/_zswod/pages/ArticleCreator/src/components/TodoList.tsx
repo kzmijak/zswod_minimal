@@ -18,7 +18,7 @@ const TodoList: FC = () => (
         Artykuł musi mieć co najmniej jeden obraz
       </Typography>
       <Typography component={ListItem} variant="subtitle1">
-        Każdy obraz musi mieć uzupełniony tekst alternatywny
+        Każdy obraz powinien mieć nadany tytuł oraz uzupełniony tekst alternatywny
       </Typography>
     </List>
   </Stack>

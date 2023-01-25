@@ -1,16 +1,8 @@
-import { alpha, Box, CardContent, Paper, Stack, styled, Typography, useTheme } from '@mui/material';
+import { alpha, Box, CardContent, Paper, Stack, Typography, useTheme } from '@mui/material';
 import { FC } from 'react';
 import { Markdown } from 'src/_zswod/components/Markdown';
 import { ArticleModel } from 'src/_zswod/models/Article';
 import { Blob } from 'src/_zswod/modules/Blob';
-
-// const ImgStyle = styled(Blob)(() => ({
-//   top: 0,
-//   width: '100%',
-//   height: '100%',
-//   objectFit: 'cover',
-//   position: 'absolute',
-// }));
 
 type ArticleImageProps = {
   title: string;
@@ -19,26 +11,29 @@ type ArticleImageProps = {
 
 const ArticleImage: FC<ArticleImageProps> = ({ previewBlobId, title }) => {
   const theme = useTheme();
+  const hasPreview = Boolean(previewBlobId);
+
   return (
     <Paper
       sx={{
         position: 'relative',
-        paddingTop: { xs: '100%', md: '50%' },
+        ...(!hasPreview && { paddingTop: { xs: '100%', md: '50%' } }),
       }}
     >
-      {Boolean(previewBlobId) && <Blob alt={title} id={previewBlobId!} />}
+      {hasPreview && <Blob alt={title} id={previewBlobId!} sx={{ height: 500 }} />}
       <Box
         sx={{
           top: 0,
           width: '100%',
-          height: '100%',
+          height: 500,
           position: 'absolute',
           backgroundImage: `linear-gradient(to top, ${theme.palette.grey[900]} 0%,${alpha(
             theme.palette.grey[900],
-            0.8
+            hasPreview ? 0.1 : 0.8
           )} 100%)`,
         }}
       />
+
       <CardContent
         sx={{
           bottom: 0,
@@ -49,7 +44,7 @@ const ArticleImage: FC<ArticleImageProps> = ({ previewBlobId, title }) => {
           color: 'common.white',
         }}
       >
-        <Typography variant="h3" gutterBottom>
+        <Typography variant="h3" gutterBottom noWrap>
           {title}
         </Typography>
       </CardContent>

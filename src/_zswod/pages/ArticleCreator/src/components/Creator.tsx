@@ -1,5 +1,5 @@
-import { Alert, Button, Grow, Stack } from '@mui/material';
-import { FC, useState } from 'react';
+import { Alert, Button, Grow, Stack, Tooltip } from '@mui/material';
+import { FC, useMemo, useState } from 'react';
 import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
 import { ArticleFormContent } from '../models/ArticleFormContent';
 import { ImageFormContent } from '../models/ImageFormContent';
@@ -25,6 +25,8 @@ const Creator: FC = () => {
   const [articlePreviewOpen, setArticlePreviewOpen] = useState(false);
   const [articleFormContent, setArticleFormContent] = useState<ArticleFormContent>(initialArticle);
   const [imageFormContents, setImageFormContents] = useState<ImageFormContent[]>(initialImages);
+
+  const hasImages = useMemo(() => imageFormContents.length > 0, [imageFormContents.length]);
 
   const handleContinue = (form: ArticleFormContent) => {
     setArticleFormContent(form);
@@ -60,9 +62,22 @@ const Creator: FC = () => {
         onClose={() => setArticlePreviewOpen(false)}
         article={articleFormContent}
       >
-        <LoadingButton loading={status === 'loading'} variant="contained" onClick={handlePublish}>
-          Opublikuj
-        </LoadingButton>
+        <Tooltip
+          title={
+            !hasImages && 'Przed opublikowaniem artykułu należy załączyć minimalnie jeden obraz'
+          }
+        >
+          <Stack minWidth="100%">
+            <LoadingButton
+              loading={status === 'loading'}
+              disabled={!hasImages}
+              variant="contained"
+              onClick={handlePublish}
+            >
+              Opublikuj
+            </LoadingButton>
+          </Stack>
+        </Tooltip>
         {status === 'error' && (
           <Grow in>
             <Alert severity="error">{error}</Alert>
