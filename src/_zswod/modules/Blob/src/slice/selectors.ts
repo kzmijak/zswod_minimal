@@ -11,14 +11,4 @@ const selectAllBlobs = createSelector(selectBlobsState, (state) => selectAll(sta
 const selectBlobById = (id: string) =>
   createSelector(selectBlobsState, (state) => selectById(state, id));
 
-const selectDropBlobs = (dropId: string) =>
-  createSelector(selectAllBlobs, (blobs) => blobs.filter((blob) => blob.dropId === dropId));
-
-export {
-  // selectAll as selectAllBlobs,
-  selectAllBlobs,
-  selectTotal as selectTotalBlobs,
-  selectBlobsState,
-  selectBlobById,
-  selectDropBlobs,
-};
+export { selectAllBlobs, selectTotal as selectTotalBlobs, selectBlobsState, selectBlobById };

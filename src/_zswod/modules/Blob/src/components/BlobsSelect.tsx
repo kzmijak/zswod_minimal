@@ -17,6 +17,7 @@ import { fetchMoreBlobsAsyncThunk } from '../slice/thunks';
 import { BlobModel } from '../models/BlobModel';
 import { Blob } from './Blob';
 import Scrollbar from 'src/components/Scrollbar';
+import { BlobDrop } from './BlobDrop';
 
 const BoxSelect = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -70,6 +71,7 @@ const BlobsSelect: FC<BlobsSelectProps> = ({ onSubmit }) => {
     <Stack sx={{ width: 600 }}>
       <Scrollbar sx={{ height: 500 }}>
         <Stack>
+          <BlobDrop />
           <ImageList cols={3} rowHeight={164}>
             {blobs.map((blob) => {
               const indexInSelected = selectedBlobIds.indexOf(blob.id);

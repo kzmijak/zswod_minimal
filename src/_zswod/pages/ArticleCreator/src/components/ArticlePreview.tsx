@@ -25,10 +25,12 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({
 }) => {
   const { content, title } = article;
 
+  const previewImage = images.find((image) => image.isPreview);
+
   return (
     <Dialog open={open} onClose={onClose} fullWidth scroll="body" maxWidth="md">
       <Box sx={{ minHeight: 1200 }}>
-        <ArticleContent content={content} previewImageUrl={images[0]?.blobId} title={title} />
+        <ArticleContent content={content} previewBlobId={previewImage?.blobId} title={title} />
       </Box>
       <FloatingBox onBackgroundClick={onClose} anchor="right" open width={400}>
         <ArticleImageDrop images={images} onChange={onImagesChange} />

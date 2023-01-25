@@ -8,9 +8,20 @@ import { ErrorSocket } from 'src/_zswod/components/ErrorSocket';
 import { Editor } from 'src/_zswod/modules/Quill';
 
 const schema = yup.object().shape({
-  title: yup.string().required('Artykuł musi mieć tytuł'),
-  short: yup.string().required('Skrót artykułu jest wymagany, służy on za zapowiedź'),
-  content: yup.string().required('Artykuł nie może być pusty'),
+  title: yup
+    .string()
+    .min(6, 'Tytuł musi mieć minimum 6 znaków')
+    .max(200, 'Tytuł może mieć maksymalnie 200 znaków ')
+    .required('Artykuł musi mieć tytuł'),
+  short: yup
+    .string()
+    .min(12, 'Skrót artykułu musi mieć minimum 12 znaków')
+    .max(300, 'Skrót artykułu może mieć maksymalnie 300 znaków')
+    .required('Skrót artykułu jest wymagany, służy on za zapowiedź'),
+  content: yup
+    .string()
+    .min(10, 'Minimalna treść artykułu zawiera 10 znaków')
+    .required('Artykuł nie może być pusty'),
 });
 
 type ArticleFormProps = {

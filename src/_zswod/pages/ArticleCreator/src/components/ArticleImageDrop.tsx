@@ -1,12 +1,14 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { ImageFormContent } from '../models/ImageFormContent';
 import {
   Dialog,
   Fab,
+  IconButton,
   ImageList,
   ImageListItem,
   ImageListItemBar,
   Stack,
+  Tooltip,
   useTheme,
 } from '@mui/material';
 import { ImageForm } from './ImageForm';
@@ -15,13 +17,9 @@ import { GalleryIllustration } from '../assets/illustration_gallery';
 import { GetImagesButton } from './utils/GetImagesButton';
 import { Blob, BlobsSelect } from 'src/_zswod/modules/Blob';
 import Scrollbar from 'src/components/Scrollbar';
-
-const replaceImage = (array: ImageFormContent[], image: ImageFormContent) => {
-  const arrayCopy = array.slice();
-  const index = arrayCopy.findIndex((img) => img.blobId === image.blobId);
-  arrayCopy.splice(index, 1, image);
-  return arrayCopy;
-};
+import { arrayMapBlobToImage } from '../utils/mapBlobToImage';
+import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
+import { removeFromArray } from 'src/_zswod/utils/removeFromArray';
 
 type ArticleImageDropProps = {
   images: ImageFormContent[];
@@ -34,6 +32,20 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
   const [editedImage, setEditedImage] = useState<ImageFormContent | null>(null);
   const theme = useTheme();
 
+  const handleSetPreview = (imageForm: ImageFormContent) => {
+    const newImage = { ...imageForm, isPreview: !imageForm.isPreview };
+    const imagesCopy = images.slice();
+
+    const currentPreview = imagesCopy.find((image) => image.isPreview);
+
+    if (Boolean(currentPreview)) {
+      const currentPreviewIndex = imagesCopy.indexOf(currentPreview!);
+      imagesCopy.splice(currentPreviewIndex, 1, { ...currentPreview!, isPreview: false });
+    }
+
+    onChange(removeFromArray(imagesCopy, (img) => img.blobId === newImage.blobId, newImage));
+  };
+
   const openDialog = (image: ImageFormContent) => {
     setEditedImage(image);
     setImageFormOpen(true);
@@ -42,6 +54,15 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
   const closeDialog = () => {
     setImageFormOpen(false);
   };
+
+  useEffect(() => {
+    if (images.length > 0 && !images.some((image) => image.isPreview)) {
+      const copy = images.slice();
+      const firstImage = images[0];
+      copy.splice(0, 1, { ...firstImage, isPreview: true });
+      onChange(copy);
+    }
+  }, [images, onChange]);
 
   return (
     <>
@@ -58,22 +79,20 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
             {images.map((imageForm) => {
               const { alt, title, blobId, isPreview } = imageForm;
               return (
-                <ImageListItem key={blobId}>
+                <ImageListItem
+                  key={blobId}
+                  onClick={() => handleSetPreview(imageForm)}
+                  sx={{ cursor: 'pointer' }}
+                >
                   <Blob
                     title={title}
                     alt={alt}
                     id={blobId}
-                    onClick={() => {
-                      const newImage = { ...imageForm, isPreview: !isPreview };
-
-                      onChange(replaceImage(images, newImage));
-                    }}
                     sx={{
                       borderRadius: 2,
                       objectFit: 'cover',
                       height: '100%',
                       width: '100%',
-                      cursor: 'pointer',
                       ...(isPreview && { border: `solid 4px ${theme.palette.warning.main}` }),
                     }}
                   />
@@ -85,16 +104,39 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
                         'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
                     }}
                     actionIcon={
-                      <Fab
-                        sx={{ margin: 1 }}
-                        size="small"
-                        onClick={() => {
-                          openDialog(imageForm);
-                        }}
-                        color={Boolean(imageForm.alt) ? 'default' : 'warning'}
-                      >
-                        <EditRoundedIcon />
-                      </Fab>
+                      <Tooltip title="Edytuj">
+                        <Fab
+                          sx={{ margin: 1 }}
+                          size="small"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            openDialog(imageForm);
+                          }}
+                          color={Boolean(imageForm.alt) ? 'default' : 'warning'}
+                        >
+                          <EditRoundedIcon />
+                        </Fab>
+                      </Tooltip>
+                    }
+                  />
+                  <ImageListItemBar
+                    position="top"
+                    sx={{ backgroundColor: 'transparent' }}
+                    actionIcon={
+                      <Tooltip title="Usuń">
+                        <IconButton
+                          sx={{ color: 'black' }}
+                          size="medium"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onChange(
+                              removeFromArray(images, (image) => image.blobId === imageForm.blobId)
+                            );
+                          }}
+                        >
+                          <HighlightOffTwoToneIcon />
+                        </IconButton>
+                      </Tooltip>
                     }
                   />
                 </ImageListItem>
@@ -107,13 +149,24 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
         <ImageForm
           initialState={editedImage!}
           onSubmit={(imageForm) => {
-            onChange(replaceImage(images, imageForm));
+            onChange(
+              removeFromArray(images, (image) => image.blobId === imageForm.blobId, imageForm)
+            );
             closeDialog();
           }}
         />
       </Dialog>
       <Dialog open={savedImagesOpen} onClose={() => setSavedImagesOpen(false)}>
-        <BlobsSelect onSubmit={(newBlobs) => {}} />
+        <BlobsSelect
+          onSubmit={(newBlobs) => {
+            const uniqueBlobs = newBlobs.filter(
+              (blob) => !images.some((image) => image.blobId === blob.id)
+            );
+            const blobsConverted = arrayMapBlobToImage(uniqueBlobs);
+            onChange([...images, ...blobsConverted]);
+            setSavedImagesOpen(false);
+          }}
+        />
       </Dialog>
     </>
   );

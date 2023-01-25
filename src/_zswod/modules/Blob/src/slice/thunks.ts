@@ -12,17 +12,9 @@ const fetchMoreBlobsAsyncThunk = createAsyncThunk('blobs/get-blobs', async (_, {
   return response;
 });
 
-type UploadBlobsAsyncThunkParams = {
-  files: File[];
-  dropId: string;
-};
-
-const uploadBlobsAsyncThunk = createAsyncThunk(
-  'blobs/upload',
-  async ({ files, dropId }: UploadBlobsAsyncThunkParams) => {
-    const blobs = await uploadBlobs(files, dropId);
-    return blobs;
-  }
-);
+const uploadBlobsAsyncThunk = createAsyncThunk('blobs/upload', async (files: File[]) => {
+  const blobs = await uploadBlobs(files);
+  return blobs;
+});
 
 export { fetchMoreBlobsAsyncThunk, uploadBlobsAsyncThunk };

@@ -2,21 +2,22 @@ import { alpha, Box, CardContent, Paper, Stack, styled, Typography, useTheme } f
 import { FC } from 'react';
 import { Markdown } from 'src/_zswod/components/Markdown';
 import { ArticleModel } from 'src/_zswod/models/Article';
+import { Blob } from 'src/_zswod/modules/Blob';
 
-const ImgStyle = styled('img')(() => ({
-  top: 0,
-  width: '100%',
-  height: '100%',
-  objectFit: 'cover',
-  position: 'absolute',
-}));
+// const ImgStyle = styled(Blob)(() => ({
+//   top: 0,
+//   width: '100%',
+//   height: '100%',
+//   objectFit: 'cover',
+//   position: 'absolute',
+// }));
 
 type ArticleImageProps = {
   title: string;
-  image: string;
+  previewBlobId: string | undefined;
 };
 
-const ArticleImage: FC<ArticleImageProps> = ({ image, title }) => {
+const ArticleImage: FC<ArticleImageProps> = ({ previewBlobId, title }) => {
   const theme = useTheme();
   return (
     <Paper
@@ -25,7 +26,7 @@ const ArticleImage: FC<ArticleImageProps> = ({ image, title }) => {
         paddingTop: { xs: '100%', md: '50%' },
       }}
     >
-      {Boolean(image) && <ImgStyle alt={title} src={image} />}
+      {Boolean(previewBlobId) && <Blob alt={title} id={previewBlobId!} />}
       <Box
         sx={{
           top: 0,
@@ -57,12 +58,16 @@ const ArticleImage: FC<ArticleImageProps> = ({ image, title }) => {
 };
 
 type ArticleContentProps = Pick<ArticleModel, 'content' | 'title'> & {
-  previewImageUrl: string;
+  previewBlobId: string | undefined;
 };
 
-const ArticleContent: FC<ArticleContentProps> = ({ content, previewImageUrl, title }) => (
+const ArticleContent: FC<ArticleContentProps> = ({
+  content,
+  previewBlobId: previewImageUrl,
+  title,
+}) => (
   <Stack>
-    <ArticleImage title={title} image={previewImageUrl} />
+    <ArticleImage title={title} previewBlobId={previewImageUrl} />
     <Box sx={{ margin: 3.5 }}>
       <Markdown>{content}</Markdown>
     </Box>

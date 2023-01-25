@@ -21,7 +21,7 @@ const uploadBlobErrorDisplayValueDict: Record<UploadBlobError, string> = {
   Unknown: 'Coś poszło nie tak',
 };
 
-const uploadBlobs = async (file: File[], dropId: string) => {
+const uploadBlobs = async (file: File[]) => {
   const formData = new FormData();
 
   file.forEach((file) => {
@@ -30,7 +30,7 @@ const uploadBlobs = async (file: File[], dropId: string) => {
 
   const response = await api.post<BlobDto[]>('blob', formData);
 
-  return arrayMapBlobDtoToModel(response.data, dropId);
+  return arrayMapBlobDtoToModel(response.data);
 };
 
 const getUploadBlobError = (err: any) => {
