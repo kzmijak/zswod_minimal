@@ -1,6 +1,5 @@
 import { Alert, Button, Grow, Stack, Tooltip } from '@mui/material';
 import { FC, useMemo, useState } from 'react';
-import { useCurrentArticle } from 'src/_zswod/modules/CurrentArticle';
 import { ArticleFormContent } from '../models/ArticleFormContent';
 import { ImageFormContent } from '../models/ImageFormContent';
 import { ArticleForm } from './ArticleForm';
@@ -9,12 +8,15 @@ import { ArticlePreview } from './ArticlePreview';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
 import { LoadingButton } from '@mui/lab';
 import { createArticle, getCreateArticleError } from '../api/createArticle';
+import { ArticleModel } from 'src/_zswod/models/Article';
+import { ImageModel } from 'src/_zswod/models/Image';
 
-const Creator: FC = () => {
+type CreatorProps = {
+  article: ArticleModel;
+  images: ImageModel[];
+};
+const Creator: FC<CreatorProps> = ({ article, images }) => {
   const formId = 'article-form';
-
-  const { article } = useCurrentArticle();
-  const { images } = useCurrentArticle();
 
   const initialArticle = pick<ArticleFormContent>(article, 'content', 'short', 'title');
   const initialImages = arrayPick<ImageFormContent>(images, 'title', 'alt', 'url');
