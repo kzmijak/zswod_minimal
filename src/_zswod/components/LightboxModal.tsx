@@ -5,15 +5,6 @@ import { Typography, GlobalStyles } from '@mui/material';
 
 const LightboxModalStyles = () => {
   const theme = useTheme();
-  const isRTL = theme.direction === 'rtl';
-
-  const backgroundIcon = (iconName: string) => ({
-    backgroundSize: '24px 24px',
-    backgroundPosition: 'center',
-    backgroundRepeat: 'no-repeat',
-    backgroundColor: alpha(theme.palette.grey[900], 0.8),
-    backgroundImage: `url("/static/icons/controls/${iconName}.svg")`,
-  });
 
   return (
     <GlobalStyles
@@ -58,24 +49,17 @@ const LightboxModalStyles = () => {
           '& .ril__toolbarRightSide button': {
             width: '100%',
             height: '100%',
-            '&.ril__zoomInButton': backgroundIcon('maximize-outline'),
-            '&.ril__zoomOutButton': backgroundIcon('minimize-outline'),
-            '&.ril__closeButton': backgroundIcon('close'),
           },
           '& .ril__navButtons': {
             padding: theme.spacing(3),
             borderRadius: theme.shape.borderRadius,
-            // TODO: Fix me
-            // borderRadius: theme.shape.borderRadiusSm,
             '&.ril__navButtonPrev': {
               left: theme.spacing(2),
               right: 'auto',
-              ...backgroundIcon(isRTL ? 'arrow-ios-forward' : 'arrow-ios-back'),
             },
             '&.ril__navButtonNext': {
               right: theme.spacing(2),
               left: 'auto',
-              ...backgroundIcon(isRTL ? 'arrow-ios-back' : 'arrow-ios-forward'),
             },
           },
         },
@@ -134,6 +118,11 @@ const LightboxModal: FC<LightboxModalProps> = ({
           onMoveNextRequest={() => setPhotoIndex((photoIndex + 1) % images.length)}
           toolbarButtons={toolbarButtons}
           reactModalStyle={customStyles}
+          nextLabel="Następny obraz"
+          prevLabel="Poprzedni obraz"
+          zoomInLabel="Zbliż"
+          zoomOutLabel="Oddal"
+          closeLabel="Zamknij"
           {...other}
         />
       )}

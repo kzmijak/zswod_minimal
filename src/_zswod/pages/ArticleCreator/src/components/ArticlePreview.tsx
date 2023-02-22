@@ -1,4 +1,4 @@
-import { Box, Dialog, DialogProps, Stack } from '@mui/material';
+import { Box, Dialog, DialogProps, Stack, Button } from '@mui/material';
 import { FC, ReactNode } from 'react';
 import { ArticleContent } from 'src/_zswod/pages/Article';
 import { ArticleFormContent } from '../models/ArticleFormContent';
@@ -30,7 +30,16 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({
   return (
     <Dialog open={open} onClose={onClose} fullWidth scroll="body" maxWidth="md">
       <Box sx={{ minHeight: 1200 }}>
-        <ArticleContent content={content} previewBlobId={previewImage?.blobId} title={title} />
+        <ArticleContent
+          content={content}
+          previewBlobId={previewImage?.blobId}
+          title={title}
+          actionButton={
+            <Button variant="contained" onClick={onClose}>
+              Powrót do edycji
+            </Button>
+          }
+        />
       </Box>
       <FloatingBox onBackgroundClick={onClose} anchor="right" open width={400}>
         <ArticleImageDrop images={images} onChange={onImagesChange} />

@@ -7,11 +7,10 @@ type GalleryIllustrationProps = {
 
 const GalleryIllustration: FC<GalleryIllustrationProps> = ({ sx }) => (
   <Box sx={sx}>
-    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg" fill="#000000">
+    <svg viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
       <g id="SVGRepo_bgCarrier" strokeWidth="0" />
       <g id="SVGRepo_tracerCarrier" strokeLinecap="round" strokeLinejoin="round" />
       <g id="SVGRepo_iconCarrier">
-        <rect fill="#ffffff" height="60" rx="10" width="60" />
         <path
           d="M24,22V15.515l-1.071-1.071a6,6,0,0,0-8.485,0h0a6,6,0,0,0,0,8.485L20.1,28.586a6,6,0,0,0,8.485,0h0a6.142,6.142,0,0,0,.537-.657A6,6,0,0,1,24,22Z"
           fill="#ffe1a0"

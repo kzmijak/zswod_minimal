@@ -9,7 +9,7 @@ import { useSelector } from 'react-redux';
 import useResponsive from 'src/hooks/useResponsive';
 import { m } from 'framer-motion';
 import { selectArticleHeadersImages } from 'src/_zswod/modules/ArticleHeaders';
-import { Blob } from 'src/_zswod/modules/Blob';
+import { Blob, useBlobUrl } from 'src/_zswod/modules/Blob';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -37,11 +37,12 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const ref = useRef(null);
   const [imageOpen, setImageOpen] = useState<number>(-1);
   const isDesktop = useResponsive('up', 'md');
+  const { getUrl } = useBlobUrl();
 
   const images = useSelector(selectArticleHeadersImages(isDesktop ? 12 : 6));
 
   const isLight = theme.palette.mode === 'light';
-  const imageBlobIds = images.map((image) => image.blobId);
+  const imageBlobIds = images.map((image) => getUrl(image.blobId));
 
   useEffect(() => {
     passRef(ref);

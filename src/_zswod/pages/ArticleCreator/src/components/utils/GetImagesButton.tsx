@@ -5,15 +5,17 @@ const DropZoneStyle = styled(Box, {
   shouldForwardProp: (propName) => propName !== 'isDragActive' && propName !== 'error',
 })<{ dimmed: boolean; error: boolean }>(({ theme, dimmed, error }) => ({
   margin: 15,
-  border: `dashed 4px ${theme.palette.primary.light}`,
+  border: `dashed 2px ${theme.palette.divider}`,
+  backgroundColor: theme.palette.grey[200],
   borderRadius: 10,
-  '&:hover': { opacity: 0.92, cursor: 'pointer' },
+  '&:hover': { cursor: 'pointer', backgroundColor: theme.palette.grey[300] },
   ...(dimmed && { opacity: 0.6 }),
   ...(error && {
     color: 'error.main',
     borderColor: 'error.light',
     bgcolor: 'error.lighter',
   }),
+  transition: 'all 0.2s',
 }));
 
 type GetImagesButtonProps = {
@@ -34,7 +36,7 @@ const GetImagesButton: FC<GetImagesButtonProps> = ({
   <DropZoneStyle error={Boolean(error)} dimmed={Boolean(dimmed)}>
     <Stack onClick={onClick} minHeight={1} justifyContent="center" alignItems="center" padding={2}>
       {illustration}
-      <Typography align="center" variant="h6" color={(theme) => theme.palette.primary.dark}>
+      <Typography align="center" variant="h6" color={(theme) => theme.palette.text.primary}>
         {subtitle}
       </Typography>
     </Stack>
