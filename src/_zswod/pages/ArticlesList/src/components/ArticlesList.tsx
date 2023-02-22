@@ -34,7 +34,7 @@ const ArticlesList: FC = () => {
         <Timeline position="left">
           {articleHeaders.map((article) => {
             const { id, short, uploadDate: uploadDateISO, titleNormalized, title } = article;
-            const previewImage = getArticleHeaderPreviewImage(article)!;
+            const previewImage = getArticleHeaderPreviewImage(article, { onEmpty: 'nullObject' })!;
             const uploadDate = new Date(uploadDateISO);
             return (
               <TimeOutlinedList key={id} date={uploadDate}>

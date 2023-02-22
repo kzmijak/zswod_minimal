@@ -10,12 +10,16 @@ import { LoadingButton } from '@mui/lab';
 import { createArticle, getCreateArticleError } from '../api/createArticle';
 import { ArticleModel } from 'src/_zswod/models/Article';
 import { ImageModel } from 'src/_zswod/models/Image';
+import { updateArticle } from '../api/updateArticle';
 
 type CreatorProps = {
   article: ArticleModel;
   images: ImageModel[];
+  titleNormalized?: string;
 };
-const Creator: FC<CreatorProps> = ({ article, images }) => {
+const Creator: FC<CreatorProps> = ({ article, images, titleNormalized }) => {
+  const isEditMode = Boolean(titleNormalized);
+
   const formId = 'article-form';
 
   const initialArticle = pick<ArticleFormContent>(article, 'content', 'short', 'title');
@@ -38,7 +42,9 @@ const Creator: FC<CreatorProps> = ({ article, images }) => {
   const handlePublish = async () => {
     setStatus('loading');
     try {
-      await createArticle(articleFormContent, imageFormContents);
+      await (isEditMode
+        ? updateArticle(titleNormalized!, articleFormContent, imageFormContents)
+        : createArticle(articleFormContent, imageFormContents));
       setStatus('success');
     } catch (err) {
       setError(getCreateArticleError(err));

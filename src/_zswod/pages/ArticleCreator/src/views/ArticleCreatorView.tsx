@@ -22,7 +22,7 @@ const ArticleCreatorView: FC = () => {
 
   return (
     <Page title="Edytor">
-      <Creator article={article} images={images} />
+      <Creator titleNormalized={articleTitle} article={article} images={images} />
     </Page>
   );
 };

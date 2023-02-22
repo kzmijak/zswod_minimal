@@ -1,4 +1,3 @@
-// @mui
 import { styled } from '@mui/material/styles';
 import { Container, Stack, Typography } from '@mui/material';
 import { varFade } from 'src/components/animate';
@@ -6,7 +5,6 @@ import { CarouselCenterMode, CarouselItemProps } from 'src/_zswod/components/Car
 import { FC, useEffect, useRef } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
-import { useNavigate } from 'react-router';
 import { useSelector } from 'react-redux';
 import { selectAllArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 import { m } from 'framer-motion';
@@ -21,7 +19,6 @@ type HomeArticlesProps = {
 
 const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const ref = useRef(null);
-  const navigate = useNavigate();
 
   const articleHeaders = useSelector(selectAllArticleHeaders);
 
@@ -32,8 +29,8 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const carouselItems: CarouselItemProps[] = articleHeaders.map((header) => ({
     title: header.title,
     description: header.short,
-    image: header.images[0].blobId,
-    onClick: () => navigate(`${PATHS_ABOUT.nowosci.link}/${header.titleNormalized}`),
+    blobId: header.images[0]?.blobId,
+    articleUrl: `${PATHS_ABOUT.nowosci.link}/${header.titleNormalized}`,
   }));
 
   return (
@@ -51,7 +48,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
           </Typography>
         </m.div>
 
-        <CarouselCenterMode animate items={carouselItems} />
+        <CarouselCenterMode items={carouselItems} />
 
         <m.div variants={varFade().inLeft}>
           <Stack
