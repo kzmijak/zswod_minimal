@@ -1,4 +1,7 @@
-import { FC, ReactNode } from 'react';
+import { FC, ReactNode, useEffect } from 'react';
+import { useAppDispatch } from 'src/_zswod/utils/useAppDispatch';
+import { invalidateAuthentication } from '../slice/actions';
+import { fetchCurrentUserAsyncThunk } from '../slice/thunks';
 import { JwtContext } from '../utils/JwtContext';
 import { useJwtStorage } from '../utils/useJwtStorage';
 
@@ -8,10 +11,24 @@ type JwtProviderProps = {
 
 const JwtProvider: FC<JwtProviderProps> = ({ children }) => {
   const { setToken, token } = useJwtStorage();
+  const dispatch = useAppDispatch();
 
-  const logout = () => setToken(null);
+  const login = (token: string) => {
+    setToken(token);
+  };
 
-  return <JwtContext.Provider value={{ setToken, token, logout }}>{children}</JwtContext.Provider>;
+  useEffect(() => {
+    if (Boolean(token)) {
+      dispatch(fetchCurrentUserAsyncThunk());
+    }
+  }, [dispatch, token]);
+
+  const logout = () => {
+    setToken(null);
+    dispatch(invalidateAuthentication());
+  };
+
+  return <JwtContext.Provider value={{ login, token, logout }}>{children}</JwtContext.Provider>;
 };
 
 export { JwtProvider };

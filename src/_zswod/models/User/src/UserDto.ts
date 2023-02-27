@@ -1,8 +1,6 @@
 type UserDto = {
   id: string;
-  email: string;
-  password: string;
-  roles: string;
+  role: string;
 };
 
 export type { UserDto };

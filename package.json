@@ -8,6 +8,7 @@
     "lint": "eslint --ext .ts,.tsx ./src",
     "lint:fix": "eslint --fix --ext .ts,.tsx ./src",
     "start": "cross-env HTTPS=true PORT=3000 react-scripts start",
+    "startb": "cross-env HTTPS=true PORT=3000 BROWSER=none react-scripts start",
     "build": "react-scripts build",
     "eject": "react-scripts eject",
     "clear-all": "rm -rf build node_modules",

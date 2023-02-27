@@ -11,7 +11,7 @@ import { Warning } from '../components/utils/Warning';
 import { LoginFormContent } from '../models/LoginFormContent';
 
 const LoginView: FC = () => {
-  const { setToken } = useJwt();
+  const { login } = useJwt();
   const [status, setStatus] = useState<RequestStatus>('idle');
   const [error, setError] = useState('');
   const formId = 'login-form';
@@ -20,7 +20,7 @@ const LoginView: FC = () => {
     setStatus('loading');
     try {
       const token = await signIn(body);
-      setToken(token);
+      login(token);
       setStatus('success');
     } catch (err) {
       setError(getSignInError(err));

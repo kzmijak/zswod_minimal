@@ -10,11 +10,9 @@ import { UserModel } from './UserModel';
 const mapStringToRole = createEnumMapper<UserRole>(userRoleConsts, 'Unknown');
 const getUserRoleDisplayValue = createDisplayValueGetter(userRoleDisplayValueDict);
 
-const mapUserDtoToModel = ({ email, id, password, roles }: UserDto): UserModel => ({
-  email,
+const mapUserDtoToModel = ({ id, role }: UserDto): UserModel => ({
   id,
-  password,
-  role: mapStringToRole(roles),
+  role: mapStringToRole(role),
 });
 
 const arrayMapUserDtoToModel = createArrayMapper(mapUserDtoToModel);

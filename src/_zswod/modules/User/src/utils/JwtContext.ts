@@ -2,13 +2,13 @@ import { createContext } from 'react';
 
 type JwtContextType = {
   token: string;
-  setToken: (token: string) => void;
+  login: (token: string) => void;
   logout: () => void;
 };
 
 const JwtContext = createContext<JwtContextType>({
   token: '',
-  setToken: () => null,
+  login: () => null,
   logout: () => null,
 });
 

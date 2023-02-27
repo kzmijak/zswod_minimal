@@ -29,7 +29,7 @@ root.render(
     <ReduxProvider store={store}>
       <ConfigProvider>
         <JwtProvider>
-          <AxiosProvider store={store}>
+          <AxiosProvider>
             <SettingsProvider>
               <CollapseDrawerProvider>
                 <BrowserRouter>
