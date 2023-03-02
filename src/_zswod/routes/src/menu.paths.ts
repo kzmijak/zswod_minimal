@@ -11,13 +11,26 @@ const PATH_DASHBOARD: PathReduced = {
   students: `${PATH_DASHBOARD_ROOT}/dlaucznia`,
 };
 
-const menuContents = [
+type MenuItem = {
+  label: string;
+  link: string;
+  children?: MenuItem[];
+  key?: string;
+};
+
+const menuContents: MenuItem[] = [
+  {
+    label: 'Główne',
+    link: PATH_DASHBOARD_ROOT,
+    children: [
+      { key: 'nowosci', label: 'Nowości', link: `${PATH_DASHBOARD_ROOT}/nowosci` },
+      { key: 'galeria', label: 'Galeria', link: `${PATH_DASHBOARD_ROOT}/galeria` },
+    ],
+  },
   {
     label: 'O Szkole',
     link: PATH_DASHBOARD.about,
     children: [
-      { key: 'nowosci', label: 'Nowości', link: `${PATH_DASHBOARD.about}/nowosci` },
-      { key: 'galeria', label: 'Galeria', link: `${PATH_DASHBOARD.about}/galeria` },
       { key: 'rekrutacja', label: 'Rekrutacja', link: `${PATH_DASHBOARD.about}/rekrutacja` },
       { key: 'dokumenty', label: 'Szkolne dokumenty', link: `${PATH_DASHBOARD.about}/dokumenty` },
       { key: 'kronika', label: 'Kronika szkoły', link: `${PATH_DASHBOARD.about}/kronika` },
@@ -123,15 +136,15 @@ type PathsAbout<T extends readonly string[]> = {
 };
 
 const PATHS_ABOUT = Object.fromEntries(
-  menuContents[0].children.map((obj) => [obj.key, { label: obj.label, link: obj.link }])
+  menuContents[0].children!.map((obj) => [obj.key, { label: obj.label, link: obj.link }])
 ) as PathsAbout<typeof PathsAboutConsts>;
 
 const PATHS_PARENTS = Object.fromEntries(
-  menuContents[1].children.map((obj) => [obj.key, { label: obj.label, link: obj.link }])
+  menuContents[1].children!.map((obj) => [obj.key, { label: obj.label, link: obj.link }])
 ) as PathsAbout<typeof PathsParentsConsts>;
 
 const PATHS_STUDENTS = Object.fromEntries(
-  menuContents[2].children.map((obj) => [obj.key, { label: obj.label, link: obj.link }])
+  menuContents[2].children!.map((obj) => [obj.key, { label: obj.label, link: obj.link }])
 ) as PathsAbout<typeof PathsStudentsConsts>;
 
 export {

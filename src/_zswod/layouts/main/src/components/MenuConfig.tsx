@@ -12,7 +12,7 @@ const mappedMenus: MenuItemProps[] = menuContents.map((menuItem) => ({
   title: menuItem.label,
   icon: <Iconify icon={'eva:home-fill'} {...ICON_SIZE} />,
   path: menuItem.link,
-  items: menuItem.children.map((child) => ({
+  items: menuItem.children!.map((child) => ({
     title: child.label,
     path: child.link,
   })),

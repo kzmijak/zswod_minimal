@@ -1,3 +1,3 @@
-import { DashboardLayout } from './src/components/DashboardLayout';
+import { DashboardLayout } from './src/DashboardLayout';
 
 export { DashboardLayout };
