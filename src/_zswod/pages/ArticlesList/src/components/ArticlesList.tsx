@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { TimeOutlinedList } from 'src/_zswod/components/TimeOutlinedList';
 import {
-  getArticleHeaderPreviewImage,
+  getPreviewImage,
   selectAllArticleHeaders,
   selectArticleHeadersStatus,
 } from 'src/_zswod/modules/ArticleHeaders';
@@ -34,7 +34,7 @@ const ArticlesList: FC = () => {
         <Timeline position="left">
           {articleHeaders.map((article) => {
             const { id, short, uploadDate: uploadDateISO, titleNormalized, title } = article;
-            const previewImage = getArticleHeaderPreviewImage(article, { onEmpty: 'nullObject' })!;
+            const previewImage = getPreviewImage(article)!;
             const uploadDate = new Date(uploadDateISO);
             return (
               <TimeOutlinedList key={id} date={uploadDate}>

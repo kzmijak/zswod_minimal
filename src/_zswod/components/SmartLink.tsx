@@ -1,13 +1,8 @@
 import { forwardRef, ReactNode } from 'react';
-import { Link as ExternalLink, styled } from '@mui/material';
-import { Link as InternalLink } from 'react-router-dom';
+import { Link as ExternalLink } from '@mui/material';
 import { isExternal } from '../utils/isExternal';
 import { SxProps } from '@mui/material/styles';
-
-const InternalLinkStyled = styled(InternalLink)({
-  textDecoration: 'none',
-  color: 'inherit',
-});
+import { RouterLink } from './RouterLink';
 
 type SmartLinkProps = {
   to: string;
@@ -25,9 +20,9 @@ const SmartLink = forwardRef<HTMLAnchorElement, SmartLinkProps>(
         {children}
       </ExternalLink>
     ) : (
-      <InternalLinkStyled ref={ref} to={to} color="inherit" replace={replace} sx={sx}>
+      <RouterLink ref={ref} to={to} color="inherit" replace={replace} sx={sx}>
         {children}
-      </InternalLinkStyled>
+      </RouterLink>
     );
   }
 );

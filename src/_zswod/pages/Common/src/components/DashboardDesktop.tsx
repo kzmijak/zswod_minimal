@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import { Grid, styled } from '@mui/material';
 import { WelcomeBoard } from './elements/WelcomeBoard';
+import { ArticleDemo } from './elements/ArticleDemo';
 
 const GridStyled = styled(Grid)({
   width: '100%',
@@ -14,8 +15,8 @@ const DashboardDesktop: FC = () => (
         <WelcomeBoard />
       </GridStyled>
       <GridStyled container item xs={8} direction="column">
-        <GridStyled item xs={4}>
-          Tu będzie artykuł
+        <GridStyled item xs={4} sx={{ padding: 2 }}>
+          <ArticleDemo />
         </GridStyled>
         <GridStyled item xs={8}>
           Tu będą obrazy z galerii

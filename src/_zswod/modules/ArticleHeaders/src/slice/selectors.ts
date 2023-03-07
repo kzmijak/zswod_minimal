@@ -15,9 +15,18 @@ const selectAllArticleHeaders = createSelector(selectAll, (entities) => {
   return entities;
 });
 
-const selectArticleHeadersImages = (limit?: number) =>
-  createSelector(selectAllArticleHeaders, (headers) =>
-    headers.flatMap((header) => header.images).slice(0, limit)
-  );
+const selectArticleHeadersImages = createSelector(
+  [selectAllArticleHeaders, (_state, limit?: number) => limit],
+  (headers, limit) => headers.flatMap((header) => header.images).slice(0, limit)
+);
 
-export { selectArticleHeadersStatus, selectAllArticleHeaders, selectArticleHeadersImages };
+const selectLatestArticleHeader = createSelector(selectAllArticleHeaders, (headers) =>
+  [...headers].shift()
+);
+
+export {
+  selectArticleHeadersStatus,
+  selectAllArticleHeaders,
+  selectArticleHeadersImages,
+  selectLatestArticleHeader,
+};

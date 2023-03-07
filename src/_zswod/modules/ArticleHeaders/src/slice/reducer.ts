@@ -8,7 +8,9 @@ type InitialState = {
   error: RequestError;
 };
 
-const entityAdapter = createEntityAdapter<ArticleHeaderModel>();
+const entityAdapter = createEntityAdapter<ArticleHeaderModel>({
+  sortComparer: (a, b) => new Date(a.uploadDate).getTime() - new Date(b.uploadDate).getTime(),
+});
 
 const initialState = entityAdapter.getInitialState<InitialState>({
   error: null,

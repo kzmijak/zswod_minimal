@@ -5,8 +5,9 @@ import {
   selectAllArticleHeaders,
   selectArticleHeadersStatus,
   selectArticleHeadersImages,
+  selectLatestArticleHeader,
 } from './src/slice/selectors';
-import { getArticleHeaderPreviewImage } from './src/slice/getters';
+import { getPreviewImage } from './src/slice/getters';
 
 export {
   articleHeadersReducer,
@@ -15,5 +16,6 @@ export {
   selectAllArticleHeaders,
   FetchArticleHeaders,
   selectArticleHeadersImages,
-  getArticleHeaderPreviewImage,
+  getPreviewImage,
+  selectLatestArticleHeader,
 };

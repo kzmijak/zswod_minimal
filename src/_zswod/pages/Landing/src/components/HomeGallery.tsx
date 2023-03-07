@@ -5,11 +5,11 @@ import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC, useEffect, useRef, useState } from 'react';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { LightboxModal } from 'src/_zswod/components/LightboxModal';
-import { useSelector } from 'react-redux';
 import useResponsive from 'src/hooks/useResponsive';
 import { m } from 'framer-motion';
 import { selectArticleHeadersImages } from 'src/_zswod/modules/ArticleHeaders';
 import { Blob, useBlobUrl } from 'src/_zswod/modules/Blob';
+import { useRootSelector } from 'src/_zswod/utils/useRootSelector';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -39,7 +39,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const isDesktop = useResponsive('up', 'md');
   const { getUrl } = useBlobUrl();
 
-  const images = useSelector(selectArticleHeadersImages(isDesktop ? 12 : 6));
+  const images = useRootSelector((state) => selectArticleHeadersImages(state, isDesktop ? 12 : 6));
 
   const isLight = theme.palette.mode === 'light';
   const imageBlobIds = images.map((image) => getUrl(image.blobId));

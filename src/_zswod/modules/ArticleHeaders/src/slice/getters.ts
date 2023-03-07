@@ -1,14 +1,9 @@
+import { createSelector } from '@reduxjs/toolkit';
 import { ArticleHeaderModel } from 'src/_zswod/models/ArticleHeader';
-import { nullImageObject } from 'src/_zswod/models/Image';
 
-type GetterOptions = {
-  onEmpty: 'nullObject' | 'null';
-};
+const getPreviewImage = createSelector(
+  (header: ArticleHeaderModel | undefined) => header,
+  (header) => (Boolean(header) ? [...header!.images].shift() : undefined)
+);
 
-const getArticleHeaderPreviewImage = ({ images }: ArticleHeaderModel, options?: GetterOptions) => {
-  const fallback = options?.onEmpty === 'nullObject' ? nullImageObject : null;
-
-  return images.length > 0 ? images[0] : fallback;
-};
-
-export { getArticleHeaderPreviewImage };
+export { getPreviewImage };
