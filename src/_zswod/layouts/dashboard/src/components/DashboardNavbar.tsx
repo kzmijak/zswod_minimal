@@ -4,7 +4,6 @@ import { useLocation } from 'react-router';
 import Scrollbar from 'src/components/Scrollbar';
 import { NAVBAR } from 'src/config';
 import useResponsive from 'src/hooks/useResponsive';
-import NavbarAccount from 'src/layouts/dashboard/navbar/NavbarAccount';
 import { Logo } from 'src/_zswod/components/Logo';
 import { CatIllustration } from '../assets/illustration_cat';
 import { NavigationMenu } from './NavigationMenu';
@@ -52,7 +51,12 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ isOpenSidebar, onCloseSideb
           flexShrink: 0,
         }}
       >
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ backgroundColor: 'common.white', borderRadius: 40, padding: 0 }}
+        >
           <Logo />
         </Stack>
 

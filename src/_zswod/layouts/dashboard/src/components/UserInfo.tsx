@@ -3,9 +3,8 @@ import { FC, ReactNode } from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getUserRoleDisplayValue, UserRole } from 'src/_zswod/models/User';
-import { selectCurrentUserRole, useJwt } from 'src/_zswod/modules/User';
+import { selectCurrentUserRole } from 'src/_zswod/modules/User';
 import { AdminIllustration } from '../assets/illustration_admin';
-import LogoutRoundedIcon from '@mui/icons-material/LogoutRounded';
 import LoginIcon from '@mui/icons-material/Login';
 import { isLight } from 'src/_zswod/utils/paletteMode';
 import { StudentIllustration } from '../assets/illustration_student';
@@ -14,28 +13,7 @@ import { TeacherIllustration } from '../assets/illustration_teacher';
 import { GuestIllustration } from '../assets/illustration_guest';
 import { selectAuthenticationStatus } from 'src/_zswod/modules/User/src/slice/selectors';
 import { AnimatePresence, m } from 'framer-motion';
-
-const LogoutButton: FC = () => {
-  const { logout } = useJwt();
-
-  return (
-    <Tooltip title="Wyloguj się">
-      <Fab
-        onClick={() => logout()}
-        color="default"
-        sx={{
-          height: 40,
-          width: 40,
-          backgroundColor: 'transparent',
-          color: 'grey.500',
-          boxShadow: 0,
-        }}
-      >
-        <LogoutRoundedIcon />
-      </Fab>
-    </Tooltip>
-  );
-};
+import { LogoutButton } from './LogoutButton';
 
 const LoginButton: FC = () => (
   <Tooltip title="Logowanie / Rejestracja">

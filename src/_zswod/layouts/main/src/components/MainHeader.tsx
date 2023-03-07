@@ -1,14 +1,13 @@
-import { useLocation } from 'react-router-dom';
-import { styled, useTheme } from '@mui/material/styles';
-import { Box, Button, AppBar, Toolbar, Container } from '@mui/material';
+import { styled } from '@mui/material/styles';
+import { Box, AppBar, Toolbar, Container } from '@mui/material';
 import useOffSetTop from 'src/hooks/useOffSetTop';
 import useResponsive from 'src/hooks/useResponsive';
 import cssStyles from 'src/utils/cssStyles';
 import { HEADER } from 'src/config';
 import { MenuDesktop } from './MenuDesktop';
 import { Logo } from 'src/_zswod/components/Logo';
-import { PATH_DASHBOARD_ROOT } from 'src/_zswod/routes';
 import { FC } from 'react';
+import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: HEADER.MOBILE_HEIGHT,
@@ -36,25 +35,18 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
 
 const MainHeader: FC = () => {
   const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
-
-  const theme = useTheme();
-
-  const { pathname } = useLocation();
-
   const isDesktop = useResponsive('up', 'md');
-
-  const isHome = pathname === '/';
 
   return (
     <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
       <ToolbarStyle
         disableGutters
-        sx={{
+        sx={(theme) => ({
           ...(isOffset && {
             ...cssStyles(theme).bgBlur(),
             height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
           }),
-        }}
+        })}
       >
         <Container
           sx={{
@@ -68,7 +60,7 @@ const MainHeader: FC = () => {
 
           {isDesktop && <MenuDesktop isOffset={isOffset} />}
 
-          {/* {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} />} */}
+          {!isDesktop && <ButtonEPanel size="small" sx={{ marginX: 2 }} />}
         </Container>
       </ToolbarStyle>
 

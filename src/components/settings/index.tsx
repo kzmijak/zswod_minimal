@@ -1,8 +1,8 @@
-import SettingsDrawer from './drawer';
 //
 import ThemeContrast from './ThemeContrast';
 import ThemeRtlLayout from './ThemeRtlLayout';
 import ThemeColorPresets from './ThemeColorPresets';
+import { SettingsDrawer } from 'src/_zswod/modules/ThemeSettings';
 
 // ----------------------------------------------------------------------
 

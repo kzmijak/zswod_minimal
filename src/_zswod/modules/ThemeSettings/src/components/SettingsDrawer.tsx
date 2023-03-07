@@ -1,18 +1,26 @@
 import { AnimatePresence, m } from 'framer-motion';
-import { useState, useEffect, FC } from 'react';
+import { useState, useEffect } from 'react';
+// @mui
 import { alpha, styled } from '@mui/material/styles';
-import { Backdrop, Divider, Typography, Stack } from '@mui/material';
+import { Stack, Divider, Backdrop, Typography, IconButton } from '@mui/material';
+// hooks
 import useSettings from 'src/hooks/useSettings';
+// utils
 import cssStyles from 'src/utils/cssStyles';
+// config
 import { NAVBAR, defaultSettings } from 'src/config';
+//
 import Iconify from 'src/components/Iconify';
 import Scrollbar from 'src/components/Scrollbar';
-import { IconButtonAnimate, varFade } from 'src/components/animate';
-import { ToggleButton } from './ToggleButton';
-import { SettingFullscreen } from './SettingFullscreen';
-import { SettingColorPresets } from './SettingColorPresets';
-// TODO: FIx me
-// import SettingMode from 'src/components/settings/SettingMode';
+import { varFade } from 'src/components/animate';
+//
+import ToggleButton from './ToggleButton';
+import SettingMode from 'src/components/settings/drawer/SettingMode';
+import SettingContrast from 'src/components/settings/drawer/SettingContrast';
+import SettingColorPresets from 'src/components/settings/drawer/SettingColorPresets';
+import SettingFullscreen from './SettingFullscreen';
+
+// ----------------------------------------------------------------------
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   ...cssStyles(theme).bgBlur({ color: theme.palette.background.paper, opacity: 0.92 }),
@@ -34,23 +42,28 @@ const RootStyle = styled(m.div)(({ theme }) => ({
   )}`,
 }));
 
-const Settings: FC = () => {
+// ----------------------------------------------------------------------
+
+export default function SettingsDrawer() {
   const {
     themeMode,
+    themeLayout,
+    themeStretch,
+    themeContrast,
     themeDirection,
     themeColorPresets,
-    themeStretch,
-    themeLayout,
     onResetSetting,
   } = useSettings();
+
   const [open, setOpen] = useState(false);
 
   const notDefault =
     themeMode !== defaultSettings.themeMode ||
-    themeDirection !== defaultSettings.themeDirection ||
-    themeColorPresets !== defaultSettings.themeColorPresets ||
     themeLayout !== defaultSettings.themeLayout ||
-    themeStretch !== defaultSettings.themeStretch;
+    themeStretch !== defaultSettings.themeStretch ||
+    themeContrast !== defaultSettings.themeContrast ||
+    themeDirection !== defaultSettings.themeDirection ||
+    themeColorPresets !== defaultSettings.themeColorPresets;
 
   const varSidebar =
     themeDirection !== 'rtl'
@@ -69,7 +82,7 @@ const Settings: FC = () => {
     if (open) {
       document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset';
+      document.body.style.overflow = '';
     }
   }, [open]);
 
@@ -101,28 +114,35 @@ const Settings: FC = () => {
                 justifyContent="space-between"
                 sx={{ py: 2, pr: 1, pl: 2.5 }}
               >
-                <Typography variant="subtitle1">Ustawienia</Typography>
-                <div>
-                  <IconButtonAnimate onClick={onResetSetting}>
-                    <Iconify icon={'ic:round-refresh'} width={20} height={20} />
-                  </IconButtonAnimate>
-                  <IconButtonAnimate onClick={handleClose}>
-                    <Iconify icon={'eva:close-fill'} width={20} height={20} />
-                  </IconButtonAnimate>
-                </div>
+                <Typography variant="subtitle1" sx={{ flexGrow: 1 }}>
+                  Ustawienia motywu
+                </Typography>
+
+                <IconButton onClick={onResetSetting}>
+                  <Iconify icon={'ic:round-refresh'} width={20} height={20} />
+                </IconButton>
+
+                <IconButton onClick={handleClose}>
+                  <Iconify icon={'eva:close-fill'} width={20} height={20} />
+                </IconButton>
               </Stack>
 
               <Divider sx={{ borderStyle: 'dashed' }} />
 
               <Scrollbar sx={{ flexGrow: 1 }}>
                 <Stack spacing={3} sx={{ p: 3 }}>
-                  {/* <Stack spacing={1.5}>
+                  <Stack spacing={1.5}>
                     <Typography variant="subtitle2">Tryb</Typography>
                     <SettingMode />
-                  </Stack> */}
+                  </Stack>
 
                   <Stack spacing={1.5}>
-                    <Typography variant="subtitle2">Kolory</Typography>
+                    <Typography variant="subtitle2">Kontrast</Typography>
+                    <SettingContrast />
+                  </Stack>
+
+                  <Stack spacing={1.5}>
+                    <Typography variant="subtitle2">Barwy</Typography>
                     <SettingColorPresets />
                   </Stack>
 
@@ -135,6 +155,4 @@ const Settings: FC = () => {
       </AnimatePresence>
     </>
   );
-};
-
-export { Settings };
+}

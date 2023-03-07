@@ -1,9 +1,13 @@
-import { useState, FC } from 'react';
+import { useState } from 'react';
+// @mui
 import { alpha } from '@mui/material/styles';
 import { Button } from '@mui/material';
+//
 import Iconify from 'src/components/Iconify';
 
-const SettingFullscreen: FC = () => {
+// ----------------------------------------------------------------------
+
+export default function SettingFullscreen() {
   const [fullscreen, setFullscreen] = useState(false);
 
   const toggleFullScreen = () => {
@@ -32,9 +36,7 @@ const SettingFullscreen: FC = () => {
         }),
       }}
     >
-      Pełny ekran
+      {fullscreen ? 'Opuść pełny ekran' : 'Pełny ekran'}
     </Button>
   );
-};
-
-export { SettingFullscreen };
+}

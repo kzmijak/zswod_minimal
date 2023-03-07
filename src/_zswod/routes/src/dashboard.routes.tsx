@@ -4,7 +4,7 @@ import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
 import { ArticlesListView } from 'src/_zswod/pages/ArticlesList';
 import { ArticleView } from 'src/_zswod/pages/Article';
 import { GalleriesListView, GalleryView } from 'src/_zswod/pages/Gallery';
-import { Maintenance } from 'src/_zswod/views/Maintenance';
+import { CommonView } from 'src/_zswod/pages/Common';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD_ROOT,
@@ -28,7 +28,11 @@ const DashboardRoutes: RouteObject = {
     },
     {
       path: '*',
-      element: <Maintenance />,
+      element: <CommonView />,
+    },
+    {
+      path: '',
+      element: <CommonView />,
     },
   ],
 };
