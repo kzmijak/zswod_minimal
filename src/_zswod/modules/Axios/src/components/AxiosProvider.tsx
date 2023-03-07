@@ -13,8 +13,8 @@ const AxiosProvider: FC<AxiosProviderProps> = ({ children }) => {
   const { token, logout } = useJwt();
   const backendUrl = useSelector(selectBackendUrl);
 
-  const requestInterceptorIdRef = useRef(-1);
-  const responseInterceptorIdRef = useRef(-1);
+  const requestInterceptorIdRef = useRef(0);
+  const responseInterceptorIdRef = useRef(0);
 
   api.interceptors.request.eject(requestInterceptorIdRef.current);
   requestInterceptorIdRef.current = api.interceptors.request.use(
@@ -28,6 +28,7 @@ const AxiosProvider: FC<AxiosProviderProps> = ({ children }) => {
     }
   );
 
+  api.interceptors.response.eject(responseInterceptorIdRef.current);
   responseInterceptorIdRef.current = api.interceptors.response.use(
     (response) => response,
     (error: AxiosError) => {

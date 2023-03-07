@@ -27,10 +27,6 @@ const LoginForm: FC<LoginFormProps> = ({ onSubmit, formId }) => {
   } = useForm<LoginFormContent>({
     mode: 'onBlur',
     resolver: yupResolver(schema),
-    defaultValues: {
-      email: 'string@yopmail.com',
-      password: 'string123', // TODO !!!!
-    },
   });
 
   return (

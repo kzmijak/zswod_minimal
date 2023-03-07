@@ -7,6 +7,7 @@ import useSettings from 'src/hooks/useSettings';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC } from 'react';
 import { TextIconLabel } from 'src/_zswod/components/TextIconLabel';
+import { TalentowiskoIcon } from 'src/_zswod/components/TalentowiskoIcon';
 
 const RootStyle = styled(m.div)(({ theme }) => ({
   position: 'relative',
@@ -44,7 +45,7 @@ const HeroOverlayStyle = styled(m.img)({
   zIndex: 9,
   width: '100%',
   height: '100%',
-  objectFit: 'cover',
+  objectFit: 'fill',
   position: 'absolute',
 });
 
@@ -113,13 +114,7 @@ const HomeHero: FC = () => {
 
                 <m.div variants={varFade().inRight}>
                   <TextIconLabel
-                    icon={
-                      <Image
-                        alt="talentowisko ikona"
-                        src="/logo/talentowisko.png"
-                        sx={{ width: 37, height: 20, mr: 1 }}
-                      />
-                    }
+                    icon={<TalentowiskoIcon sx={{ width: 37, height: 20, mr: 1 }} />}
                     value={
                       <Link
                         href="https://www.talentowisko.pl/podstawowa/szkola/szkola-podstawowa-im-jana-pawla-ii-w-orlowie-drewnianym/"

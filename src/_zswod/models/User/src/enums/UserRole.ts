@@ -1,4 +1,11 @@
-const userRoleConsts = ['Admin', 'Teacher', 'LegalGuardian', 'Student', 'Unknown'] as const;
+const userRoleConsts = [
+  'Admin',
+  'Teacher',
+  'LegalGuardian',
+  'Student',
+  'Guest',
+  'Unknown',
+] as const;
 
 type UserRole = typeof userRoleConsts[number];
 
@@ -7,6 +14,7 @@ const userRoleDisplayValueDict: Record<UserRole, string> = {
   Teacher: 'Dydaktyk',
   LegalGuardian: 'Opiekun',
   Student: 'Uczeń',
+  Guest: 'Gość',
   Unknown: 'Nieznane',
 };
 

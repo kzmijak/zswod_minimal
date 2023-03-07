@@ -6,11 +6,9 @@ import useResponsive from 'src/hooks/useResponsive';
 import cssStyles from 'src/utils/cssStyles';
 import { HEADER } from 'src/config';
 import { MenuDesktop } from './MenuDesktop';
-import { menuConfig } from './MenuConfig';
 import { Logo } from 'src/_zswod/components/Logo';
 import { PATH_DASHBOARD_ROOT } from 'src/_zswod/routes';
 import { FC } from 'react';
-import { MenuMobile } from './MenuMobile';
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: HEADER.MOBILE_HEIGHT,
@@ -68,13 +66,9 @@ const MainHeader: FC = () => {
           <Logo sx={{ width: 78, height: 78, mr: 1 }} />
           <Box sx={{ flexGrow: 1 }} />
 
-          {isDesktop && <MenuDesktop isOffset={isOffset} isHome={isHome} navConfig={menuConfig} />}
+          {isDesktop && <MenuDesktop isOffset={isOffset} />}
 
-          <Button variant="contained" href={PATH_DASHBOARD_ROOT}>
-            E-Panel
-          </Button>
-
-          {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} navConfig={menuConfig} />}
+          {/* {!isDesktop && <MenuMobile isOffset={isOffset} isHome={isHome} />} */}
         </Container>
       </ToolbarStyle>
 

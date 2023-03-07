@@ -1,13 +1,14 @@
 import { styled, Stack, Drawer, Box } from '@mui/material';
 import { FC, useEffect } from 'react';
 import { useLocation } from 'react-router';
-import Logo from 'src/components/Logo';
 import Scrollbar from 'src/components/Scrollbar';
 import { NAVBAR } from 'src/config';
 import useResponsive from 'src/hooks/useResponsive';
 import NavbarAccount from 'src/layouts/dashboard/navbar/NavbarAccount';
-import NavbarDocs from 'src/layouts/dashboard/navbar/NavbarDocs';
+import { Logo } from 'src/_zswod/components/Logo';
+import { CatIllustration } from '../assets/illustration_cat';
 import { NavigationMenu } from './NavigationMenu';
+import { UserInfo } from './UserInfo';
 
 const RootStyle = styled('div')(({ theme }) => ({
   [theme.breakpoints.up('lg')]: {
@@ -55,14 +56,16 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ isOpenSidebar, onCloseSideb
           <Logo />
         </Stack>
 
-        <NavbarAccount isCollapse={false} />
+        <UserInfo />
       </Stack>
 
-      <NavigationMenu />
+      <Box padding={1}>
+        <NavigationMenu />
+      </Box>
 
-      <Box sx={{ flexGrow: 1 }} />
-
-      <NavbarDocs />
+      <Box sx={{ my: 5 }}>
+        <CatIllustration />
+      </Box>
     </Scrollbar>
   );
 

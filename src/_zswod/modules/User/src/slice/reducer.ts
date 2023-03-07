@@ -19,6 +19,7 @@ const slice = createSlice({
   reducers: {
     updateAuthenticationStatus: (state, action: PayloadAction<AuthenticationStatus>) => {
       state.status = action.payload;
+      state.user = undefined;
     },
   },
   extraReducers: (builder) =>
