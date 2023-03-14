@@ -57,7 +57,7 @@ const ArticleDemo: FC = () => {
           backgroundPosition: 'center',
           filter: 'blur(1.2px)',
           zIndex: 0,
-          opacity: 0.95,
+          opacity: 0.8,
           ...(isMouseOver && {
             filter: 'none',
             opacity: 1,
