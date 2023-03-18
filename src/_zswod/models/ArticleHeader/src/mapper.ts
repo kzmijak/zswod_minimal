@@ -1,22 +1,22 @@
 import { createArrayMapper } from 'src/_zswod/utils/mapperCreators';
-import { arrayMapImageDtoToModel } from '../../Image';
+import { mapImageDtoToModel } from '../../Image';
 import { ArticleHeaderDto } from './ArticleHeaderDto';
 import { ArticleHeaderModel } from './ArticleHeaderModel';
 
 const mapDtoToModel = ({
   id,
-  images,
   short,
   title,
   titleNormalized,
   uploadDate,
+  previewImage,
 }: ArticleHeaderDto): ArticleHeaderModel => ({
   uploadDate: new Date(uploadDate).toISOString(),
   id,
   short,
   title,
   titleNormalized,
-  images: arrayMapImageDtoToModel(images),
+  previewImage: mapImageDtoToModel(previewImage),
 });
 
 const arrayMapDtoToModel = createArrayMapper(mapDtoToModel);

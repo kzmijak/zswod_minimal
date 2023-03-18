@@ -1,9 +1,9 @@
 type ImageDto = {
   id: string;
   title: string;
-  alt: string;
-  blobId: string;
   isPreview: boolean;
+  blobId: string;
+  alt: string;
 };
 
 export type { ImageDto };

@@ -15,6 +15,7 @@ const fetchArticleErrorDisplayValueDict: Record<FetchArticleError, string> = {
 
 const fetchArticle = async (titleNormalized: string): Promise<ArticleResponseModel> => {
   const response = await api.get<ArticleResponseDto>(`article/${titleNormalized}`);
+  console.log(response);
   const { article, images } = response.data;
 
   return {

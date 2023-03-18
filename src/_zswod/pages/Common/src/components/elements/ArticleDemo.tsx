@@ -1,7 +1,7 @@
 import { alpha, Box, Stack, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import { RouterLink } from 'src/_zswod/components/RouterLink';
-import { getPreviewImage, selectLatestArticleHeader } from 'src/_zswod/modules/ArticleHeaders';
+import { selectLatestArticleHeader } from 'src/_zswod/modules/ArticleHeaders';
 import { useBlobUrl } from 'src/_zswod/modules/Blob';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { useRootSelector } from 'src/_zswod/utils/useRootSelector';
@@ -13,7 +13,7 @@ const ArticleDemo: FC = () => {
 
   if (!Boolean(header)) return null;
 
-  const previewImage = getPreviewImage(header);
+  const previewImage = header?.previewImage;
   const { short, title, titleNormalized } = header!;
 
   if (!Boolean(previewImage)) return null;

@@ -5,11 +5,10 @@ import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC, useEffect, useRef, useState } from 'react';
 import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
 import { LightboxModal } from 'src/_zswod/components/LightboxModal';
-import useResponsive from 'src/hooks/useResponsive';
 import { m } from 'framer-motion';
-import { selectArticleHeadersImages } from 'src/_zswod/modules/ArticleHeaders';
 import { Blob, useBlobUrl } from 'src/_zswod/modules/Blob';
-import { useRootSelector } from 'src/_zswod/utils/useRootSelector';
+import { useSelector } from 'react-redux';
+import { selectAllArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -36,10 +35,11 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const theme = useTheme();
   const ref = useRef(null);
   const [imageOpen, setImageOpen] = useState<number>(-1);
-  const isDesktop = useResponsive('up', 'md');
   const { getUrl } = useBlobUrl();
 
-  const images = useRootSelector((state) => selectArticleHeadersImages(state, isDesktop ? 12 : 6));
+  const headers = useSelector(selectAllArticleHeaders);
+
+  const images = headers.map((header) => header.previewImage); // TODO
 
   const isLight = theme.palette.mode === 'light';
   const imageBlobIds = images.map((image) => getUrl(image.blobId));

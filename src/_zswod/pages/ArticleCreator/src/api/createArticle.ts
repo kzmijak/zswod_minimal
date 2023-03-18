@@ -18,7 +18,7 @@ const createArticleErrorDisplayValueDict: Record<createArticleError, string> = {
 };
 
 const createArticle = async (article: ArticleFormContent, images: ImageFormContent[]) => {
-  const response = await api.post<string>('article/create', { article, images });
+  const response = await api.post<string>('article/create', { ...article, images });
 
   return response.data;
 };

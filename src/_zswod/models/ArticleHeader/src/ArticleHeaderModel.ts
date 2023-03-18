@@ -6,7 +6,7 @@ type ArticleHeaderModel = {
   short: string;
   uploadDate: string;
   titleNormalized: string;
-  images: ImageModel[];
+  previewImage: ImageModel;
 };
 
 export type { ArticleHeaderModel };

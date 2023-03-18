@@ -1,7 +1,8 @@
 import { nullObjectConsts } from 'src/_zswod/utils/nullObjectConsts';
+import { nullImageObject } from '../../Image';
 import { ArticleHeaderModel } from './ArticleHeaderModel';
 
-const { GUID, DATE_STRING, STRING, ARRAY } = nullObjectConsts;
+const { GUID, DATE_STRING, STRING } = nullObjectConsts;
 
 const nullObject: ArticleHeaderModel = {
   id: GUID,
@@ -9,7 +10,7 @@ const nullObject: ArticleHeaderModel = {
   short: STRING,
   title: STRING,
   titleNormalized: STRING,
-  images: ARRAY,
+  previewImage: nullImageObject,
 };
 
 export { nullObject };

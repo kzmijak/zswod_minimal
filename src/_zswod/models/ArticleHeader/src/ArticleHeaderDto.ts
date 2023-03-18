@@ -6,7 +6,7 @@ type ArticleHeaderDto = {
   short: string;
   uploadDate: string;
   titleNormalized: string;
-  images: ImageDto[];
+  previewImage: ImageDto;
 };
 
 export type { ArticleHeaderDto };

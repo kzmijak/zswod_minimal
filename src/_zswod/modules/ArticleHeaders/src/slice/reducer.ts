@@ -1,7 +1,8 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { ArticleHeaderModel } from 'src/_zswod/models/ArticleHeader';
+import { fetchArticleAsyncThunk } from 'src/_zswod/modules/CurrentArticle/src/slice/thunks';
 import { RequestError, RequestStatus } from 'src/_zswod/utils/requestStatus';
-import { fetch } from './actions';
+import { fetchArticleHeadersAsyncThunk } from './thunks';
 
 type InitialState = {
   status: RequestStatus;
@@ -23,14 +24,15 @@ const slice = createSlice({
   reducers: {},
   extraReducers: (builder) =>
     builder
-      .addCase(fetch.pending, (state) => {
+      .addCase(fetchArticleHeadersAsyncThunk.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetch.fulfilled, (state, action) => {
+      .addCase(fetchArticleHeadersAsyncThunk.fulfilled, (state, action) => {
         state.status = 'success';
         entityAdapter.setAll(state, action.payload);
       })
-      .addCase(fetch.rejected, (state, error) => {
+      .addCase(fetchArticleHeadersAsyncThunk.rejected, (state, error) => {
+        console.log(error);
         state.status = 'error';
       }),
 });
