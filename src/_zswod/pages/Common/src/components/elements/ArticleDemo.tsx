@@ -3,7 +3,7 @@ import { FC, useState } from 'react';
 import { RouterLink } from 'src/_zswod/components/RouterLink';
 import { selectLatestArticleHeader } from 'src/_zswod/modules/ArticleHeaders';
 import { useBlobUrl } from 'src/_zswod/modules/Blob';
-import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
 import { useRootSelector } from 'src/_zswod/utils/useRootSelector';
 
 const ArticleDemo: FC = () => {
@@ -21,7 +21,7 @@ const ArticleDemo: FC = () => {
   return (
     <Stack
       component={RouterLink}
-      to={`${PATHS_ABOUT.nowosci.link}/${titleNormalized}`}
+      to={`${PATH_DASHBOARD.articles}/${titleNormalized}`}
       minHeight="100%"
       onMouseOver={() => setIsMouseOver(true)}
       onMouseLeave={() => setIsMouseOver(false)}

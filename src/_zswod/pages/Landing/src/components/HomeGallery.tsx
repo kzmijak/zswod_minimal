@@ -3,7 +3,7 @@ import { Container, Grid, Stack, Typography, useTheme } from '@mui/material';
 import { varFade } from 'src/components/animate';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { FC, useEffect, useRef, useState } from 'react';
-import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
 import { LightboxModal } from 'src/_zswod/components/LightboxModal';
 import { m } from 'framer-motion';
 import { Blob, useBlobUrl } from 'src/_zswod/modules/Blob';
@@ -114,7 +114,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
             }}
           >
             <Typography>Zobacz całą galerię!</Typography>
-            <ButtonEPanel to={PATHS_ABOUT.galeria.link} />
+            <ButtonEPanel to={PATH_DASHBOARD.galleries} />
           </Stack>
         </m.div>
       </Container>

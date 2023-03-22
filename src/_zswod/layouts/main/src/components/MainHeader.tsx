@@ -8,6 +8,7 @@ import { MenuDesktop } from './MenuDesktop';
 import { Logo } from 'src/_zswod/components/Logo';
 import { FC } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
+import { FetchCustomPageHeaders } from 'src/_zswod/modules/CustomPageHeaders';
 
 const ToolbarStyle = styled(Toolbar)(({ theme }) => ({
   height: HEADER.MOBILE_HEIGHT,
@@ -38,34 +39,37 @@ const MainHeader: FC = () => {
   const isDesktop = useResponsive('up', 'md');
 
   return (
-    <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
-      <ToolbarStyle
-        disableGutters
-        sx={(theme) => ({
-          ...(isOffset && {
-            ...cssStyles(theme).bgBlur(),
-            height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
-          }),
-        })}
-      >
-        <Container
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
+    <>
+      <FetchCustomPageHeaders />
+      <AppBar sx={{ boxShadow: 0, bgcolor: 'transparent' }}>
+        <ToolbarStyle
+          disableGutters
+          sx={(theme) => ({
+            ...(isOffset && {
+              ...cssStyles(theme).bgBlur(),
+              height: { md: HEADER.MAIN_DESKTOP_HEIGHT - 16 },
+            }),
+          })}
         >
-          <Logo sx={{ width: 78, height: 78, mr: 1 }} />
-          <Box sx={{ flexGrow: 1 }} />
+          <Container
+            sx={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}
+          >
+            <Logo sx={{ width: 78, height: 78, mr: 1 }} />
+            <Box sx={{ flexGrow: 1 }} />
 
-          {isDesktop && <MenuDesktop isOffset={isOffset} />}
+            {isDesktop && <MenuDesktop isOffset={isOffset} />}
 
-          {!isDesktop && <ButtonEPanel size="small" sx={{ marginX: 2 }} />}
-        </Container>
-      </ToolbarStyle>
+            {!isDesktop && <ButtonEPanel size="small" sx={{ marginX: 2 }} />}
+          </Container>
+        </ToolbarStyle>
 
-      {isOffset && <ToolbarShadowStyle />}
-    </AppBar>
+        {isOffset && <ToolbarShadowStyle />}
+      </AppBar>
+    </>
   );
 };
 

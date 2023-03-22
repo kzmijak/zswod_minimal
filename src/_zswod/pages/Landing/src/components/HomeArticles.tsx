@@ -4,7 +4,7 @@ import { varFade } from 'src/components/animate';
 import { CarouselCenterMode, CarouselItemProps } from 'src/_zswod/components/CarouselCenterMode';
 import { FC, useEffect, useRef } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
-import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
 import { useSelector } from 'react-redux';
 import { selectAllArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 import { m } from 'framer-motion';
@@ -30,7 +30,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
     title: header.title,
     description: header.short,
     blobId: header.previewImage.blobId,
-    articleUrl: `${PATHS_ABOUT.nowosci.link}/${header.titleNormalized}`,
+    articleUrl: `${PATH_DASHBOARD.articles}/${header.titleNormalized}`,
   }));
 
   return (
@@ -62,7 +62,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
             }}
           >
             <Typography>Jest ich więcej!</Typography>
-            <ButtonEPanel to={PATHS_ABOUT.nowosci.link} />
+            <ButtonEPanel to={PATH_DASHBOARD.articles} />
           </Stack>
         </m.div>
       </Container>

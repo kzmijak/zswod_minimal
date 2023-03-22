@@ -8,7 +8,7 @@ import {
   selectCurrentArticlePreview,
   useArticle,
 } from 'src/_zswod/modules/CurrentArticle';
-import { PATHS_ABOUT } from 'src/_zswod/routes/src/menu.paths';
+import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
 import { ArticleContent } from '../components/ArticleContent';
 
 const ArticleView: FC = () => {
@@ -19,7 +19,7 @@ const ArticleView: FC = () => {
   const previewBlob = useSelector(selectCurrentArticlePreview);
 
   if (!Boolean(titleNormalized) || status === 'error')
-    return <Navigate to={PATHS_ABOUT.nowosci.link} />;
+    return <Navigate to={PATH_DASHBOARD.articles} />;
 
   return (
     <>

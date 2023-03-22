@@ -1,30 +1,33 @@
 import { RouteObject } from 'react-router';
-import { PATHS_ABOUT, PATH_DASHBOARD_ROOT } from './menu.paths';
+import { PATH_DASHBOARD } from './paths';
 import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
 import { ArticlesListView } from 'src/_zswod/pages/ArticlesList';
 import { ArticleView } from 'src/_zswod/pages/Article';
-import { GalleriesListView, GalleryView } from 'src/_zswod/pages/Gallery';
 import { CommonView } from 'src/_zswod/pages/Common';
 
 const DashboardRoutes: RouteObject = {
-  path: PATH_DASHBOARD_ROOT,
+  path: PATH_DASHBOARD.root,
   element: <DashboardLayout />,
   children: [
     {
-      path: PATHS_ABOUT.galeria.link,
-      element: <GalleriesListView />,
+      path: PATH_DASHBOARD.galleries,
+      element: <CommonView />,
     },
     {
-      path: `${PATHS_ABOUT.galeria.link}/:articleTitle`,
-      element: <GalleryView />,
+      path: `${PATH_DASHBOARD.galleries}/:galleryTitle`,
+      element: <CommonView />,
     },
     {
-      path: `${PATHS_ABOUT.nowosci.link}`,
+      path: `${PATH_DASHBOARD.articles}`,
       element: <ArticlesListView />,
     },
     {
-      path: `${PATHS_ABOUT.nowosci.link}/:title`,
+      path: `${PATH_DASHBOARD.articles}/:articleTitle`,
       element: <ArticleView />,
+    },
+    {
+      path: `${PATH_DASHBOARD.root}/:customPageSection/:customPageTitle`,
+      element: <CommonView />,
     },
     {
       path: '*',
@@ -37,4 +40,4 @@ const DashboardRoutes: RouteObject = {
   ],
 };
 
-export { PATH_DASHBOARD_ROOT, DashboardRoutes };
+export { DashboardRoutes };

@@ -1,10 +1,6 @@
 import { ArticleDto, ArticleModel, mapArticleDtoToModel } from 'src/_zswod/models/Article';
-import { ImageDto, ImageModel, arrayMapImageDtoToModel } from 'src/_zswod/models/Image';
 import { api } from 'src/_zswod/modules/Axios';
 import { mapRequestError } from 'src/_zswod/utils/handleRequestError';
-
-type ArticleResponseDto = { article: ArticleDto; images: ImageDto[] };
-type ArticleResponseModel = { article: ArticleModel; images: ImageModel[] };
 
 const fetchArticleErrorConsts = ['ErrArticleTitleNotFound', 'Unknown'] as const;
 type FetchArticleError = typeof fetchArticleErrorConsts[number];
@@ -13,15 +9,10 @@ const fetchArticleErrorDisplayValueDict: Record<FetchArticleError, string> = {
   Unknown: 'Coś poszło nie tak',
 };
 
-const fetchArticle = async (titleNormalized: string): Promise<ArticleResponseModel> => {
-  const response = await api.get<ArticleResponseDto>(`article/${titleNormalized}`);
-  console.log(response);
-  const { article, images } = response.data;
+const fetchArticle = async (titleNormalized: string): Promise<ArticleModel> => {
+  const response = await api.get<ArticleDto>(`article/${titleNormalized}`);
 
-  return {
-    article: mapArticleDtoToModel(article),
-    images: arrayMapImageDtoToModel(images),
-  };
+  return mapArticleDtoToModel(response.data);
 };
 
 const getFetchArticleError = (err: any) => {

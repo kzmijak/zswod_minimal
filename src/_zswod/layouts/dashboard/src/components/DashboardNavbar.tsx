@@ -1,4 +1,5 @@
 import { styled, Stack, Drawer, Box } from '@mui/material';
+import { m } from 'framer-motion';
 import { FC, useEffect } from 'react';
 import { useLocation } from 'react-router';
 import Scrollbar from 'src/components/Scrollbar';
@@ -52,9 +53,12 @@ const DashboardNavbar: FC<DashboardNavbarProps> = ({ isOpenSidebar, onCloseSideb
         }}
       >
         <Stack
+          component={m.div}
           direction="row"
           alignItems="center"
           justifyContent="space-between"
+          initial={{ opacity: 0, y: -15 }}
+          animate={{ opacity: 1, y: 0 }}
           sx={{ backgroundColor: 'common.white', borderRadius: 40, padding: 0 }}
         >
           <Logo />

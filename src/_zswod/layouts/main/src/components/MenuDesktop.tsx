@@ -2,14 +2,17 @@ import { FC } from 'react';
 import { Link } from 'react-router-dom';
 import { Stack, MenuItem, useTheme } from '@mui/material';
 import { MenuSection } from './controls/MenuSection';
-import { menuContents, PATH_VULCAN } from 'src/_zswod/routes/src/menu.paths';
+import { PATH_DASHBOARD, PATH_VULCAN } from 'src/_zswod/routes/src/paths';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
+import { useSelector } from 'react-redux';
+import { selectCustomPageHeadersGrouped } from 'src/_zswod/modules/CustomPageHeaders';
 
 type MenuDesktopProps = {
   isOffset?: boolean;
 };
 const MenuDesktop: FC<MenuDesktopProps> = ({ isOffset }) => {
-  const [main, ...contents] = menuContents;
+  const menuContents = useSelector(selectCustomPageHeadersGrouped);
+
   const theme = useTheme();
   const isLight = theme.palette.mode === 'light';
 
@@ -17,19 +20,20 @@ const MenuDesktop: FC<MenuDesktopProps> = ({ isOffset }) => {
 
   return (
     <Stack direction="row" spacing={2} alignItems="center">
-      {main.children?.map(({ label, link }) => (
-        <MenuSection variant={buttonVariant} key={label} label={label} href={link} />
-      ))}
-      {contents.map(({ label, link, children }) => (
-        <MenuSection label={label} key={label} variant={buttonVariant} href={link}>
-          {children?.map((child) => {
-            const { label, link } = child!;
-            return (
-              <MenuItem key={label} component={Link} to={link!} sx={{ whiteSpace: 'normal' }}>
-                {label}
-              </MenuItem>
-            );
-          })}
+      <MenuSection variant={buttonVariant} label="Nowości" href={PATH_DASHBOARD.articles} />
+      <MenuSection variant={buttonVariant} label="Galerie" href={PATH_DASHBOARD.galleries} />
+      {menuContents.map(({ items, section }) => (
+        <MenuSection label={section} key={section} variant={buttonVariant}>
+          {items?.map(({ title, titleNormalized, isExternal, link }) => (
+            <MenuItem
+              key={title}
+              component={Link}
+              to={isExternal ? link! : `/etablica/${titleNormalized}`}
+              sx={{ whiteSpace: 'normal' }}
+            >
+              {title}
+            </MenuItem>
+          ))}
         </MenuSection>
       ))}
       <MenuSection variant={buttonVariant} label="Dziennik Vulcan" href={PATH_VULCAN} />

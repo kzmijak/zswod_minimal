@@ -5,6 +5,7 @@ import { Box } from '@mui/material';
 import { HEADER, NAVBAR } from 'src/config';
 import { DashboardHeader } from './components/DashboardHeader';
 import { DashboardNavbar } from './components/DashboardNavbar';
+import { FetchCustomPageHeaders } from 'src/_zswod/modules/CustomPageHeaders';
 
 const MainStyle = styled(
   'main',
@@ -29,18 +30,21 @@ const DashboardLayout: FC = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <Box
-      sx={{
-        display: { lg: 'flex' },
-        minHeight: { lg: 1 },
-      }}
-    >
-      <DashboardHeader onOpenSidebar={() => setOpen(true)} />
-      <DashboardNavbar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
-      <MainStyle>
-        <Outlet />
-      </MainStyle>
-    </Box>
+    <>
+      <FetchCustomPageHeaders />
+      <Box
+        sx={{
+          display: { lg: 'flex' },
+          minHeight: { lg: 1 },
+        }}
+      >
+        <DashboardHeader onOpenSidebar={() => setOpen(true)} />
+        <DashboardNavbar isOpenSidebar={open} onCloseSidebar={() => setOpen(false)} />
+        <MainStyle>
+          <Outlet />
+        </MainStyle>
+      </Box>
+    </>
   );
 };
 

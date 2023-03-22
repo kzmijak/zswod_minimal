@@ -7,7 +7,7 @@ import {
   ResetPasswordView,
   SetNewPasswordView,
 } from 'src/_zswod/pages/Authentication';
-import { PATH_ACCOUNT } from './menu.paths';
+import { PATH_ACCOUNT } from './paths';
 
 const AuthRoutes: RouteObject = {
   path: PATH_ACCOUNT,

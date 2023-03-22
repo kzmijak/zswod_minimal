@@ -1,13 +1,8 @@
 import { useLocation, Outlet } from 'react-router-dom';
-// @mui
 import { Box, Link, Container, Typography, Stack } from '@mui/material';
-// components
-//
 import { MainHeader } from './MainHeader';
 import { Logo } from 'src/_zswod/components/Logo';
 import { FC } from 'react';
-
-// ----------------------------------------------------------------------
 
 const MainLayout: FC = () => {
   const { pathname } = useLocation();

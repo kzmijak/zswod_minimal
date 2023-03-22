@@ -19,27 +19,35 @@ import ExtracurricularIcon from '@mui/icons-material/AccessTimeOutlined';
 import PedagogueIcon from '@mui/icons-material/SettingsAccessibilityOutlined';
 import VolunteerIcon from '@mui/icons-material/VolunteerActivismOutlined';
 import MentorsIcon from '@mui/icons-material/SupervisedUserCircleOutlined';
+import { ReactNode } from 'react';
+import QuestionMarkIcon from '@mui/icons-material/QuestionMark';
+import { Icon } from './Icon';
+import { TalentowiskoIcon } from 'src/_zswod/components/TalentowiskoIcon';
 
-export {
-  NewsIcon,
-  GalleryIcon,
-  EnlistIcon,
-  DocumentsIcon,
-  ChronicleIcon,
-  LibraryIcon,
-  ContestsIcon,
-  ProjectsIcon,
-  PrivacyIcon,
-  MeetingIcon,
-  ConsultIcon,
-  CounsilIcon,
-  StaffIcon,
-  LessonsIcon,
-  HelpIcon,
-  GradesIcon,
-  StudentCounsilIcon,
-  ExtracurricularIcon,
-  PedagogueIcon,
-  VolunteerIcon,
-  MentorsIcon,
+const iconNodeDict: Record<Icon, ReactNode> = {
+  Chronicle: <ChronicleIcon />,
+  Consult: <ConsultIcon />,
+  Contests: <ContestsIcon />,
+  Counsil: <CounsilIcon />,
+  Documents: <DocumentsIcon />,
+  Enlist: <EnlistIcon />,
+  Extracurricular: <ExtracurricularIcon />,
+  Gallery: <GalleryIcon />,
+  Grades: <GradesIcon />,
+  Help: <HelpIcon />,
+  Lessons: <LessonsIcon />,
+  Library: <LibraryIcon />,
+  Meeting: <MeetingIcon />,
+  Mentors: <MentorsIcon />,
+  News: <NewsIcon />,
+  Pedagogue: <PedagogueIcon />,
+  Privacy: <PrivacyIcon />,
+  Projects: <ProjectsIcon />,
+  Staff: <StaffIcon />,
+  StudentCounsil: <StudentCounsilIcon />,
+  Volunteer: <VolunteerIcon />,
+  Talentowisko: <TalentowiskoIcon />,
+  Unknown: <QuestionMarkIcon />,
 };
+
+export { iconNodeDict };
