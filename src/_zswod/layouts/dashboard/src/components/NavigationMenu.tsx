@@ -20,12 +20,12 @@ const container: Variants = {
 };
 
 type NavItemProps = CustomPageHeaderItem;
-const NavItem: FC<NavItemProps> = ({ icon, title, titleNormalized, isExternal, link }) => {
+const NavItem: FC<NavItemProps> = ({ icon, title, titleNormalized, link }) => {
   const { pathname } = useLocation();
 
   const isSelected = pathname.includes(titleNormalized);
   return (
-    <SmartLink to={isExternal ? link! : titleNormalized}>
+    <SmartLink to={Boolean(link) ? link! : titleNormalized}>
       <MenuItem
         sx={(theme) => ({
           whiteSpace: 'normal',
@@ -73,8 +73,13 @@ const NavigationMenu: FC = () => {
       minHeight={800}
     >
       <Stack spacing={1}>
-        <NavItem icon="News" title="Nowości" titleNormalized={PATH_DASHBOARD.articles} />
-        <NavItem icon="Gallery" title="Galerie" titleNormalized={PATH_DASHBOARD.galleries} />
+        <NavItem order={0} icon="News" title="Nowości" titleNormalized={PATH_DASHBOARD.articles} />
+        <NavItem
+          order={0}
+          icon="Gallery"
+          title="Galerie"
+          titleNormalized={PATH_DASHBOARD.galleries}
+        />
       </Stack>
       {menuContents.map(({ items, section }) => (
         <Stack component={m.div} variants={container} key={section} spacing={1}>

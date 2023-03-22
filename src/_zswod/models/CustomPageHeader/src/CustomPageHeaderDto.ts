@@ -1,9 +1,9 @@
 type CustomPageHeaderDto = {
+  order: number;
   titleNormalized: string;
   section: string;
   title: string;
   icon: string;
-  isExternal?: boolean;
   link?: string;
 };
 

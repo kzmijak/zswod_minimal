@@ -24,11 +24,11 @@ const MenuDesktop: FC<MenuDesktopProps> = ({ isOffset }) => {
       <MenuSection variant={buttonVariant} label="Galerie" href={PATH_DASHBOARD.galleries} />
       {menuContents.map(({ items, section }) => (
         <MenuSection label={section} key={section} variant={buttonVariant}>
-          {items?.map(({ title, titleNormalized, isExternal, link }) => (
+          {items?.map(({ title, titleNormalized, link }) => (
             <MenuItem
               key={title}
               component={Link}
-              to={isExternal ? link! : `/etablica/${titleNormalized}`}
+              to={Boolean(link) ? link! : `/etablica/${titleNormalized}`}
               sx={{ whiteSpace: 'normal' }}
             >
               {title}

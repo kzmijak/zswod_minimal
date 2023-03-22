@@ -4,7 +4,7 @@ type CustomPageHeaderItem = {
   titleNormalized: string;
   title: string;
   icon: Icon;
-  isExternal?: boolean;
+  order: number;
   link?: string;
 };
 

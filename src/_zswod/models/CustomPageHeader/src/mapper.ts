@@ -7,14 +7,14 @@ const mapCustomPageHeaderDtoToModel = ({
   icon,
   title,
   titleNormalized,
-  isExternal,
+  order,
   link,
   section,
 }: CustomPageHeaderDto): CustomPageHeaderModel => ({
   icon: mapStringToIcon(icon),
+  order,
   title,
   titleNormalized,
-  isExternal,
   link,
   section,
 });
