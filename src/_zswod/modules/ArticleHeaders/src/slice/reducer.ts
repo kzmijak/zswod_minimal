@@ -1,6 +1,5 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { ArticleHeaderModel } from 'src/_zswod/models/ArticleHeader';
-import { fetchArticleAsyncThunk } from 'src/_zswod/modules/CurrentArticle/src/slice/thunks';
 import { RequestError, RequestStatus } from 'src/_zswod/utils/requestStatus';
 import { fetchArticleHeadersAsyncThunk } from './thunks';
 
@@ -10,7 +9,7 @@ type InitialState = {
 };
 
 const entityAdapter = createEntityAdapter<ArticleHeaderModel>({
-  sortComparer: (a, b) => new Date(a.uploadDate).getTime() - new Date(b.uploadDate).getTime(),
+  sortComparer: (a, b) => new Date(a.createTime).getTime() - new Date(b.createTime).getTime(),
 });
 
 const initialState = entityAdapter.getInitialState<InitialState>({

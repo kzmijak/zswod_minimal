@@ -1,11 +1,11 @@
 import { BlobDto } from './BlobDto';
 import { BlobModel } from './BlobModel';
 
-const mapBlobDtoToModel = ({ title, alt, id, createdAt }: BlobDto): BlobModel => ({
+const mapBlobDtoToModel = ({ title, alt, id, createTime }: BlobDto): BlobModel => ({
   id,
   alt,
   title,
-  createdAt: new Date(createdAt).toISOString(),
+  createTime: new Date(createTime).toISOString(),
 });
 
 const arrayMapBlobDtoToModel = (dtos: BlobDto[]): BlobModel[] =>

@@ -1,14 +1,14 @@
 import { nullObjectConsts } from 'src/_zswod/utils/nullObjectConsts';
 import { ImageModel } from './ImageModel';
 
-const { GUID, STRING, BOOLEAN } = nullObjectConsts;
+const { GUID, STRING, DATE_STRING, NUMBER } = nullObjectConsts;
 
 const nullObject: ImageModel = {
   alt: STRING,
   id: GUID,
-  title: STRING,
   blobId: STRING,
-  isPreview: BOOLEAN,
+  createTime: DATE_STRING,
+  order: NUMBER,
 };
 
 export { nullObject };

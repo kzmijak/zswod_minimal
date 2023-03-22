@@ -2,7 +2,7 @@ type BlobDto = {
   id: string;
   title: string;
   alt: string;
-  createdAt: string;
+  createTime: string;
 };
 
 export type { BlobDto };

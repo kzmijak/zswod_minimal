@@ -4,7 +4,7 @@ type ArticleHeaderDto = {
   id: string;
   title: string;
   short: string;
-  uploadDate: string;
+  createTime: string;
   titleNormalized: string;
   previewImage: ImageDto;
 };

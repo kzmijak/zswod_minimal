@@ -4,21 +4,20 @@ import { ArticleHeaderDto } from './ArticleHeaderDto';
 import { ArticleHeaderModel } from './ArticleHeaderModel';
 
 const mapDtoToModel = ({
+  createTime,
   id,
-  short,
-  title,
-  titleNormalized,
-  uploadDate,
   previewImage,
-}: ArticleHeaderDto): ArticleHeaderModel => ({
-  uploadDate: new Date(uploadDate).toISOString(),
-  id,
   short,
   title,
   titleNormalized,
+}: ArticleHeaderDto): ArticleHeaderModel => ({
+  createTime: new Date(createTime).toISOString(),
+  id,
   previewImage: mapImageDtoToModel(previewImage),
+  short,
+  title,
+  titleNormalized,
 });
 
 const arrayMapDtoToModel = createArrayMapper(mapDtoToModel);
-
 export { mapDtoToModel, arrayMapDtoToModel };

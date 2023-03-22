@@ -1,9 +1,9 @@
 type ImageModel = {
   id: string;
-  title: string;
-  alt: string;
+  createTime: string;
+  order: number;
   blobId: string;
-  isPreview: boolean;
+  alt: string;
 };
 
 export type { ImageModel };

@@ -21,7 +21,7 @@ const selectCurrentArticleImages = createSelector(
 );
 
 const selectCurrentArticlePreview = createSelector(selectCurrentArticleImages, (images) =>
-  images.find((image) => image.isPreview)
+  images.find((image) => image.order === 0)
 );
 
 export {

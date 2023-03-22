@@ -6,7 +6,7 @@ const { GUID, DATE_STRING, STRING } = nullObjectConsts;
 
 const nullObject: ArticleHeaderModel = {
   id: GUID,
-  uploadDate: DATE_STRING,
+  createTime: DATE_STRING,
   short: STRING,
   title: STRING,
   titleNormalized: STRING,

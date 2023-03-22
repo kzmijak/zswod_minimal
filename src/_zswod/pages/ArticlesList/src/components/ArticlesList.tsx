@@ -32,7 +32,7 @@ const ArticlesList: FC = () => {
       <Stack direction="column" spacing={3}>
         <Timeline position="left">
           {articleHeaders.map((article) => {
-            const { id, short, uploadDate: uploadDateISO, titleNormalized, title } = article;
+            const { id, short, createTime: uploadDateISO, titleNormalized, title } = article;
             const { previewImage } = article;
             const uploadDate = new Date(uploadDateISO);
             return (

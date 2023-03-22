@@ -2,7 +2,7 @@ type BlobModel = {
   id: string;
   title: string;
   alt: string;
-  createdAt: string;
+  createTime: string;
 };
 
 export type { BlobModel };
