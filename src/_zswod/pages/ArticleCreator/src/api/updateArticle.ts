@@ -1,7 +1,7 @@
+import { ImageModel } from 'src/_zswod/models/Image';
 import { api } from 'src/_zswod/modules/Axios';
 import { mapRequestError } from 'src/_zswod/utils/handleRequestError';
 import { ArticleFormContent } from '../models/ArticleFormContent';
-import { ImageFormContent } from '../models/ImageFormContent';
 
 const updateArticleErrorConsts = [
   'ErrCouldNotSanitizeTitle',
@@ -18,7 +18,7 @@ const updateArticleErrorDisplayValueDict: Record<UpdateArticleError, string> = {
 const updateArticle = async (
   titleNormalized: string,
   article: ArticleFormContent,
-  images: ImageFormContent[]
+  images: ImageModel[]
 ) => {
   const response = await api.patch<string>('article/update', { titleNormalized, article, images });
 

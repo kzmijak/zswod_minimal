@@ -1,31 +1,39 @@
-import { Box, Dialog, DialogProps, Stack, Button } from '@mui/material';
-import { FC, ReactNode } from 'react';
+import { Box, Dialog, DialogProps, Button } from '@mui/material';
+import { FC } from 'react';
 import { ArticleContent } from 'src/_zswod/pages/Article';
 import { ArticleFormContent } from '../models/ArticleFormContent';
-import { ImageFormContent } from '../models/ImageFormContent';
-import { ArticleImageDrop } from './ArticleImageDrop';
 import { FloatingBox } from './utils/FloatingBox';
-import { TodoList } from './TodoList';
+import { CreatorSummary } from './CreatorSummary';
+import { GalleryViewer } from 'src/_zswod/modules/GalleryViewer';
+import { ImageModel } from 'src/_zswod/models/Image';
 
 type ArticlePreviewProps = Pick<DialogProps, 'open'> & {
+  titleNormalized: string | undefined;
   article: ArticleFormContent;
-  images: ImageFormContent[];
-  onImagesChange: (images: ImageFormContent[]) => void;
+  images: ImageModel[];
+  galleryTitle: string;
+  onImagesChange: (images: ImageModel[]) => void;
   onClose: () => void;
-  children: ReactNode;
 };
 
 const ArticlePreview: FC<ArticlePreviewProps> = ({
+  titleNormalized,
   open,
   onClose,
   article,
   images,
   onImagesChange,
-  children,
+  galleryTitle,
 }) => {
   const { content, title } = article;
 
   const previewImage = images.find((image) => image.order === 0);
+
+  const gallery = {
+    createTime: '',
+    images,
+    title: galleryTitle,
+  };
 
   return (
     <Dialog open={open} onClose={onClose} fullWidth scroll="body" maxWidth="md">
@@ -42,13 +50,15 @@ const ArticlePreview: FC<ArticlePreviewProps> = ({
         />
       </Box>
       <FloatingBox onBackgroundClick={onClose} anchor="right" open width={400}>
-        <ArticleImageDrop images={images} onChange={onImagesChange} />
+        <GalleryViewer mutable gallery={gallery} onImagesChange={onImagesChange} />
       </FloatingBox>
       <FloatingBox open onBackgroundClick={onClose} anchor="left" width={400}>
-        <Stack padding={2} spacing={2}>
-          <TodoList />
-          {children}
-        </Stack>
+        <CreatorSummary
+          articleFormContent={article}
+          galleryTitle={galleryTitle}
+          images={images}
+          titleNormalized={titleNormalized}
+        />
       </FloatingBox>
     </Dialog>
   );

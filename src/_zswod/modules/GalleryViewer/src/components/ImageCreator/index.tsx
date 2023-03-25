@@ -8,10 +8,11 @@ import { GalleryIllustration } from '../../assets/illustration_gallery';
 import { GetImagesButton } from './GetImagesButton';
 
 type ImageCreatorProps = {
+  startingOrder?: number;
   onCreate: (images: ImageModel[]) => void;
 };
 
-const ImageCreator: FC<ImageCreatorProps> = ({ onCreate }) => {
+const ImageCreator: FC<ImageCreatorProps> = ({ onCreate, startingOrder }) => {
   const [dialogOpen, setDialogOpen] = useState(false);
   const { getUrl } = useBlobUrl();
 
@@ -20,7 +21,7 @@ const ImageCreator: FC<ImageCreatorProps> = ({ onCreate }) => {
   };
 
   const handleSubmit = (blobs: BlobModel[]) => {
-    const blobsConverted = arrayMapBlobToImage(blobs, getUrl);
+    const blobsConverted = arrayMapBlobToImage(blobs, getUrl, startingOrder);
     onCreate(blobsConverted);
     closeDialog();
   };

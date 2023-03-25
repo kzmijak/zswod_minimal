@@ -1,7 +1,7 @@
+import { ImageModel } from 'src/_zswod/models/Image';
 import { api } from 'src/_zswod/modules/Axios';
 import { mapRequestError } from 'src/_zswod/utils/handleRequestError';
 import { ArticleFormContent } from '../models/ArticleFormContent';
-import { ImageFormContent } from '../models/ImageFormContent';
 
 const createArticleErrorConsts = [
   'ErrFailedCreatingArticle',
@@ -17,7 +17,7 @@ const createArticleErrorDisplayValueDict: Record<createArticleError, string> = {
   Unknown: 'Coś poszło nie tak',
 };
 
-const createArticle = async (article: ArticleFormContent, images: ImageFormContent[]) => {
+const createArticle = async (article: ArticleFormContent, images: ImageModel[]) => {
   const response = await api.post<string>('article/create', { ...article, images });
 
   return response.data;

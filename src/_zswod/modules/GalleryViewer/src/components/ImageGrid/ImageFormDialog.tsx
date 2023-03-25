@@ -1,6 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react';
-import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
-import PriorityHighIcon from '@mui/icons-material/PriorityHigh';
+import { ChangeEvent, FC, FormEvent, useState } from 'react';
 import { Button, Dialog, DialogProps, Stack, TextField, Typography } from '@mui/material';
 import Image from 'src/components/Image';
 import { ImageModel } from 'src/_zswod/models/Image';
@@ -15,7 +13,8 @@ const ImageFormDialog: FC<ImageFormDialogProps> = ({ open, onClose, alt, onSubmi
     setNewAlt(event.target.value);
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
     onSubmit(newAlt);
   };
 
@@ -56,38 +55,5 @@ const ImageFormDialog: FC<ImageFormDialogProps> = ({ open, onClose, alt, onSubmi
     </Dialog>
   );
 };
-type SetAltButtonProps = Pick<ImageModel, 'alt' | 'src'> & { onAltChange: (alt: string) => void };
 
-const SetAltButton: FC<SetAltButtonProps> = ({ alt, src, onAltChange }) => {
-  const [dialogOpen, setDialogOpen] = useState(false);
-
-  const openDialog = () => setDialogOpen(true);
-  const closeDialog = () => setDialogOpen(false);
-
-  const handleFormSubmit = (alt: string) => {
-    onAltChange(alt);
-    closeDialog();
-  };
-
-  return (
-    <>
-      <Button
-        startIcon={<ModeEditOutlineIcon />}
-        endIcon={!Boolean(alt) && <PriorityHighIcon />}
-        variant="outlined"
-        onClick={openDialog}
-      >
-        Nadaj tekst alternatywny
-      </Button>
-      <ImageFormDialog
-        open={dialogOpen}
-        onClose={closeDialog}
-        alt={alt}
-        src={src}
-        onSubmit={handleFormSubmit}
-      />
-    </>
-  );
-};
-
-export { SetAltButton };
+export { ImageFormDialog };

@@ -1,4 +1,4 @@
-import { Stack, Typography, ListItem, List } from '@mui/material';
+import { Stack, Typography, List, ListItem } from '@mui/material';
 import { FC } from 'react';
 
 const TodoList: FC = () => (

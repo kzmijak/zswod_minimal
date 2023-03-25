@@ -7,7 +7,7 @@ import { ImageCreator } from './ImageCreator';
 import { ImageGrid } from './ImageGrid';
 
 type ConditionalDateProps = {
-  dateString: string;
+  dateString: string | undefined;
   label: string;
 };
 const ConditionalDate: FC<ConditionalDateProps> = ({ dateString, label }) => {
@@ -26,15 +26,13 @@ const concatUniqueImages = (existingImages: ImageModel[], newImages: ImageModel[
   return [...existingImages, ...uniqueNewImages];
 };
 
-type GalleryViewerProps = Pick<GalleryModel, 'createTime' | 'images' | 'title' | 'updateTime'> & {
+type GalleryViewerProps = {
+  gallery: Pick<GalleryModel, 'createTime' | 'images' | 'title' | 'updateTime'>;
   mutable?: boolean;
   onImagesChange?: (images: ImageModel[]) => void;
 };
 const GalleryViewer: FC<GalleryViewerProps> = ({
-  createTime,
-  images,
-  title,
-  updateTime,
+  gallery: { createTime, images, title, updateTime },
   mutable = false,
   onImagesChange,
 }) => {
@@ -44,9 +42,9 @@ const GalleryViewer: FC<GalleryViewerProps> = ({
   };
 
   return (
-    <Stack>
+    <Stack padding={2}>
       <Typography variant="h4">{title}</Typography>
-      {mutable && <ImageCreator onCreate={handleCreateImage} />}
+      {mutable && <ImageCreator onCreate={handleCreateImage} startingOrder={images.length} />}
       <ImageGrid images={images} mutable={mutable} onImagesChange={onImagesChange} />
       <ConditionalDate label="Utworzono" dateString={createTime} />
       <ConditionalDate label="Ostatnia aktualizacja" dateString={updateTime} />

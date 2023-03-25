@@ -4,7 +4,7 @@ type GalleryModel = {
   id: string;
   title: string;
   createTime: string;
-  updateTime: string;
+  updateTime?: string;
   images: ImageModel[];
 };
 

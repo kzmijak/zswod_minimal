@@ -1,7 +1,21 @@
 import { Grid } from '@mui/material';
+import { AnimatePresence, m } from 'framer-motion';
 import { FC } from 'react';
 import { ImageModel } from 'src/_zswod/models/Image';
 import { ImageGridItem } from './ImageGridItem';
+
+const recalculateOrder = (images: ImageModel[]) =>
+  images.map<ImageModel>((image, index) => {
+    if (index === 0) {
+      return { ...image, order: 0 };
+    } else {
+      const currentOrder = images[index].order;
+      const previousOrder = images[index - 1].order;
+      const designatedOrder = previousOrder + 1;
+      if (currentOrder === designatedOrder) return image;
+      return { ...image, order: designatedOrder };
+    }
+  });
 
 type ImageGridProps = {
   images: ImageModel[];
@@ -21,28 +35,44 @@ const ImageGrid: FC<ImageGridProps> = ({ images, mutable, onImagesChange }) => {
     return imagesCopy;
   };
 
-  const handleImageChange = (image: ImageModel, index: number) => {
+  const editImage = (image: ImageModel, index: number) => {
     const imagesAfterChange = replaceImage(index, image);
-    onImagesChange?.(imagesAfterChange);
+    recalculateAndSubmit(imagesAfterChange);
   };
 
-  const handleImageRemove = (index: number) => {
+  const removeImage = (index: number) => {
     const imagesAfterChange = replaceImage(index, null);
-    onImagesChange?.(imagesAfterChange);
+    recalculateAndSubmit(imagesAfterChange);
+  };
+
+  const recalculateAndSubmit = (images: ImageModel[]) => {
+    const recalculated = recalculateOrder(images);
+    onImagesChange?.(recalculated);
   };
 
   return (
-    <Grid container>
-      {images.map((image, index) => (
-        <Grid key={image.id} item xs={12} sm={6} md={4} lg={3}>
-          <ImageGridItem
-            image={image}
-            mutable={mutable}
-            onImageChange={(changedImage) => handleImageChange(changedImage, index)}
-            onRemove={() => handleImageRemove(index)}
-          />
-        </Grid>
-      ))}
+    <Grid container spacing={1} padding={1}>
+      <AnimatePresence>
+        {images.map((image, index) => (
+          <Grid
+            component={m.div}
+            initial={{ scale: 0.4 }}
+            animate={{ scale: 1, transition: { type: 'spring', duration: 0.4 } }}
+            exit={{ scale: 0.8, opacity: 0, transition: { bounce: 0, duration: 0.2 } }}
+            key={image.id}
+            item
+            xs={12}
+            md={6}
+          >
+            <ImageGridItem
+              image={image}
+              mutable={mutable}
+              onImageChange={(changedImage) => editImage(changedImage, index)}
+              onRemove={() => removeImage(index)}
+            />
+          </Grid>
+        ))}
+      </AnimatePresence>
     </Grid>
   );
 };

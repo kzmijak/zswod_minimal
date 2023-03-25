@@ -42,6 +42,9 @@ const BlobsSelect: FC<BlobsSelectProps> = ({ onSubmit }) => {
   const [selectedBlobIds, setSelectedBlobIds] = useState<string[]>([]);
   const { getUrl } = useBlobUrl();
 
+  const blobsComparer = (blobA: BlobModel, blobB: BlobModel) =>
+    selectedBlobIds.indexOf(blobA.id) - selectedBlobIds.indexOf(blobB.id);
+
   const fetchNextBlobsBatch = useCallback(() => {
     dispatch(fetchMoreBlobsAsyncThunk());
   }, [dispatch]);
@@ -65,7 +68,9 @@ const BlobsSelect: FC<BlobsSelectProps> = ({ onSubmit }) => {
   };
 
   const handleSubmit = () => {
-    const selectedBlobs = blobs.filter((blob) => selectedBlobIds.includes(blob.id));
+    const selectedBlobs = blobs
+      .filter((blob) => selectedBlobIds.includes(blob.id))
+      .sort(blobsComparer);
     onSubmit(selectedBlobs);
   };
 
