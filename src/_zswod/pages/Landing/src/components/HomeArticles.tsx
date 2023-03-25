@@ -5,8 +5,7 @@ import { CarouselCenterMode, CarouselItemProps } from 'src/_zswod/components/Car
 import { FC, useEffect, useRef } from 'react';
 import { ButtonEPanel } from 'src/_zswod/components/ButtonEPanel';
 import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
-import { useSelector } from 'react-redux';
-import { selectAllArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
+import { useArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 import { m } from 'framer-motion';
 
 const RootStyle = styled('div')(({ theme }) => ({
@@ -19,8 +18,7 @@ type HomeArticlesProps = {
 
 const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const ref = useRef(null);
-
-  const articleHeaders = useSelector(selectAllArticleHeaders);
+  const { articleHeaders } = useArticleHeaders();
 
   useEffect(() => {
     passRef(ref);
@@ -29,7 +27,7 @@ const HomeArticles: FC<HomeArticlesProps> = ({ passRef }) => {
   const carouselItems: CarouselItemProps[] = articleHeaders.map((header) => ({
     title: header.title,
     description: header.short,
-    blobId: header.previewImage.blobId,
+    src: header.previewImage.src,
     articleUrl: `${PATH_DASHBOARD.articles}/${header.titleNormalized}`,
   }));
 

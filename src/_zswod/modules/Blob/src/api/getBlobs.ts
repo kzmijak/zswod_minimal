@@ -1,7 +1,7 @@
 import { api } from 'src/_zswod/modules/Axios';
 import { mapRequestError } from 'src/_zswod/utils/handleRequestError';
-import { BlobDto } from '../models/BlobDto';
-import { arrayMapBlobDtoToModel } from '../models/mapper';
+import { BlobDto } from '../../../../models/Blob/src/BlobDto';
+import { arrayMapBlobDtoToModel } from 'src/_zswod/models/Blob';
 
 const getBlobsErrorConsts = ['ErrCouldNotQuery', 'Unknown'] as const;
 type GetBlobsError = typeof getBlobsErrorConsts[number];

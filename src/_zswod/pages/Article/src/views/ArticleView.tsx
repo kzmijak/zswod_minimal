@@ -25,7 +25,7 @@ const ArticleView: FC = () => {
     <>
       <Page title="Nowości">
         <Container>
-          <ArticleContent content={content} title={title} previewBlobId={previewBlob?.blobId} />
+          <ArticleContent content={content} title={title} previewImageUrl={previewBlob?.src} />
         </Container>
       </Page>
     </>

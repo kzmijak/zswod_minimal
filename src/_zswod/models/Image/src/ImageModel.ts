@@ -2,7 +2,7 @@ type ImageModel = {
   id: string;
   createTime: string;
   order: number;
-  blobId: string;
+  src: string;
   alt: string;
 };
 

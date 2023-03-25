@@ -1,12 +1,11 @@
 import { FC } from 'react';
-import { FetchArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
+import { Page } from 'src/_zswod/components/Page';
 import { DashboardDesktop } from '../components/DashboardDesktop';
 
 const CommonView: FC = () => (
-  <>
-    <FetchArticleHeaders />
+  <Page title="E-Panel">
     <DashboardDesktop />
-  </>
+  </Page>
 );
 
 export { CommonView };

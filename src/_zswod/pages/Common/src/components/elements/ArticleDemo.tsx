@@ -1,14 +1,13 @@
 import { alpha, Box, Stack, Typography } from '@mui/material';
 import { FC, useState } from 'react';
 import { RouterLink } from 'src/_zswod/components/RouterLink';
-import { selectLatestArticleHeader } from 'src/_zswod/modules/ArticleHeaders';
-import { useBlobUrl } from 'src/_zswod/modules/Blob';
+import { selectLatestArticleHeader, useArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
 import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
 import { useRootSelector } from 'src/_zswod/utils/useRootSelector';
 
 const ArticleDemo: FC = () => {
+  useArticleHeaders();
   const header = useRootSelector(selectLatestArticleHeader);
-  const { getUrl } = useBlobUrl();
   const [isMouseOver, setIsMouseOver] = useState(false);
 
   if (!Boolean(header)) return null;
@@ -51,7 +50,7 @@ const ArticleDemo: FC = () => {
           position: 'absolute',
           width: '100%',
           height: '100%',
-          backgroundImage: `url(${getUrl(previewImage!.blobId)})`,
+          backgroundImage: `url(${previewImage!.src})`,
           backgroundRepeat: 'no-repeat',
           backgroundSize: 'cover',
           backgroundPosition: 'center',

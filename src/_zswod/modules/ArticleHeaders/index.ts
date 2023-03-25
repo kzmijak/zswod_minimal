@@ -1,5 +1,5 @@
 import { reducer as articleHeadersReducer } from './src/slice/reducer';
-import { FetchArticleHeaders } from './src/components/FetchArticleHeaders';
+import { useArticleHeaders } from './src/components/useArticleHeaders';
 import {
   selectAllArticleHeaders,
   selectArticleHeadersStatus,
@@ -12,6 +12,6 @@ export {
   fetchArticleHeadersAsyncThunk,
   selectArticleHeadersStatus,
   selectAllArticleHeaders,
-  FetchArticleHeaders,
+  useArticleHeaders,
   selectLatestArticleHeader,
 };

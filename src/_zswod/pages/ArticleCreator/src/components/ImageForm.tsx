@@ -3,13 +3,12 @@ import { Button, Stack, TextField, Typography } from '@mui/material';
 
 import { FC } from 'react';
 import { useForm } from 'react-hook-form';
-import { Blob } from 'src/_zswod/modules/Blob';
+import Image from 'src/components/Image';
 import * as yup from 'yup';
 import { ImageFormContent } from '../models/ImageFormContent';
 import { nullImageFormObject } from '../models/nullImageFormObject';
 
 const schema = yup.object().shape({
-  title: yup.string().required(),
   alt: yup.string().required(),
 });
 
@@ -33,7 +32,7 @@ const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject, onS
       onSubmit={handleSubmit(onSubmit)}
       sx={{ backgroundColor: 'transparent' }}
     >
-      <Blob id={initialState.blobId} />
+      <Image src={initialState.src} alt={initialState.alt} />
       <Stack
         spacing={3}
         minWidth={300}
@@ -44,7 +43,6 @@ const ImageForm: FC<ImageFormProps> = ({ initialState = nullImageFormObject, onS
       >
         <Typography variant="h6">Uzupełnij te wartości</Typography>
         <Stack spacing={1}>
-          <TextField {...register('title')} autoFocus fullWidth label="Nazwa" name="title" />
           <TextField
             {...register('alt')}
             fullWidth

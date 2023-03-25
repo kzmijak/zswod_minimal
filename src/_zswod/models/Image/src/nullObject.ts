@@ -6,9 +6,9 @@ const { GUID, STRING, DATE_STRING, NUMBER } = nullObjectConsts;
 const nullObject: ImageModel = {
   alt: STRING,
   id: GUID,
-  blobId: STRING,
   createTime: DATE_STRING,
   order: NUMBER,
+  src: STRING,
 };
 
 export { nullObject };

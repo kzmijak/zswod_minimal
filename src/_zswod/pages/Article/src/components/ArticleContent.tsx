@@ -1,14 +1,14 @@
 import { alpha, Box, CardContent, Paper, Stack, Typography, useTheme } from '@mui/material';
 import { FC, ReactNode } from 'react';
+import Image from 'src/components/Image';
 import { Markdown } from 'src/_zswod/components/Markdown';
 import { ArticleModel } from 'src/_zswod/models/Article';
-import { Blob } from 'src/_zswod/modules/Blob';
 
-type ArticleImageProps = Pick<ArticleContentProps, 'actionButton' | 'previewBlobId' | 'title'>;
+type ArticleImageProps = Pick<ArticleContentProps, 'actionButton' | 'previewImageUrl' | 'title'>;
 
-const ArticleImage: FC<ArticleImageProps> = ({ previewBlobId, title, actionButton }) => {
+const ArticleImage: FC<ArticleImageProps> = ({ previewImageUrl, title, actionButton }) => {
   const theme = useTheme();
-  const hasPreview = Boolean(previewBlobId);
+  const hasPreview = Boolean(previewImageUrl);
 
   return (
     <Paper
@@ -17,7 +17,7 @@ const ArticleImage: FC<ArticleImageProps> = ({ previewBlobId, title, actionButto
       }}
     >
       <Box sx={{ height: 500 }}>
-        {hasPreview && <Blob alt={title} id={previewBlobId!} sx={{ height: '100%' }} />}
+        {hasPreview && <Image alt={title} src={previewImageUrl} sx={{ height: '100%' }} />}
       </Box>
       <Box
         sx={{
@@ -52,18 +52,18 @@ const ArticleImage: FC<ArticleImageProps> = ({ previewBlobId, title, actionButto
 };
 
 type ArticleContentProps = Pick<ArticleModel, 'content' | 'title'> & {
-  previewBlobId: string | undefined;
+  previewImageUrl: string | undefined;
   actionButton?: ReactNode;
 };
 
 const ArticleContent: FC<ArticleContentProps> = ({
   content,
-  previewBlobId: previewImageUrl,
+  previewImageUrl,
   title,
   actionButton,
 }) => (
   <Stack>
-    <ArticleImage title={title} previewBlobId={previewImageUrl} actionButton={actionButton} />
+    <ArticleImage title={title} previewImageUrl={previewImageUrl} actionButton={actionButton} />
     <Box sx={{ margin: 3.5 }}>
       <Markdown>{content}</Markdown>
     </Box>

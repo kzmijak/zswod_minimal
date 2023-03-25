@@ -14,10 +14,11 @@ import { useSelector } from 'react-redux';
 import { useAppDispatch } from 'src/_zswod/utils/useAppDispatch';
 import { selectAllBlobs, selectBlobsState } from '../slice/selectors';
 import { fetchMoreBlobsAsyncThunk } from '../slice/thunks';
-import { BlobModel } from '../models/BlobModel';
-import { Blob } from './Blob';
+import { BlobModel } from 'src/_zswod/models/Blob';
 import Scrollbar from 'src/components/Scrollbar';
 import { BlobDrop } from './BlobDrop';
+import { useBlobUrl } from '../utils/useBlobUrl';
+import Image from 'src/components/Image';
 
 const BoxSelect = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.primary.main,
@@ -39,6 +40,7 @@ const BlobsSelect: FC<BlobsSelectProps> = ({ onSubmit }) => {
   const { status, eof } = useSelector(selectBlobsState);
   const blobs = useSelector(selectAllBlobs);
   const [selectedBlobIds, setSelectedBlobIds] = useState<string[]>([]);
+  const { getUrl } = useBlobUrl();
 
   const fetchNextBlobsBatch = useCallback(() => {
     dispatch(fetchMoreBlobsAsyncThunk());
@@ -100,7 +102,10 @@ const BlobsSelect: FC<BlobsSelectProps> = ({ onSubmit }) => {
                       >
                         {isSelected && <BoxSelect>{indexInSelected + 1}</BoxSelect>}
                       </Stack>
-                      <Blob id={blob.id} sx={{ zIndex: 1, height: '100%', objectFit: 'cover' }} />
+                      <Image
+                        src={getUrl(blob.id)}
+                        sx={{ zIndex: 1, height: '100%', objectFit: 'cover' }}
+                      />
                     </CardActionArea>
                   </Card>
                 </ImageListItem>

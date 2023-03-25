@@ -6,9 +6,9 @@ import { FC, useEffect, useRef, useState } from 'react';
 import { PATH_DASHBOARD } from 'src/_zswod/routes/src/paths';
 import { LightboxModal } from 'src/_zswod/components/LightboxModal';
 import { m } from 'framer-motion';
-import { Blob, useBlobUrl } from 'src/_zswod/modules/Blob';
 import { useSelector } from 'react-redux';
 import { selectAllArticleHeaders } from 'src/_zswod/modules/ArticleHeaders';
+import Image from 'src/components/Image';
 
 const RootStyle = styled('div')(({ theme }) => ({
   paddingTop: theme.spacing(15),
@@ -35,14 +35,13 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const theme = useTheme();
   const ref = useRef(null);
   const [imageOpen, setImageOpen] = useState<number>(-1);
-  const { getUrl } = useBlobUrl();
 
   const headers = useSelector(selectAllArticleHeaders);
 
   const images = headers.map((header) => header.previewImage); // TODO
+  const imageUrls = images.map((image) => image.src);
 
   const isLight = theme.palette.mode === 'light';
-  const imageBlobIds = images.map((image) => getUrl(image.blobId));
 
   useEffect(() => {
     passRef(ref);
@@ -75,9 +74,9 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
 
         <Grid container spacing={{ xs: 2, md: 3 }} columns={{ xs: 4, sm: 8, md: 12 }}>
           {images.map((item, index) => (
-            <Grid item xs={2} sm={4} md={3} key={index}>
+            <Grid item xs={2} sm={4} md={3} key={item.id}>
               <m.div variants={varFade().inUp}>
-                <Blob
+                <Image
                   sx={{
                     opacity: index < 2 ? 0.5 : 0.85,
                     height: { ...{ xs: 180, md: 400 } },
@@ -86,7 +85,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
                     cursor: 'pointer',
                   }}
                   alt={item.alt}
-                  id={item.blobId}
+                  src={item.src}
                   onClick={() => setImageOpen(index)}
                 />
               </m.div>
@@ -95,7 +94,7 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
         </Grid>
 
         <LightboxModal
-          images={imageBlobIds}
+          images={imageUrls}
           photoIndex={imageOpen}
           setPhotoIndex={setImageOpen}
           isOpen={imageOpen !== -1}

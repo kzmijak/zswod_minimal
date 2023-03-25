@@ -1,13 +1,12 @@
 import { nullObjectConsts } from 'src/_zswod/utils/nullObjectConsts';
 import { ImageFormContent } from './ImageFormContent';
 
-const { STRING, BOOLEAN } = nullObjectConsts;
+const { STRING, NUMBER } = nullObjectConsts;
 
 const nullImageFormObject: ImageFormContent = {
   alt: STRING,
-  title: STRING,
-  blobId: STRING,
-  isPreview: BOOLEAN,
+  order: NUMBER,
+  src: STRING,
 };
 
 export { nullImageFormObject };

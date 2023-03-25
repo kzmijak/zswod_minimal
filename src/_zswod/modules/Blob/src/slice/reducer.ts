@@ -1,8 +1,8 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
+import { BlobModel } from 'src/_zswod/models/Blob';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
 import { getGetBlobsError } from '../api/getBlobs';
 import { getUploadBlobError } from '../api/uploadBlob';
-import { BlobModel } from '../models/BlobModel';
 import { fetchMoreBlobsAsyncThunk, uploadBlobsAsyncThunk } from './thunks';
 
 type InitialState = {

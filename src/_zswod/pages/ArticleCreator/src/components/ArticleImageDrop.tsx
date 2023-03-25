@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react';
+import { FC, useState } from 'react';
 import { ImageFormContent } from '../models/ImageFormContent';
 import {
   Dialog,
@@ -15,11 +15,12 @@ import { ImageForm } from './ImageForm';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import { GalleryIllustration } from '../assets/illustration_gallery';
 import { GetImagesButton } from './utils/GetImagesButton';
-import { Blob, BlobsSelect } from 'src/_zswod/modules/Blob';
+import { BlobsSelect, useBlobUrl } from 'src/_zswod/modules/Blob';
 import Scrollbar from 'src/components/Scrollbar';
-import { arrayMapBlobToImage } from '../utils/mapBlobToImage';
 import HighlightOffTwoToneIcon from '@mui/icons-material/HighlightOffTwoTone';
 import { removeFromArray } from 'src/_zswod/utils/removeFromArray';
+import Image from 'src/components/Image';
+import { arrayMapBlobToImage } from 'src/_zswod/models/extraMappers';
 
 type ArticleImageDropProps = {
   images: ImageFormContent[];
@@ -30,21 +31,8 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
   const [savedImagesOpen, setSavedImagesOpen] = useState(false);
   const [imageFormOpen, setImageFormOpen] = useState(false);
   const [editedImage, setEditedImage] = useState<ImageFormContent | null>(null);
+  const { getUrl } = useBlobUrl();
   const theme = useTheme();
-
-  const handleSetPreview = (imageForm: ImageFormContent) => {
-    const newImage = { ...imageForm, isPreview: !imageForm.isPreview };
-    const imagesCopy = images.slice();
-
-    const currentPreview = imagesCopy.find((image) => image.isPreview);
-
-    if (Boolean(currentPreview)) {
-      const currentPreviewIndex = imagesCopy.indexOf(currentPreview!);
-      imagesCopy.splice(currentPreviewIndex, 1, { ...currentPreview!, isPreview: false });
-    }
-
-    onChange(removeFromArray(imagesCopy, (img) => img.blobId === newImage.blobId, newImage));
-  };
 
   const openDialog = (image: ImageFormContent) => {
     setEditedImage(image);
@@ -55,14 +43,9 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
     setImageFormOpen(false);
   };
 
-  useEffect(() => {
-    if (images.length > 0 && !images.some((image) => image.isPreview)) {
-      const copy = images.slice();
-      const firstImage = images[0];
-      copy.splice(0, 1, { ...firstImage, isPreview: true });
-      onChange(copy);
-    }
-  }, [images, onChange]);
+  const removeItem = (order: number) => {
+    onChange(removeFromArray(images, (image) => image.order === order));
+  };
 
   return (
     <>
@@ -77,17 +60,13 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
         <Scrollbar sx={{ height: 600 }}>
           <ImageList rowHeight={168} sx={{ margin: 1.5 }}>
             {images.map((imageForm) => {
-              const { alt, title, blobId, isPreview } = imageForm;
+              const { alt, src, order } = imageForm;
+              const isPreview = order === 0;
               return (
-                <ImageListItem
-                  key={blobId}
-                  onClick={() => handleSetPreview(imageForm)}
-                  sx={{ cursor: 'pointer' }}
-                >
-                  <Blob
-                    title={title}
+                <ImageListItem key={src} sx={{ cursor: 'pointer' }}>
+                  <Image
+                    src={src}
                     alt={alt}
-                    id={blobId}
                     sx={{
                       borderRadius: 2,
                       objectFit: 'cover',
@@ -129,9 +108,6 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
                           size="medium"
                           onClick={(event) => {
                             event.stopPropagation();
-                            onChange(
-                              removeFromArray(images, (image) => image.blobId === imageForm.blobId)
-                            );
                           }}
                         >
                           <HighlightOffTwoToneIcon />
@@ -149,9 +125,7 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
         <ImageForm
           initialState={editedImage!}
           onSubmit={(imageForm) => {
-            onChange(
-              removeFromArray(images, (image) => image.blobId === imageForm.blobId, imageForm)
-            );
+            removeItem(imageForm.order);
             closeDialog();
           }}
         />
@@ -160,9 +134,9 @@ const ArticleImageDrop: FC<ArticleImageDropProps> = ({ images, onChange }) => {
         <BlobsSelect
           onSubmit={(newBlobs) => {
             const uniqueBlobs = newBlobs.filter(
-              (blob) => !images.some((image) => image.blobId === blob.id)
+              (blob) => !images.some((image) => !image.src.includes(blob.id))
             );
-            const blobsConverted = arrayMapBlobToImage(uniqueBlobs);
+            const blobsConverted = arrayMapBlobToImage(uniqueBlobs, getUrl);
             onChange([...images, ...blobsConverted]);
             setSavedImagesOpen(false);
           }}
