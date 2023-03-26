@@ -1,6 +1,7 @@
 import { Grid } from '@mui/material';
 import { AnimatePresence, m } from 'framer-motion';
-import { FC } from 'react';
+import { FC, useState } from 'react';
+import { LightboxModal } from 'src/_zswod/components/LightboxModal';
 import { ImageModel } from 'src/_zswod/models/Image';
 import { ImageGridItem } from './ImageGridItem';
 
@@ -23,6 +24,17 @@ type ImageGridProps = {
   onImagesChange?: (images: ImageModel[]) => void;
 };
 const ImageGrid: FC<ImageGridProps> = ({ images, mutable, onImagesChange }) => {
+  const [lightboxOpen, setLightboxOpen] = useState(false);
+  const [lightboxImageIndex, setLightboxImageIndex] = useState(-1);
+
+  const openLightbox = (index: number) => {
+    setLightboxImageIndex(index);
+    setLightboxOpen(true);
+  };
+  const closeLightbox = () => {
+    setLightboxOpen(false);
+  };
+
   const replaceImage = (index: number, imageToInsert: ImageModel | null) => {
     const imagesCopy = [...images];
 
@@ -51,29 +63,39 @@ const ImageGrid: FC<ImageGridProps> = ({ images, mutable, onImagesChange }) => {
   };
 
   return (
-    <Grid container spacing={1} padding={1}>
-      <AnimatePresence>
-        {images.map((image, index) => (
-          <Grid
-            component={m.div}
-            initial={{ scale: 0.4 }}
-            animate={{ scale: 1, transition: { type: 'spring', duration: 0.4 } }}
-            exit={{ scale: 0.8, opacity: 0, transition: { bounce: 0, duration: 0.2 } }}
-            key={image.id}
-            item
-            xs={12}
-            md={6}
-          >
-            <ImageGridItem
-              image={image}
-              mutable={mutable}
-              onImageChange={(changedImage) => editImage(changedImage, index)}
-              onRemove={() => removeImage(index)}
-            />
-          </Grid>
-        ))}
-      </AnimatePresence>
-    </Grid>
+    <>
+      <Grid container spacing={1} padding={1}>
+        <AnimatePresence>
+          {images.map((image, index) => (
+            <Grid
+              component={m.div}
+              initial={{ scale: 0.4 }}
+              animate={{ scale: 1, transition: { type: 'spring', duration: 0.4 } }}
+              exit={{ scale: 0.8, opacity: 0, transition: { bounce: 0, duration: 0.2 } }}
+              key={image.id}
+              item
+              xs={12}
+              md={6}
+            >
+              <ImageGridItem
+                image={image}
+                mutable={mutable}
+                onFullScreenOpen={() => openLightbox(index)}
+                onImageChange={(changedImage) => editImage(changedImage, index)}
+                onRemove={() => removeImage(index)}
+              />
+            </Grid>
+          ))}
+        </AnimatePresence>
+      </Grid>
+      <LightboxModal
+        images={images}
+        onClose={closeLightbox}
+        open={lightboxOpen}
+        photoIndex={lightboxImageIndex}
+        setPhotoIndex={openLightbox}
+      />
+    </>
   );
 };
 

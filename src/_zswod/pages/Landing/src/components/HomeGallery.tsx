@@ -39,7 +39,6 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
   const headers = useSelector(selectAllArticleHeaders);
 
   const images = headers.map((header) => header.previewImage); // TODO
-  const imageUrls = images.map((image) => image.src);
 
   const isLight = theme.palette.mode === 'light';
 
@@ -94,10 +93,10 @@ const HomeGallery: FC<HomeGalleryProps> = ({ passRef }) => {
         </Grid>
 
         <LightboxModal
-          images={imageUrls}
+          images={images}
           photoIndex={imageOpen}
           setPhotoIndex={setImageOpen}
-          isOpen={imageOpen !== -1}
+          open={imageOpen !== -1}
           onClose={() => setImageOpen(-1)}
         />
 

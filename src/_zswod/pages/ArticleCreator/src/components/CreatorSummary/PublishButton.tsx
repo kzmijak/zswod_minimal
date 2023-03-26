@@ -11,7 +11,9 @@ import {
 } from '@mui/material';
 
 import { FC, useState } from 'react';
+import { useNavigate } from 'react-router';
 import { ImageModel } from 'src/_zswod/models/Image';
+import { PATH_DASHBOARD } from 'src/_zswod/routes';
 import { RequestStatus } from 'src/_zswod/utils/requestStatus';
 import { createArticle, getCreateArticleError } from '../../api/createArticle';
 import { updateArticle } from '../../api/updateArticle';
@@ -49,6 +51,7 @@ const PublishButton: FC<PublishButtonProps> = ({
 }) => {
   const isEditMode = Boolean(titleNormalized);
   const hasImages = images.length > 0;
+  const navigate = useNavigate();
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [status, setStatus] = useState<RequestStatus>('idle');
@@ -66,8 +69,9 @@ const PublishButton: FC<PublishButtonProps> = ({
     try {
       await (isEditMode
         ? updateArticle(titleNormalized!, articleFormContent, images)
-        : createArticle(articleFormContent, images));
+        : createArticle(articleFormContent, galleryTitle, images));
       setStatus('success');
+      navigate(PATH_DASHBOARD.articles);
     } catch (err) {
       setError(getCreateArticleError(err));
       openFailureDialog();

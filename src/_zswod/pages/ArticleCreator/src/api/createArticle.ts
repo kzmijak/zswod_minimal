@@ -17,8 +17,12 @@ const createArticleErrorDisplayValueDict: Record<createArticleError, string> = {
   Unknown: 'Coś poszło nie tak',
 };
 
-const createArticle = async (article: ArticleFormContent, images: ImageModel[]) => {
-  const response = await api.post<string>('article/create', { ...article, images });
+const createArticle = async (
+  article: ArticleFormContent,
+  galleryTitle: string,
+  images: ImageModel[]
+) => {
+  const response = await api.post<string>('article/create', { ...article, galleryTitle, images });
 
   return response.data;
 };

@@ -2,6 +2,7 @@ import { useEffect, FC } from 'react';
 import Lightbox from 'react-18-image-lightbox';
 import { alpha, useTheme } from '@mui/material/styles';
 import { Typography, GlobalStyles } from '@mui/material';
+import { ImageModel } from '../models/Image';
 
 const LightboxModalStyles = () => {
   const theme = useTheme();
@@ -69,10 +70,10 @@ const LightboxModalStyles = () => {
 };
 
 type LightboxModalProps = {
-  images: string[];
+  images: ImageModel[];
   photoIndex: number;
   setPhotoIndex: (index: number) => void;
-  isOpen: boolean;
+  open: boolean;
   onClose: VoidFunction;
 };
 
@@ -80,17 +81,19 @@ const LightboxModal: FC<LightboxModalProps> = ({
   images,
   photoIndex,
   setPhotoIndex,
-  isOpen,
+  open,
   onClose,
   ...other
 }) => {
+  const imageUrls = images.map((image) => image.src);
+
   useEffect(() => {
-    if (isOpen) {
+    if (open) {
       document.body.style.overflow = 'hidden';
     } else {
       document.body.style.overflow = 'unset';
     }
-  }, [isOpen]);
+  }, [open]);
 
   const showIndex = (
     <Typography variant="subtitle2">{`${photoIndex + 1} / ${images.length}`}</Typography>
@@ -107,12 +110,12 @@ const LightboxModal: FC<LightboxModalProps> = ({
     <>
       <LightboxModalStyles />
 
-      {isOpen && (
+      {open && (
         <Lightbox
           animationDuration={120}
-          mainSrc={images[photoIndex]}
-          nextSrc={images[(photoIndex + 1) % images.length]}
-          prevSrc={images[(photoIndex + images.length - 1) % images.length]}
+          mainSrc={imageUrls[photoIndex]}
+          nextSrc={imageUrls[(photoIndex + 1) % images.length]}
+          prevSrc={imageUrls[(photoIndex + images.length - 1) % images.length]}
           onCloseRequest={onClose}
           onMovePrevRequest={() => setPhotoIndex((photoIndex + images.length - 1) % images.length)}
           onMoveNextRequest={() => setPhotoIndex((photoIndex + 1) % images.length)}

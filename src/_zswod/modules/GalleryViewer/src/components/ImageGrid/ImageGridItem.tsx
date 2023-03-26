@@ -13,40 +13,45 @@ import {
 import { FC, useState } from 'react';
 import { ImageModel } from 'src/_zswod/models/Image';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import DragIndicatorIcon from '@mui/icons-material/DragIndicator';
 import { ImageFormDialog } from './ImageFormDialog';
+import SlideshowIcon from '@mui/icons-material/Slideshow';
 
 type ImageGridItemProps = {
   image: ImageModel;
   mutable?: boolean;
   onImageChange?: (image: ImageModel) => void;
   onRemove?: () => void;
-  onDrag?: () => void;
+  onFullScreenOpen?: () => void;
 };
 const ImageGridItem: FC<ImageGridItemProps> = ({
   mutable,
   onImageChange,
   onRemove,
-  onDrag,
+  onFullScreenOpen,
   image,
 }) => {
   const { alt, src } = image;
 
   const [dialogOpen, setDialogOpen] = useState(false);
-  const openDialog = () => setDialogOpen(true);
-  const closeDialog = () => setDialogOpen(false);
+  const openEditDialog = () => setDialogOpen(true);
+  const closeEditDialog = () => setDialogOpen(false);
 
   const handleImageAltChange = (alt: string) => {
     const assembledImage = { ...image, alt };
     onImageChange?.(assembledImage);
-    closeDialog();
+    closeEditDialog();
+  };
+
+  const handleClickImage = () => {
+    if (mutable) openEditDialog();
+    else onFullScreenOpen?.();
   };
 
   return (
     <>
       <Paper variant="outlined">
         <Card>
-          <CardActionArea onClick={openDialog}>
+          <CardActionArea onClick={handleClickImage}>
             <CardMedia component="img" alt={alt} src={src} sx={{ height: 200 }} />
             <Box padding={1}>
               <Typography variant="caption">Tekst alternatywny:</Typography>
@@ -65,15 +70,15 @@ const ImageGridItem: FC<ImageGridItemProps> = ({
           </CardActionArea>
           {mutable && (
             <CardActions>
-              <Stack direction="row" justifyContent="flex-end" sx={{ minWidth: '100%' }}>
+              <Stack direction="row" justifyContent="space-between" sx={{ minWidth: '100%' }}>
+                <Tooltip title="Pełny ekran">
+                  <IconButton onClick={onFullScreenOpen}>
+                    <SlideshowIcon />
+                  </IconButton>
+                </Tooltip>
                 <Tooltip title="Usuń">
                   <IconButton onClick={onRemove}>
                     <HighlightOffIcon />
-                  </IconButton>
-                </Tooltip>
-                <Tooltip title="Zmień kolejność">
-                  <IconButton disableTouchRipple sx={{ cursor: 'grab' }} onClick={onDrag}>
-                    <DragIndicatorIcon />
                   </IconButton>
                 </Tooltip>
               </Stack>
@@ -85,7 +90,7 @@ const ImageGridItem: FC<ImageGridItemProps> = ({
         alt={alt}
         src={src}
         open={dialogOpen}
-        onClose={closeDialog}
+        onClose={closeEditDialog}
         onSubmit={handleImageAltChange}
       />
     </>

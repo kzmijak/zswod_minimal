@@ -16,11 +16,15 @@ const updateArticleErrorDisplayValueDict: Record<UpdateArticleError, string> = {
 };
 
 const updateArticle = async (
-  titleNormalized: string,
+  articleId: string,
   article: ArticleFormContent,
   images: ImageModel[]
 ) => {
-  const response = await api.patch<string>('article/update', { titleNormalized, article, images });
+  const response = await api.patch<string>('article/update', {
+    articleId,
+    article,
+    images,
+  });
 
   return response.data;
 };
