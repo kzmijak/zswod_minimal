@@ -29,4 +29,5 @@ export {
   selectCurrentArticleStatus,
   selectCurrentArticleImages,
   selectCurrentArticlePreview,
+  currentArticleGallery,
 };

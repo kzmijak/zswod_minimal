@@ -53,20 +53,22 @@ const ImageGridItem: FC<ImageGridItemProps> = ({
         <Card>
           <CardActionArea onClick={handleClickImage}>
             <CardMedia component="img" alt={alt} src={src} sx={{ height: 200 }} />
-            <Box padding={1}>
-              <Typography variant="caption">Tekst alternatywny:</Typography>
-              {Boolean(alt) && (
-                <Typography noWrap variant="subtitle2">
-                  {alt}
-                </Typography>
-              )}
+            {mutable && (
+              <Box padding={1}>
+                <Typography variant="caption">Tekst alternatywny:</Typography>
+                {Boolean(alt) && (
+                  <Typography noWrap variant="subtitle2">
+                    {alt}
+                  </Typography>
+                )}
 
-              {!Boolean(alt) && (
-                <Typography variant="subtitle2" fontWeight="bold" color="error">
-                  Kliknij żeby uzupełnić
-                </Typography>
-              )}
-            </Box>
+                {!Boolean(alt) && (
+                  <Typography variant="subtitle2" fontWeight="bold" color="error">
+                    Kliknij żeby uzupełnić
+                  </Typography>
+                )}
+              </Box>
+            )}
           </CardActionArea>
           {mutable && (
             <CardActions>

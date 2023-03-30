@@ -11,6 +11,7 @@ const mapDtoToModel = ({
   createTime,
   updateTime,
   gallery,
+  titleNormalized,
 }: ArticleDto): ArticleModel => ({
   content,
   id,
@@ -19,6 +20,7 @@ const mapDtoToModel = ({
   createTime: new Date(createTime).toISOString(),
   updateTime: new Date(updateTime).toISOString(),
   gallery: mapGalleryDtoToModel(gallery),
+  titleNormalized,
 });
 
 const arrayMapDtoToModel = createArrayMapper(mapDtoToModel);

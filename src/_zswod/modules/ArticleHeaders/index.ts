@@ -6,6 +6,7 @@ import {
   selectLatestArticleHeader,
 } from './src/slice/selectors';
 import { fetchArticleHeadersAsyncThunk } from './src/slice/thunks';
+import { invalidateArticlesFetch, removeArticleById } from './src/slice/actions';
 
 export {
   articleHeadersReducer,
@@ -14,4 +15,6 @@ export {
   selectAllArticleHeaders,
   useArticleHeaders,
   selectLatestArticleHeader,
+  removeArticleById,
+  invalidateArticlesFetch,
 };

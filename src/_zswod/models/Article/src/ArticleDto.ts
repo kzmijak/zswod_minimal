@@ -8,6 +8,7 @@ type ArticleDto = {
   createTime: string;
   updateTime: string;
   gallery: GalleryDto;
+  titleNormalized: string;
 };
 
 export type { ArticleDto };

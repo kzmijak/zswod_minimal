@@ -8,6 +8,7 @@ type ArticleModel = {
   createTime: string;
   updateTime: string;
   gallery: GalleryModel;
+  titleNormalized: string;
 };
 
 export type { ArticleModel };

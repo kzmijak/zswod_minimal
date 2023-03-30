@@ -12,6 +12,7 @@ const nullObject: ArticleModel = {
   content: STRING,
   title: STRING,
   gallery: nullGalleryObject,
+  titleNormalized: STRING,
 };
 
 export { nullObject };

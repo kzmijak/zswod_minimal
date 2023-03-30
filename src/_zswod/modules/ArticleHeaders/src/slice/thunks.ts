@@ -1,6 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchArticleHeaders } from '../api/fetchArticleHeaders';
+import { removeArticle } from '../api/removeArticle';
 
 const fetchArticleHeadersAsyncThunk = createAsyncThunk('articleHeaders/fetch', fetchArticleHeaders);
 
-export { fetchArticleHeadersAsyncThunk };
+const removeArticleAsyncThunk = createAsyncThunk('articleHeaders/delete', removeArticle);
+
+export { fetchArticleHeadersAsyncThunk, removeArticleAsyncThunk };

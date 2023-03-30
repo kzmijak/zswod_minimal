@@ -1,5 +1,6 @@
 import { currentArticleReducer } from './src/slice/reducer';
 import {
+  currentArticleGallery,
   selectCurrentArticle,
   selectCurrentArticleImages,
   selectCurrentArticlePreview,
@@ -12,4 +13,5 @@ export {
   selectCurrentArticlePreview,
   selectCurrentArticleImages,
   selectCurrentArticle,
+  currentArticleGallery,
 };

@@ -8,7 +8,7 @@ import { GalleryViewer } from 'src/_zswod/modules/GalleryViewer';
 import { ImageModel } from 'src/_zswod/models/Image';
 
 type ArticlePreviewProps = Pick<DialogProps, 'open'> & {
-  titleNormalized: string | undefined;
+  titleNormalized?: string;
   article: ArticleFormContent;
   images: ImageModel[];
   galleryTitle: string;

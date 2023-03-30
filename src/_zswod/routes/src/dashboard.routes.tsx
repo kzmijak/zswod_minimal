@@ -4,6 +4,7 @@ import { DashboardLayout } from 'src/_zswod/layouts/dashboard';
 import { ArticlesListView } from 'src/_zswod/pages/ArticlesList';
 import { ArticleView } from 'src/_zswod/pages/Article';
 import { CommonView } from 'src/_zswod/pages/Common';
+import { GalleriesListView } from 'src/_zswod/pages/GalleriesList';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD.root,
@@ -11,7 +12,7 @@ const DashboardRoutes: RouteObject = {
   children: [
     {
       path: PATH_DASHBOARD.galleries,
-      element: <CommonView />,
+      element: <GalleriesListView />,
     },
     {
       path: `${PATH_DASHBOARD.galleries}/:galleryTitle`,
@@ -22,7 +23,7 @@ const DashboardRoutes: RouteObject = {
       element: <ArticlesListView />,
     },
     {
-      path: `${PATH_DASHBOARD.articles}/:articleTitle`,
+      path: `${PATH_DASHBOARD.articles}/:titleNormalized`,
       element: <ArticleView />,
     },
     {

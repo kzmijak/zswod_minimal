@@ -1,7 +1,7 @@
 import { createEntityAdapter, createSlice } from '@reduxjs/toolkit';
 import { ArticleHeaderModel } from 'src/_zswod/models/ArticleHeader';
 import { RequestError, RequestStatus } from 'src/_zswod/utils/requestStatus';
-import { fetchArticleHeadersAsyncThunk } from './thunks';
+import { fetchArticleHeadersAsyncThunk, removeArticleAsyncThunk } from './thunks';
 
 type InitialState = {
   status: RequestStatus;
@@ -9,7 +9,7 @@ type InitialState = {
 };
 
 const entityAdapter = createEntityAdapter<ArticleHeaderModel>({
-  sortComparer: (a, b) => new Date(a.createTime).getTime() - new Date(b.createTime).getTime(),
+  sortComparer: (a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime(),
 });
 
 const initialState = entityAdapter.getInitialState<InitialState>({
@@ -20,7 +20,11 @@ const initialState = entityAdapter.getInitialState<InitialState>({
 const slice = createSlice({
   name: 'articleHeaders',
   initialState,
-  reducers: {},
+  reducers: {
+    invalidateFetch: (state) => {
+      state.status = 'idle';
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchArticleHeadersAsyncThunk.pending, (state) => {
@@ -30,10 +34,20 @@ const slice = createSlice({
         state.status = 'success';
         entityAdapter.setAll(state, action.payload);
       })
-      .addCase(fetchArticleHeadersAsyncThunk.rejected, (state, error) => {
+      .addCase(fetchArticleHeadersAsyncThunk.rejected, (state) => {
+        state.status = 'error';
+      })
+      .addCase(removeArticleAsyncThunk.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(removeArticleAsyncThunk.fulfilled, (state, action) => {
+        state.status = 'success';
+        entityAdapter.removeOne(state, action.payload);
+      })
+      .addCase(removeArticleAsyncThunk.rejected, (state) => {
         state.status = 'error';
       }),
 });
 
-const { reducer } = slice;
-export { reducer, entityAdapter };
+const { reducer, actions } = slice;
+export { reducer, actions, entityAdapter };
