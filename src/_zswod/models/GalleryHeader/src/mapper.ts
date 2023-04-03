@@ -1,18 +1,22 @@
-import { mapImageDtoToModel } from '../../Image';
+import { createArrayMapper } from 'src/_zswod/utils/mapperCreators';
+import { arrayMapImageDtoToModel } from '../../Image';
 import { GalleryHeaderDto } from './GalleryHeaderDto';
 import { GalleryHeaderModel } from './GalleryHeaderModel';
 
-const mapGalleryHeaderDtoToModel = (
-  { previewImage, title, createTime }: GalleryHeaderDto,
-  id: number
-): GalleryHeaderModel => ({
-  previewImage: mapImageDtoToModel(previewImage),
+const mapGalleryHeaderDtoToModel = ({
+  previewImages,
+  remainingImagesCount,
+  title,
+  createTime,
+  id,
+}: GalleryHeaderDto): GalleryHeaderModel => ({
+  previewImages: arrayMapImageDtoToModel(previewImages),
+  remainingImagesCount,
   title,
   id,
   createTime,
 });
 
-const arrayMapGalleryHeaderDtoToModel = (dtos: GalleryHeaderDto[]) =>
-  dtos.map(mapGalleryHeaderDtoToModel);
+const arrayMapGalleryHeaderDtoToModel = createArrayMapper(mapGalleryHeaderDtoToModel);
 
 export { mapGalleryHeaderDtoToModel, arrayMapGalleryHeaderDtoToModel };

@@ -1,8 +1,10 @@
 import { ImageDto } from '../../Image';
 
 type GalleryHeaderDto = {
+  id: string;
   title: string;
-  previewImage: ImageDto;
+  previewImages: ImageDto[];
+  remainingImagesCount?: number;
   createTime: string;
 };
 

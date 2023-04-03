@@ -12,7 +12,9 @@ type InitialState = {
   eof: boolean;
 };
 
-const entityAdapter = createEntityAdapter<BlobModel>();
+const entityAdapter = createEntityAdapter<BlobModel>({
+  sortComparer: (a, b) => new Date(b.createTime).getTime() - new Date(a.createTime).getTime(),
+});
 
 const initialState = entityAdapter.getInitialState<InitialState>({
   error: '',

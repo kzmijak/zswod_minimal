@@ -1,9 +1,10 @@
 import { ImageModel } from '../../Image';
 
 type GalleryHeaderModel = {
-  id: number;
+  id: string;
   title: string;
-  previewImage: ImageModel;
+  previewImages: ImageModel[];
+  remainingImagesCount?: number;
   createTime: string;
 };
 
