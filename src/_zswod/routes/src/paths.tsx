@@ -10,6 +10,7 @@ const PATH_DASHBOARD = {
 
   articles: `${ROOT_DASHBOARD}${SECTION_MAIN}/artykuly`,
   galleries: `${ROOT_DASHBOARD}${SECTION_MAIN}/galerie`,
+  customPageCreator: `${ROOT_DASHBOARD}${SECTION_MAIN}/wlasna-strona`,
 } as const;
 
 export { PATH_DASHBOARD, PATH_ACCOUNT, PATH_VULCAN };

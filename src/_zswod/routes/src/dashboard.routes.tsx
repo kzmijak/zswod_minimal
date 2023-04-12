@@ -5,6 +5,7 @@ import { ArticlesListView } from 'src/_zswod/pages/ArticlesList';
 import { ArticleView } from 'src/_zswod/pages/Article';
 import { CommonView } from 'src/_zswod/pages/Common';
 import { GalleriesListView } from 'src/_zswod/pages/GalleriesList';
+import { CustomPageEditorView, CustomPageView } from 'src/_zswod/pages/CustomPage';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD.root,
@@ -28,7 +29,11 @@ const DashboardRoutes: RouteObject = {
     },
     {
       path: `${PATH_DASHBOARD.root}/:customPageSection/:customPageTitle`,
-      element: <CommonView />,
+      element: <CustomPageView />,
+    },
+    {
+      path: `${PATH_DASHBOARD.customPageCreator}`,
+      element: <CustomPageEditorView />,
     },
     {
       path: '*',
