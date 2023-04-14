@@ -1,4 +1,5 @@
 import { FetchCustomPageHeaders } from './src/components/FetchCustomPageHeaders';
+import { invalidateCustomPagesFetch } from './src/slice/actions';
 import { customPageHeadersReducer } from './src/slice/reducer';
 import {
   selectAllCustomPageHeaders,
@@ -12,4 +13,5 @@ export {
   FetchCustomPageHeaders,
   selectCustomPageHeadersGrouped,
   selectCustomPageHeaderByTitleNormalized,
+  invalidateCustomPagesFetch,
 };

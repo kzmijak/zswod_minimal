@@ -12,8 +12,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { ArticleModel } from 'src/_zswod/models/Article';
 import { useAppDispatch } from 'src/_zswod/utils/useAppDispatch';
 import { removeArticleById } from 'src/_zswod/modules/ArticleHeaders';
-import { Link, useNavigate } from 'react-router-dom';
-import { Toolbar } from 'src/_zswod/components/Toolbar';
+import { useNavigate } from 'react-router-dom';
+import { Toolbar, ToolbarButton } from 'src/_zswod/components/Toolbar';
 import { PATH_DASHBOARD } from 'src/_zswod/routes';
 
 type DeletionConfirmationTooltipProps = Pick<DialogProps, 'open'> & {
@@ -71,23 +71,12 @@ const ArticleToolbar: FC<ArticleToolbarProps> = ({ id, titleNormalized }) => {
   return (
     <>
       <Toolbar>
-        <Button
-          variant="outlined"
-          component={Link}
-          to={`/edytor/${titleNormalized}`}
-          color="inherit"
-          startIcon={<EditIcon />}
-        >
+        <ToolbarButton link={`/edytor/${titleNormalized}`} startIcon={<EditIcon />}>
           Edytuj
-        </Button>
-        <Button
-          variant="outlined"
-          onClick={openDeletionConfirmationDialog}
-          color="inherit"
-          sx={{ minWidth: 16 }}
-        >
+        </ToolbarButton>
+        <ToolbarButton onClick={openDeletionConfirmationDialog} sx={{ minWidth: 16 }}>
           <DeleteForeverIcon />
-        </Button>
+        </ToolbarButton>
       </Toolbar>
       <DeletionConfirmationTooltip
         open={dialogOpen}

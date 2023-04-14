@@ -1,4 +1,4 @@
-import { IconButton } from '@mui/material';
+import { Button, IconButton } from '@mui/material';
 import { FC, useState } from 'react';
 import { Iconography } from 'src/_zswod/components/Iconography';
 import { Icon } from 'src/_zswod/models/enums/Icon';
@@ -25,9 +25,9 @@ const IconSelect: FC<IconSelectProps> = ({ iconId, onSelect }) => {
   };
   return (
     <>
-      <IconButton onClick={openDialog}>
+      <Button onClick={openDialog} variant="outlined">
         <Iconography id={iconId} />
-      </IconButton>
+      </Button>
       <IconsListDialog
         open={dialogOpen}
         onClose={closeDialog}

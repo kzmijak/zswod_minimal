@@ -1,6 +1,5 @@
 type CustomPageHeaderDto = {
-  order: number;
-  titleNormalized: string;
+  url: string;
   section: string;
   title: string;
   icon: string;

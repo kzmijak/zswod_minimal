@@ -9,7 +9,7 @@ type InitialState = {
 };
 
 const entityAdapter = createEntityAdapter<CustomPageHeaderModel>({
-  selectId: ({ titleNormalized }) => titleNormalized,
+  selectId: ({ url }) => url,
 });
 
 const initialState = entityAdapter.getInitialState<InitialState>({
@@ -20,7 +20,11 @@ const initialState = entityAdapter.getInitialState<InitialState>({
 const slice = createSlice({
   name: 'customPageHeaders',
   initialState,
-  reducers: {},
+  reducers: {
+    invalidateCustomPagesFetch: (state) => {
+      state.status = 'idle';
+    },
+  },
   extraReducers: (builder) =>
     builder
       .addCase(fetchCustomPageHeadersAsyncThunk.pending, (state) => {

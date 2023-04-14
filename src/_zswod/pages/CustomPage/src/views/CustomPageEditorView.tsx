@@ -1,9 +1,13 @@
-import { Typography } from '@mui/material';
+import { Container } from '@mui/material';
 import { FC } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { Iconography } from 'src/_zswod/components/Iconography';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Page } from 'src/_zswod/components/Page';
 import { mapStringToIcon } from 'src/_zswod/models/enums/Icon';
+import { CustomPagePresenter } from '../components/CustomPagePresenter';
+import { createCustomPage } from '../api/createCustomPage';
+import { PATH_DASHBOARD } from 'src/_zswod/routes';
+import { useAppDispatch } from 'src/_zswod/utils/useAppDispatch';
+import { invalidateCustomPagesFetch } from 'src/_zswod/modules/CustomPageHeaders';
 
 const customPageEditorQueryKeys = {
   sectionKey: 'sekcja',
@@ -27,14 +31,32 @@ const parseQueryToCustomPage = (searchParams: URLSearchParams) => {
 
 const CustomPageEditorView: FC = () => {
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  const { iconId, section, title } = parseQueryToCustomPage(searchParams);
+  const { section, title, iconId } = parseQueryToCustomPage(searchParams);
+
+  const publishCustomPage = async (content: string) => {
+    const customPageUrl = await createCustomPage({ content, iconId, section, title });
+    dispatch(invalidateCustomPagesFetch());
+    navigate(`${PATH_DASHBOARD.root}/${customPageUrl}`, { replace: true });
+  };
+
+  const cancelCreatingCustomPage = () => {
+    navigate(PATH_DASHBOARD.root, { replace: true });
+  };
 
   return (
     <Page title={title}>
-      <Iconography id={iconId} />
-      <Typography>{section}</Typography>
-      <Typography>{title}</Typography>
+      <Container>
+        <CustomPagePresenter
+          startInEditMode
+          section={section}
+          title={title}
+          onEditModeEnd={publishCustomPage}
+          onRemove={cancelCreatingCustomPage}
+        />
+      </Container>
     </Page>
   );
 };

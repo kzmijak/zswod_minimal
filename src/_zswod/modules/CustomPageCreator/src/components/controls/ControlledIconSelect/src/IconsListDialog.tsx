@@ -29,9 +29,22 @@ const IconsListDialog: FC<IconsListDialogProps> = ({
     <DialogContent>
       <Grid container>
         {iconConsts.map((iconId) => (
-          <Grid key={iconId} xs={3}>
+          <Grid
+            key={iconId}
+            xs={4}
+            md={2}
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+          >
             <IconButton
-              sx={{ ...(highlightedIcon === iconId && { backgroundColor: 'primary.main' }) }}
+              sx={(theme) => ({
+                ...(highlightedIcon === iconId && {
+                  color: 'primary.main',
+                  boxShadow: `0 0 0 1px ${theme.palette.primary.main}`,
+                  transition: '0.2s all',
+                }),
+              })}
               onClick={() => onIconSelect(iconId)}
             >
               <Iconography id={iconId} />

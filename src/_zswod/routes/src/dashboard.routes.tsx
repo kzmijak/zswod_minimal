@@ -6,6 +6,7 @@ import { ArticleView } from 'src/_zswod/pages/Article';
 import { CommonView } from 'src/_zswod/pages/Common';
 import { GalleriesListView } from 'src/_zswod/pages/GalleriesList';
 import { CustomPageEditorView, CustomPageView } from 'src/_zswod/pages/CustomPage';
+import { RequireRole } from 'src/_zswod/modules/User';
 
 const DashboardRoutes: RouteObject = {
   path: PATH_DASHBOARD.root,
@@ -33,7 +34,11 @@ const DashboardRoutes: RouteObject = {
     },
     {
       path: `${PATH_DASHBOARD.customPageCreator}`,
-      element: <CustomPageEditorView />,
+      element: (
+        <RequireRole role="Teacher">
+          <CustomPageEditorView />
+        </RequireRole>
+      ),
     },
     {
       path: '*',

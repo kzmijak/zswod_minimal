@@ -6,15 +6,13 @@ import { CustomPageHeaderModel } from './CustomPageHeaderModel';
 const mapCustomPageHeaderDtoToModel = ({
   icon,
   title,
-  titleNormalized,
-  order,
+  url,
   link,
   section,
 }: CustomPageHeaderDto): CustomPageHeaderModel => ({
   icon: mapStringToIcon(icon),
-  order,
   title,
-  titleNormalized,
+  url,
   link,
   section,
 });

@@ -65,6 +65,11 @@ const Editor: FC<EditorProps> = ({
     },
   };
 
+  const handleChange: ReactQuillProps['onChange'] = (value, delta, source, editor) => {
+    const valueToSet = editor.getLength() > 1 ? value : '';
+    onChange?.(valueToSet, delta, source, editor);
+  };
+
   return (
     <>
       <EditorStyle
@@ -81,7 +86,7 @@ const Editor: FC<EditorProps> = ({
         <Toolbar id={id} isSimple={simple} />
         <ReactQuill
           value={value}
-          onChange={onChange}
+          onChange={handleChange}
           modules={modules}
           formats={[...formatConsts]}
           placeholder={label}

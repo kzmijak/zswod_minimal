@@ -33,8 +33,8 @@ const selectCustomPageHeadersGrouped = createSelector(selectAllCustomPageHeaders
 });
 
 const selectCustomPageHeaderByTitleNormalized = createSelector(
-  [selectAllCustomPageHeaders, (_state, titleNormalized: string) => titleNormalized],
-  (headers, titleNormalized) => headers.find((header) => header.titleNormalized === titleNormalized)
+  [selectAllCustomPageHeaders, (_state, url: string) => url],
+  (headers, url) => headers.find((header) => header.url === url)
 );
 
 export {

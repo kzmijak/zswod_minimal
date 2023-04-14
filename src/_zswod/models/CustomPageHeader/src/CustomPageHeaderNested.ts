@@ -1,10 +1,9 @@
 import { Icon } from '../../enums/Icon';
 
 type CustomPageHeaderItem = {
-  titleNormalized: string;
+  url: string;
   title: string;
   icon: Icon;
-  order: number;
   link?: string;
 };
 

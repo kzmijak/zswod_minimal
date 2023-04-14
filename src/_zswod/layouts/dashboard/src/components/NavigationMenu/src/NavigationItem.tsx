@@ -1,4 +1,4 @@
-import { MenuItem, alpha, Stack, Typography, Box } from '@mui/material';
+import { MenuItem, alpha, Stack, Typography } from '@mui/material';
 import { FC } from 'react';
 import { useLocation } from 'react-router';
 import { Iconography } from 'src/_zswod/components/Iconography';
@@ -7,12 +7,12 @@ import { CustomPageHeaderItem } from 'src/_zswod/models/CustomPageHeader';
 
 type NavigationItemProps = CustomPageHeaderItem;
 
-const NavigationItem: FC<NavigationItemProps> = ({ icon, title, titleNormalized, link }) => {
+const NavigationItem: FC<NavigationItemProps> = ({ icon, title, url, link }) => {
   const { pathname } = useLocation();
 
-  const isSelected = pathname.includes(titleNormalized);
+  const isSelected = pathname.includes(url);
   return (
-    <SmartLink to={Boolean(link) ? link! : titleNormalized}>
+    <SmartLink to={Boolean(link) ? link! : url}>
       <MenuItem
         sx={(theme) => ({
           whiteSpace: 'normal',
@@ -25,20 +25,14 @@ const NavigationItem: FC<NavigationItemProps> = ({ icon, title, titleNormalized,
         })}
       >
         <Stack direction="row" spacing={2} alignItems="center" minHeight={30}>
-          <Box
-            width={30}
-            height={30}
+          <Iconography
+            id={icon}
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-              color: isSelected ? 'primary.dark' : 'grey.700',
               bgcolor: 'background.default',
               borderRadius: 3,
+              color: isSelected ? 'primary.dark' : 'grey.700',
             }}
-          >
-            <Iconography id={icon} />
-          </Box>
+          />
           <Typography variant="subtitle2">{title}</Typography>
         </Stack>
       </MenuItem>

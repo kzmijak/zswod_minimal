@@ -75,9 +75,8 @@ const ArticleForm: FC<ArticleFormProps> = ({ formId, onSubmit, defaultValues }) 
         <ErrorSocket message={errors.content?.message}>
           <Editor
             value={content}
-            onChange={(value, _delta, _source, editor) => {
-              const valueToSet = editor.getLength() > 1 ? value : '';
-              setValue('content', valueToSet, { shouldValidate: true });
+            onChange={(value) => {
+              setValue('content', value, { shouldValidate: true });
             }}
             label="Treść artykułu"
             height={'75vh'}
