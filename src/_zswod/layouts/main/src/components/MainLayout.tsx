@@ -11,7 +11,7 @@ const MainLayout: FC = () => {
 
   return (
     <Stack sx={{ minHeight: 1 }}>
-      <MainHeader />
+      <MainHeader disableOffsetStyles={!isHome} />
 
       <Outlet />
 

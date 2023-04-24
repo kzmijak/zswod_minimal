@@ -1,7 +1,6 @@
 import { Outlet, RouteObject } from 'react-router';
 import { ArticleCreatorView } from 'src/_zswod/pages/ArticleCreator';
 import { RequireAuth, RequireRole } from 'src/_zswod/modules/User';
-import { Maintenance } from 'src/_zswod/views/Maintenance';
 
 const CoreRoutes: RouteObject = {
   element: <Outlet />,
@@ -25,10 +24,6 @@ const CoreRoutes: RouteObject = {
           </RequireRole>
         </RequireAuth>
       ),
-    },
-    {
-      path: '*',
-      element: <Maintenance />,
     },
   ],
 };

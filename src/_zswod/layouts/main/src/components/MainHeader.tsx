@@ -34,8 +34,11 @@ const ToolbarShadowStyle = styled('div')(({ theme }) => ({
   boxShadow: theme.customShadows.z8,
 }));
 
-const MainHeader: FC = () => {
-  const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT);
+type MainHeaderProps = {
+  disableOffsetStyles?: boolean;
+};
+const MainHeader: FC<MainHeaderProps> = ({ disableOffsetStyles }) => {
+  const isOffset = useOffSetTop(HEADER.MAIN_DESKTOP_HEIGHT) || disableOffsetStyles;
   const isDesktop = useResponsive('up', 'md');
 
   return (

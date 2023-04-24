@@ -8,6 +8,7 @@ const SECTION_MAIN = '/glowne';
 const PATH_DASHBOARD = {
   root: ROOT_DASHBOARD,
 
+  menu: `${ROOT_DASHBOARD}/menu`,
   articles: `${ROOT_DASHBOARD}${SECTION_MAIN}/artykuly`,
   galleries: `${ROOT_DASHBOARD}${SECTION_MAIN}/galerie`,
   customPageCreator: `${ROOT_DASHBOARD}${SECTION_MAIN}/wlasna-strona`,

@@ -4,6 +4,7 @@ import { CustomPageTopBar } from './CustomPageTopBar';
 import { CustomPageModel } from 'src/_zswod/models/CustomPage';
 import { CustomPageContentEditor } from './customPageContent/CustomPageContentEditor';
 import { CustomPageContentPresenter } from './customPageContent/CustomPageContentPresenter';
+import { RequireRole } from 'src/_zswod/modules/User';
 
 type CustomPagePresenterProps = Pick<CustomPageModel, 'section' | 'title'> & {
   content?: string;
@@ -31,12 +32,14 @@ const CustomPagePresenter: FC<CustomPagePresenterProps> = ({
   return (
     <>
       <CustomPageTopBar title={title} section={section} />
-      <CustomPageToolBar
-        editMode={isEditing}
-        onEditModeStart={startEditing}
-        onEditModeEnd={handleEditModeEnd}
-        onRemove={onRemove}
-      />
+      <RequireRole role="Teacher">
+        <CustomPageToolBar
+          editMode={isEditing}
+          onEditModeStart={startEditing}
+          onEditModeEnd={handleEditModeEnd}
+          onRemove={onRemove}
+        />
+      </RequireRole>
       {isEditing ? (
         <CustomPageContentEditor
           content={customPageContent}
