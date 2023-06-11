@@ -1,20 +1,23 @@
-# Use an official Node.js runtime as the base image
-FROM node:14
+# Base image
+FROM node:14-alpine
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy package.json and yarn.lock to the working directory
+# Copy package.json and yarn.lock
 COPY package.json yarn.lock ./
 
-# Install project dependencies
-RUN yarn install --production
+# Install dependencies
+RUN yarn install --frozen-lockfile
 
-# Copy the rest of the application code
-COPY . .
+# Copy the application code
+COPY . ./
 
 # Build the production-ready React app
 RUN yarn build
 
-# Set the command to run when the container starts
+# Expose port 3000
+EXPOSE 3000
+
+# Start the application
 CMD ["yarn", "start"]
